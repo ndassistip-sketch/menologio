@@ -229,7 +229,11 @@ dialog.sheet h3{font-family:var(--f-display);font-weight:400;font-size:var(--s-x
 .say .ic{width:20px;height:20px}
 .say.mini{padding:2px 8px 2px 6px;min-height:28px;font-size:var(--s-xs)}
 .say.mini .ic{width:16px;height:16px}
-html.no-tts .say{display:none}
+html.no-tts .say,html.no-tts .tts-only{display:none}
+.drawer-voice{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--rule);padding-top:16px}
+.vrow{display:flex;flex-direction:column;gap:4px;font-size:var(--s-sm)}
+.vrow select{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:8px 10px;min-height:42px;max-width:100%}
+.vrow input[type=range]{accent-color:var(--rubric)}
 .rhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .player{position:fixed;left:0;right:0;bottom:0;z-index:7;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);
   padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
@@ -289,6 +293,14 @@ body.speaking .page{padding-bottom:110px}
   <label class="drawer-date" for="pick"><span class="rlabel">vai a una data</span>
     <input type="date" id="pick"></label>
   <button class="btn solid" id="install-btn" hidden>Installa l'app</button>
+  <div class="drawer-voice tts-only">
+    <span class="rlabel">voce di lettura</span>
+    <label class="vrow" for="v-it"><span>Italiano</span><select id="v-it"></select></label>
+    <label class="vrow" for="v-ru"><span>Russo e slavonico</span><select id="v-ru"></select></label>
+    <label class="vrow" for="v-rate"><span>Velocità <b id="v-rate-n"></b></span><input type="range" id="v-rate" min="0.7" max="1.1" step="0.05"></label>
+    <button class="btn" id="v-test">Prova la voce</button>
+    <p class="note">Le voci più umane si chiamano «Natural», «Avanzata», «Premium» o «Google». Su iPhone: Impostazioni › Accessibilità › Contenuto letto › Voci. Su Android: impostazioni di sintesi vocale di Google.</p>
+  </div>
 </dialog>
 
 <dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
@@ -390,7 +402,8 @@ body.speaking .page{padding-bottom:110px}
       <li>Le versioni italiane sono tradotte dallo slavonico per questa app e non sono un testo liturgico ufficiale.</li>
       <li>La preghiera degli starcy di Optina è riportata nel russo moderno in cui circola.</li>
       <li>Rosario della Madre di Dio, nella Lampada: la regola dei centocinquanta «Madre di Dio Vergine» raccomandata da san Serafino di Sarov, con i quindici misteri nello schema del vescovo Serafino Zvezdinskij.</li>
-      <li>La lettura ad alta voce usa le voci installate sul telefono o sul computer: senza una voce russa il testo slavonico non si sente.</li>
+      <li>La lettura ad alta voce usa le voci installate sul telefono o sul computer: senza una voce russa il testo slavonico non si sente. Le voci si scelgono nel menu ☰.</li>
+      <li>Rosario cattolico, nella Lampada: Ave Maria, Padre nostro, Gloria, Credo apostolico e Salve Regina nella forma in uso in Italia; misteri secondo la distribuzione settimanale introdotta nel 2002.</li>
     </ul></div>
     <div class="src-group"><h3>Santi patroni</h3><ul>
       <li>Date giuliane dal calendario di orthocal; le note sui patroni sono scritte per questa app.</li>
@@ -412,7 +425,7 @@ body.speaking .page{padding-bottom:110px}
   </footer>
 </main>
 
-<dialog id="lamp-dlg" aria-label="Lampada della Preghiera"><div class="dlg-bar"><button class="btn" id="lamp-close">‹ Menologio</button><span class="sc muted">lampada della preghiera</span></div><iframe id="lamp-frame" title="Lampada della Preghiera"></iframe></dialog>
+<dialog id="lamp-dlg" aria-label="Lampada della Preghiera"><div class="dlg-bar"><button class="btn" id="lamp-close">‹ Menologio</button><span class="sc muted">lampada della preghiera</span></div><iframe id="lamp-frame" title="Lampada della Preghiera" allow="microphone; autoplay"></iframe></dialog>
 <script>
 (function(){
 "use strict";
@@ -859,13 +872,25 @@ function sheetFromTap(t){
 const SPEECH = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance === "function";
 if (!SPEECH) document.documentElement.classList.add("no-tts");
 const TTS = {queue: [], playing: false, paused: false, token: 0, label: ""};
-function voiceFor(l){
-  try {
-    const p = l === "it" ? "it" : "ru";
-    const vs = speechSynthesis.getVoices().filter(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith(p));
-    return vs.find(v => v.localService) || vs[0] || null;
-  } catch (e) { return null; }
+// --- choosing the voice: the user's choice first, otherwise the most natural one on the device
+const VKEY = "men:voice";
+function vprefs(){ try { return Object.assign({it: "", ru: "", rate: 0.9}, JSON.parse(localStorage.getItem(VKEY) || "{}")); } catch (e) { return {it: "", ru: "", rate: 0.9}; } }
+function vsave(p){ try { localStorage.setItem(VKEY, JSON.stringify(p)); } catch (e) {} }
+function voicesFor(pre){
+  try { return speechSynthesis.getVoices().filter(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith(pre)); } catch (e) { return []; }
 }
+const VGOOD = /natural|neural|enhanced|premium|avanzat|online|google|siri|wavenet|journey|studio/i;
+const VFEM = /alice|federica|elsa|isabella|paola|emma|chiara|bianca|carla|giorgia|serena|valentina|silvia|milena|katya|katerina|svetlana|dariya|daria|irina|alena|ekaterina|tatyana|yuliya|female|donna/i;
+function bestVoice(l, localOnly){
+  const pre = l === "it" ? "it" : "ru";
+  const vs = voicesFor(pre), pick = vprefs()[pre];
+  const chosen = vs.find(v => v.name === pick);
+  if (chosen && !(localOnly && !chosen.localService)) return chosen;
+  const pool = localOnly ? vs.filter(v => v.localService) : vs;
+  return pool.map(v => [(VGOOD.test(v.name) ? 4 : 0) + (VFEM.test(v.name) ? 2 : 0) + (v.localService ? 1 : 0), v])
+             .sort((a, b) => b[0] - a[0]).map(x => x[1])[0] || null;
+}
+function voiceFor(l){ return bestVoice(l, navigator.onLine === false); }
 function chunks(text){
   const parts = String(text).replace(/\s+/g, " ").match(/[^.!?;:]+[.!?;:»"]*\s*/g) || [text];
   const out = []; let acc = "";
@@ -891,7 +916,8 @@ function speak(items, label){
   if (!SPEECH || !items.length) return;
   stopSpeech();
   const tok = ++TTS.token;
-  items.forEach(it => chunks(it.text).forEach(c => TTS.queue.push({text: c, lang: it.lang})));
+  // a breath between sentences and a longer one between prayers, as when someone reads aloud in church
+  items.forEach(it => { const cs = chunks(it.text); cs.forEach((c, i) => TTS.queue.push({text: c, lang: it.lang, pause: i === cs.length - 1 ? 900 : 380})); });
   TTS.playing = true; TTS.label = label;
   const langs = [...new Set(items.map(i => i.lang))];
   const missing = speechSynthesis.getVoices().length && langs.filter(l => !voiceFor(l));
@@ -900,13 +926,19 @@ function speak(items, label){
     if (tok !== TTS.token) return;
     const it = TTS.queue.shift();
     if (!it) { TTS.playing = false; hidePlayer(); return; }
+    say(it, false);
+  };
+  const say = (it, localOnly) => {
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = it.lang === "it" ? "it-IT" : "ru-RU";
-    const v = voiceFor(it.lang); if (v) u.voice = v;
-    u.rate = it.lang === "it" ? 0.95 : 0.9;
-    u.onend = next;
+    const v = bestVoice(it.lang, localOnly || navigator.onLine === false); if (v) u.voice = v;
+    const rate = Number(vprefs().rate) || 0.9;
+    u.rate = it.lang === "it" ? rate : rate * 0.95;
+    u.pitch = 1;
+    u.onend = () => { if (tok === TTS.token) setTimeout(next, it.pause || 380); };
     u.onerror = e => {
       if (tok !== TTS.token || e.error === "interrupted" || e.error === "canceled") return;
+      if (v && !v.localService && !localOnly) { say(it, true); return; }   // an online voice failed: fall back to one on the device
       TTS.token++; TTS.queue = []; TTS.playing = false;
       $("pl-label").textContent = "Lettura non riuscita: sul dispositivo non c'è una voce per questa lingua.";
       $("pl-pause").hidden = true;
@@ -915,6 +947,30 @@ function speak(items, label){
     speechSynthesis.speak(u);
   };
   next();
+}
+
+function fillVoiceSettings(){
+  if (!SPEECH) return;
+  const prefs = vprefs();
+  for (const pre of ["it", "ru"]) {
+    const sel = $("v-" + pre);
+    const vs = voicesFor(pre);
+    const auto = bestVoice(pre, false);
+    sel.innerHTML = `<option value="">Automatica${auto ? " · " + esc(auto.name) : ""}</option>` +
+      vs.map(v => `<option value="${esc(v.name)}">${esc(v.name)}${v.localService ? "" : " · online"}</option>`).join("");
+    sel.value = vs.some(v => v.name === prefs[pre]) ? prefs[pre] : "";
+  }
+  $("v-rate").value = prefs.rate; $("v-rate-n").textContent = "×" + Number(prefs.rate).toFixed(2);
+}
+function wireVoiceSettings(){
+  if (!SPEECH) return;
+  for (const pre of ["it", "ru"]) $("v-" + pre).onchange = () => { const p = vprefs(); p[pre] = $("v-" + pre).value; vsave(p); };
+  $("v-rate").oninput = () => { const p = vprefs(); p.rate = Number($("v-rate").value); vsave(p); $("v-rate-n").textContent = "×" + p.rate.toFixed(2); };
+  $("v-test").onclick = () => speak([
+    {text: "Signore Gesù Cristo, Figlio di Dio, abbi pietà di me peccatore.", lang: "it"},
+    {text: "Господи Иисусе Христе, Сыне Божий, помилуй мя грешнаго.", lang: "ru"}], "Prova della voce");
+  try { speechSynthesis.addEventListener("voiceschanged", fillVoiceSettings); } catch (e) {}
+  fillVoiceSettings();
 }
 function togglePause(){
   if (!TTS.playing) return;
@@ -1195,7 +1251,7 @@ function startFromHash(){
 async function init(){
   buildNav();
   showView("oggi");
-  $("menu-btn").onclick = openDrawer;
+  $("menu-btn").onclick = () => { if (SPEECH) fillVoiceSettings(); openDrawer(); };
   $("drawer-close").onclick = closeDrawer;
   $("drawer").addEventListener("click", e => {
     const r = $("drawer").getBoundingClientRect();
@@ -1208,7 +1264,7 @@ async function init(){
   });
   $("pl-pause").onclick = togglePause;
   $("pl-stop").onclick = stopSpeech;
-  if (SPEECH) { try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; } catch (e) {} }
+  if (SPEECH) { try { speechSynthesis.getVoices(); } catch (e) {} wireVoiceSettings(); }
   document.addEventListener("click", e => {
     if (!e.target.closest) return;
     if (sheetFromTap(e.target)) return;

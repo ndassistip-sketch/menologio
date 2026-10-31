@@ -79,6 +79,16 @@ p{margin:0}
 .mystery .cu{color:var(--muted);font-family:var(--f-display)}
 .mystery p{margin:0;color:var(--muted)}
 html.no-tts .tts{display:none}
+.modes button{line-height:1.2;padding:6px 8px}
+.micbox{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.mic{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--ember);color:var(--ember);border-radius:999px;padding:10px 20px;min-height:48px;background:var(--surface);font-weight:500}
+.mic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.mic[aria-pressed="true"]{background:var(--ember);color:var(--bg)}
+.mic[aria-pressed="true"] svg{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.mic[aria-pressed="true"] svg{animation:none}}
+#r-heard{max-width:40ch}
+input[type=range]{accent-color:var(--gold)}
 @media (prefers-reduced-motion:reduce){.flame{transition:none}}
 </style></head><body>
 
@@ -90,7 +100,8 @@ html.no-tts .tts{display:none}
 
   <div class="modes" role="group" aria-label="Modo di preghiera">
     <button id="mode-j" aria-pressed="true">Preghiera di Gesù</button>
-    <button id="mode-r" aria-pressed="false">Rosario della Madre di Dio</button>
+    <button id="mode-o" aria-pressed="false">Rosario ortodosso</button>
+    <button id="mode-c" aria-pressed="false">Rosario cattolico</button>
   </div>
 
   <div id="jesus" style="display:contents">
@@ -154,7 +165,7 @@ html.no-tts .tts{display:none}
   </div>
 
   <div id="rosary" hidden style="display:contents">
-    <p class="prose" id="r-intro">La regola della Madre di Dio: centocinquanta volte «Madre di Dio Vergine, rallegrati», in quindici decine, ognuna aperta dal Padre nostro e da un evento della sua vita. San Serafino di Sarov la raccomandava; i quindici misteri seguono lo schema diffuso dal vescovo Serafino Zvezdinskij.</p>
+    <p class="prose" id="r-intro"></p>
     <div class="lamp rlamp" id="rlamp" role="button" tabindex="0" aria-label="Avanti di un grano">
       <canvas id="rbeads" width="680" height="680" aria-hidden="true"></canvas>
       <div class="center"><div class="rtext" id="rtext" aria-live="polite"></div></div>
@@ -162,10 +173,10 @@ html.no-tts .tts{display:none}
     <div class="stats">
       <div><span class="label">Decina</span><b class="tabular" id="r-dec">1</b></div>
       <div><span class="label">Grano</span><b class="tabular" id="r-ave">0</b></div>
-      <div><span class="label">Totale</span><b class="tabular" id="r-tot">0</b></div>
+      <div><span class="label" id="r-tot-l">Totale</span><b class="tabular" id="r-tot">0</b></div>
     </div>
     <div class="mystery">
-      <span class="label" id="r-mlabel">Primo mistero</span>
+      <span class="label" id="r-mlabel"></span>
       <b id="r-myst"></b>
       <span class="cu" id="r-myst-cu" lang="cu"></span>
       <p id="r-myst-d"></p>
@@ -175,15 +186,28 @@ html.no-tts .tts{display:none}
       <button class="primary" id="r-next">Avanti</button>
       <button class="tts" id="r-say">Ascolta</button>
     </div>
-    <p class="note">Tocca la lampada o premi Avanti a ogni grano. Il punto in cui sei resta salvato.</p>
+    <div class="micbox" id="micbox">
+      <button class="mic" id="r-mic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.8M8.8 20.8h6.4"/></svg><span id="r-mic-l">Prega a voce</span></button>
+      <p class="note" id="r-heard">Premi, poi prega ad alta voce: la lampada ti ascolta e passa al grano successivo quando finisci ogni preghiera.</p>
+    </div>
     <section class="panel">
       <h2>Impostazioni del rosario</h2>
       <div class="row">
-        <div class="field"><label class="label" for="r-lang">Lingua</label>
+        <div class="field" id="r-set-f"><label class="label" for="r-set">Misteri</label>
+          <select id="r-set"><option value="auto">Quelli del giorno</option><option value="gaudiosi">Gaudiosi</option><option value="luminosi">Luminosi</option><option value="dolorosi">Dolorosi</option><option value="gloriosi">Gloriosi</option></select></div>
+        <div class="field" id="r-lang-f"><label class="label" for="r-lang">Lingua</label>
           <select id="r-lang"><option value="it">Italiano</option><option value="cu">Slavonico</option></select></div>
-        <label class="toggle tts"><input type="checkbox" id="r-auto"> Leggi ad alta voce a ogni grano</label>
         <button id="r-reset">Ricomincia da capo</button>
       </div>
+      <label class="toggle tts"><input type="checkbox" id="r-auto"> Leggi ad alta voce a ogni grano</label>
+    </section>
+    <section class="panel tts">
+      <h2>Voce</h2>
+      <div class="row">
+        <div class="field"><label class="label" for="v-sel">Voce per questa lingua</label><select id="v-sel"></select></div>
+        <div class="field"><label class="label" for="v-rate">Velocità <span id="v-rate-n"></span></label><input type="range" id="v-rate" min="0.7" max="1.1" step="0.05"></div>
+      </div>
+      <p class="prose">Le voci più umane si chiamano «Natural», «Avanzata», «Premium» o «Google». Su iPhone si scaricano da Impostazioni › Accessibilità › Contenuto letto › Voci; su Android dalle impostazioni di sintesi vocale di Google.</p>
     </section>
   </div>
 </div>
@@ -287,13 +311,13 @@ function renderLog(){
     el.appendChild(row);
   });
 }
-const mq=window.matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",()=>{drawBeads();if(!$("rosary").hidden)drawRosary()});
-new MutationObserver(()=>{drawBeads();if(!$("rosary").hidden)drawRosary()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+const mq=window.matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",()=>{drawBeads();if(!$("rosary").hidden)renderRosary()});
+new MutationObserver(()=>{drawBeads();if(!$("rosary").hidden)renderRosary()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
 document.addEventListener("visibilitychange",async()=>{if(document.visibilityState==="visible"&&st.running){try{wake=await navigator.wakeLock.request("screen")}catch(e){}}});
 renderPhase();drawBeads();renderLog();
 
-/* ---------- Rosario della Madre di Dio: 15 decine, ciascuna Padre nostro + 10 «Madre di Dio Vergine» ---------- */
-const RTXT = {
+/* ---------- Rosari: ortodosso (regola della Madre di Dio) e cattolico ---------- */
+const RT = {
   pn: {it: "Padre nostro, che sei nei cieli, sia santificato il tuo nome, venga il tuo regno, sia fatta la tua volontà, come in cielo così in terra. Dacci oggi il nostro pane quotidiano, e rimetti a noi i nostri debiti come noi li rimettiamo ai nostri debitori, e non ci indurre in tentazione, ma liberaci dal maligno.",
        cu: "Отче наш, Иже еси на небесех! Да святится имя Твое, да приидет Царствие Твое, да будет воля Твоя, яко на небеси и на земли. Хлеб наш насущный даждь нам днесь; и остави нам долги наша, якоже и мы оставляем должником нашим; и не введи нас во искушение, но избави нас от лукаваго."},
   ave: {it: "Madre di Dio Vergine, rallegrati, Maria piena di grazia, il Signore è con te. Benedetta tu fra le donne e benedetto il frutto del tuo grembo, perché hai partorito il Salvatore delle anime nostre.",
@@ -301,7 +325,17 @@ const RTXT = {
   end: {it: "È veramente giusto proclamare beata te, Madre di Dio, sempre beata e tutta immacolata e Madre del nostro Dio. Più venerabile dei cherubini e incomparabilmente più gloriosa dei serafini, tu che senza corruzione hai generato Dio Verbo, vera Madre di Dio, noi ti magnifichiamo.",
         cu: "Достойно есть яко воистину блажити Тя, Богородицу, Присноблаженную и Пренепорочную и Матерь Бога нашего. Честнейшую Херувим и славнейшую без сравнения Серафим, без истления Бога Слова рождшую, сущую Богородицу Тя величаем."}
 };
-const MYST = [
+// Catholic prayers in the form used in Italy (Padre nostro as in the 2020 Messale)
+const RC = {
+  inizio: "Nel nome del Padre e del Figlio e dello Spirito Santo. Amen. O Dio, vieni a salvarmi. Signore, vieni presto in mio aiuto. Gloria al Padre e al Figlio e allo Spirito Santo. Come era nel principio, ora e sempre, nei secoli dei secoli. Amen.",
+  credo: "Io credo in Dio, Padre onnipotente, creatore del cielo e della terra; e in Gesù Cristo, suo unico Figlio, nostro Signore, il quale fu concepito di Spirito Santo, nacque da Maria Vergine, patì sotto Ponzio Pilato, fu crocifisso, morì e fu sepolto; discese agli inferi; il terzo giorno risuscitò da morte; salì al cielo, siede alla destra di Dio Padre onnipotente; di là verrà a giudicare i vivi e i morti. Credo nello Spirito Santo, la santa Chiesa cattolica, la comunione dei santi, la remissione dei peccati, la risurrezione della carne, la vita eterna. Amen.",
+  pn: "Padre nostro, che sei nei cieli, sia santificato il tuo nome, venga il tuo regno, sia fatta la tua volontà, come in cielo così in terra. Dacci oggi il nostro pane quotidiano, e rimetti a noi i nostri debiti come anche noi li rimettiamo ai nostri debitori, e non abbandonarci alla tentazione, ma liberaci dal male. Amen.",
+  ave: "Ave, o Maria, piena di grazia, il Signore è con te. Tu sei benedetta fra le donne e benedetto è il frutto del tuo seno, Gesù. Santa Maria, Madre di Dio, prega per noi peccatori, adesso e nell'ora della nostra morte. Amen.",
+  gloria: "Gloria al Padre e al Figlio e allo Spirito Santo. Come era nel principio, ora e sempre, nei secoli dei secoli. Amen.",
+  gesu: "O Gesù, perdona le nostre colpe, preservaci dal fuoco dell'inferno, porta in cielo tutte le anime, specialmente le più bisognose della tua misericordia.",
+  salve: "Salve, Regina, madre di misericordia, vita, dolcezza e speranza nostra, salve. A te ricorriamo, esuli figli di Eva; a te sospiriamo, gementi e piangenti in questa valle di lacrime. Orsù dunque, avvocata nostra, rivolgi a noi gli occhi tuoi misericordiosi. E mostraci, dopo questo esilio, Gesù, il frutto benedetto del tuo seno. O clemente, o pia, o dolce Vergine Maria."
+};
+const MYST_O = [
   ["La Natività della Madre di Dio", "Рождество Богородицы", "Nasce da Gioacchino e Anna la madre del Signore."],
   ["L'Ingresso della Madre di Dio al Tempio", "Введение во храм Богородицы", "Bambina, è offerta a Dio nel Tempio di Gerusalemme."],
   ["L'Annunciazione", "Благовещение", "«Ecco la serva del Signore»: Luca 1,26-38."],
@@ -318,88 +352,251 @@ const MYST = [
   ["La Dormizione della Madre di Dio", "Успение Богородицы", "Il Figlio accoglie l'anima di sua madre."],
   ["La gloria della Madre di Dio", "Прославление Богородицы", "La sua intercessione e la sua protezione su chi la invoca."]
 ];
+const MYST_C = {
+  gaudiosi: {adj: "gaudioso", name: "Misteri gaudiosi", days: "il lunedì e il sabato", list: [
+    ["L'annunciazione dell'angelo a Maria", "Luca 1,26-38"], ["La visita di Maria a santa Elisabetta", "Luca 1,39-56"],
+    ["La nascita di Gesù a Betlemme", "Luca 2,1-20"], ["La presentazione di Gesù al Tempio", "Luca 2,22-38"], ["Il ritrovamento di Gesù nel Tempio", "Luca 2,41-52"]]},
+  luminosi: {adj: "luminoso", name: "Misteri luminosi", days: "il giovedì", list: [
+    ["Il battesimo di Gesù nel Giordano", "Matteo 3,13-17"], ["Le nozze di Cana", "Giovanni 2,1-11"],
+    ["L'annuncio del Regno di Dio e l'invito alla conversione", "Marco 1,14-15"], ["La trasfigurazione", "Matteo 17,1-8"], ["L'istituzione dell'Eucaristia", "Matteo 26,26-29"]]},
+  dolorosi: {adj: "doloroso", name: "Misteri dolorosi", days: "il martedì e il venerdì", list: [
+    ["L'agonia di Gesù nell'orto degli ulivi", "Luca 22,39-46"], ["La flagellazione", "Giovanni 19,1"],
+    ["La coronazione di spine", "Matteo 27,27-31"], ["Gesù sale al Calvario portando la croce", "Giovanni 19,16-17"], ["La crocifissione e la morte di Gesù", "Luca 23,33-46"]]},
+  gloriosi: {adj: "glorioso", name: "Misteri gloriosi", days: "il mercoledì e la domenica", list: [
+    ["La risurrezione di Gesù", "Matteo 28,1-10"], ["L'ascensione di Gesù al cielo", "Atti 1,9-11"],
+    ["La discesa dello Spirito Santo", "Atti 2,1-4"], ["L'assunzione di Maria al cielo", "dalla tradizione della Chiesa"], ["L'incoronazione di Maria regina del cielo e della terra", "Apocalisse 12,1"]]}
+};
+const WEEK_SET = ["gloriosi", "gaudiosi", "dolorosi", "gloriosi", "luminosi", "dolorosi", "gaudiosi"];
 const ORD = ["Primo","Secondo","Terzo","Quarto","Quinto","Sesto","Settimo","Ottavo","Nono","Decimo","Undicesimo","Dodicesimo","Tredicesimo","Quattordicesimo","Quindicesimo"];
-const RSTEPS = 15 * 11;                 // the final step (165) is «È veramente giusto»
-const ros = load("lp_rosary", {step: 0, lang: "it", auto: false});
 
-function rInfo(step){
-  if (step >= RSTEPS) return {dec: 15, ave: 10, total: 150, kind: "end"};
-  const dec = Math.floor(step / 11), k = step % 11;
-  return {dec: dec + 1, ave: k, total: dec * 10 + k, kind: k === 0 ? "pn" : "ave"};
+// voice recognition keys: words that close each prayer (without accents)
+const K = {o_pn: {it: ["maligno", "male"], ru: ["лукав"]}, o_ave: {it: ["anime nostre", "nostre"], ru: ["душ наших", "наших"]}, o_end: {it: ["magnifichiamo"], ru: ["величаем"]}};
+
+function stepsOrth(){
+  const out = [];
+  for (let d = 0; d < 15; d++) {
+    out.push({head: "Padre nostro", t: RT.pn, d, big: true, keys: K.o_pn});
+    for (let a = 1; a <= 10; a++) out.push({head: "Madre di Dio Vergine · " + a + " di 10", t: RT.ave, d, ave: a, keys: K.o_ave});
+  }
+  out.push({head: "Conclusione", t: RT.end, d: null, big: true, end: true, keys: K.o_end});
+  return out;
 }
+function cathSet(){ const v = ros.c.set; return v && v !== "auto" ? v : WEEK_SET[new Date().getDay()]; }
+function stepsCath(){
+  const it = t => ({it: t});
+  const out = [
+    {head: "Inizio", t: it(RC.inizio), d: null, big: true, pre: true, keys: {it: ["secoli"]}},
+    {head: "Credo", t: it(RC.credo), d: null, big: true, pre: true, keys: {it: ["eterna"]}},
+    {head: "Padre nostro", t: it(RC.pn), d: null, big: true, pre: true, keys: {it: ["male"]}},
+    {head: "Ave Maria · per la fede", t: it(RC.ave), d: null, pre: true, keys: {it: ["morte"]}},
+    {head: "Ave Maria · per la speranza", t: it(RC.ave), d: null, pre: true, keys: {it: ["morte"]}},
+    {head: "Ave Maria · per la carità", t: it(RC.ave), d: null, pre: true, keys: {it: ["morte"]}},
+    {head: "Gloria", t: it(RC.gloria), d: null, big: true, pre: true, keys: {it: ["secoli"]}}
+  ];
+  for (let d = 0; d < 5; d++) {
+    out.push({head: "Padre nostro", t: it(RC.pn), d, big: true, keys: {it: ["male"]}});
+    for (let a = 1; a <= 10; a++) out.push({head: "Ave Maria · " + a + " di 10", t: it(RC.ave), d, ave: a, keys: {it: ["morte"]}});
+    out.push({head: "Gloria e «O Gesù»", t: it(RC.gloria + " " + RC.gesu), d, keys: {it: ["secoli", "misericordia"]}});
+  }
+  out.push({head: "Salve Regina", t: it(RC.salve), d: null, big: true, end: true, keys: {it: ["vergine maria", "dolce"]}});
+  return out;
+}
+
+const ros = Object.assign({mode: "j", o: {step: 0, lang: "it"}, c: {step: 0, set: "auto"}, auto: false}, load("lp_ros2", {}));
+(function migrate(){ const old = load("lp_rosary", null); if (old && !load("lp_ros2", null)) { ros.o.step = old.step || 0; ros.o.lang = old.lang || "it"; ros.auto = !!old.auto; } })();
+function rsave(){ save("lp_ros2", ros); }
+function kind(){ return ros.mode === "c" ? "c" : "o"; }
+function steps(){ return kind() === "c" ? stepsCath() : stepsOrth(); }
+function rstate(){ return ros[kind()]; }
+function rlang(){ return kind() === "c" ? "it" : ros.o.lang; }
+
 function renderRosary(){
-  const i = rInfo(ros.step), t = RTXT[i.kind][ros.lang];
-  const head = i.kind === "pn" ? "Padre nostro" : i.kind === "end" ? "Conclusione" : "Madre di Dio Vergine · " + i.ave + " di 10";
-  $("rtext").setAttribute("lang", ros.lang);
-  $("rtext").innerHTML = "<small>" + head + "</small>" + t;
-  $("r-dec").textContent = i.dec; $("r-ave").textContent = i.ave; $("r-tot").textContent = i.total;
-  const m = MYST[i.dec - 1];
-  $("r-mlabel").textContent = i.kind === "end" ? "Compiuto" : ORD[i.dec - 1] + " mistero";
-  $("r-myst").textContent = i.kind === "end" ? "Centocinquanta volte: rallegrati" : m[0];
-  $("r-myst-cu").textContent = i.kind === "end" ? "" : m[1];
-  $("r-myst-d").textContent = i.kind === "end" ? "Concludi con «È veramente giusto»." : m[2];
-  $("r-lang").value = ros.lang; $("r-auto").checked = !!ros.auto;
-  drawRosary();
+  const all = steps(), st = rstate();
+  st.step = Math.max(0, Math.min(all.length - 1, st.step));
+  const s = all[st.step], L = rlang();
+  $("rtext").setAttribute("lang", L);
+  $("rtext").innerHTML = "<small>" + s.head + "</small>" + (s.t[L] || s.t.it);
+  const done = all.slice(0, st.step).filter(x => x.ave || (x.pre && /Ave/.test(x.head))).length;
+  $("r-dec").textContent = s.d == null ? "–" : s.d + 1;
+  $("r-ave").textContent = s.ave || 0;
+  $("r-tot").textContent = done + " / " + (kind() === "c" ? 53 : 150);
+  if (kind() === "o") {
+    $("r-intro").textContent = "La regola della Madre di Dio: centocinquanta volte «Madre di Dio Vergine, rallegrati», in quindici decine, ognuna aperta dal Padre nostro e da un evento della sua vita. San Serafino di Sarov la raccomandava; i quindici misteri seguono lo schema diffuso dal vescovo Serafino Zvezdinskij.";
+    if (s.end) { $("r-mlabel").textContent = "Compiuto"; $("r-myst").textContent = "Centocinquanta volte: rallegrati"; $("r-myst-cu").textContent = ""; $("r-myst-d").textContent = "Concludi con «È veramente giusto»."; }
+    else { const m = MYST_O[s.d]; $("r-mlabel").textContent = ORD[s.d] + " mistero"; $("r-myst").textContent = m[0]; $("r-myst-cu").textContent = m[1]; $("r-myst-d").textContent = m[2]; }
+  } else {
+    const set = MYST_C[cathSet()];
+    $("r-intro").textContent = "Il Rosario: cinque decine di Ave Maria, ognuna con il suo mistero, aperte dal Padre nostro e chiuse dal Gloria. Oggi la Chiesa propone i " + set.name.toLowerCase() + ".";
+    $("r-myst-cu").textContent = "";
+    if (s.pre) { $("r-mlabel").textContent = "Introduzione"; $("r-myst").textContent = set.name; $("r-myst-d").textContent = "Si recitano " + set.days + "."; }
+    else if (s.end) { $("r-mlabel").textContent = "Conclusione"; $("r-myst").textContent = "Salve Regina"; $("r-myst-d").textContent = "Poi il segno della croce."; }
+    else { const m = set.list[s.d]; $("r-mlabel").textContent = ORD[s.d] + " mistero " + set.adj; $("r-myst").textContent = m[0]; $("r-myst-d").textContent = m[1]; }
+  }
+  $("r-set-f").hidden = kind() !== "c"; $("r-lang-f").hidden = kind() !== "o";
+  $("r-set").value = ros.c.set; $("r-lang").value = ros.o.lang; $("r-auto").checked = !!ros.auto;
+  drawRosary(all, st.step);
+  fillVoice();
 }
-function drawRosary(){
+function drawRosary(all, step){
   const c = $("rbeads"), x = c.getContext("2d"), cs = getComputedStyle(document.documentElement);
   const gold = cs.getPropertyValue("--gold").trim(), line = cs.getPropertyValue("--line").trim(), ember = cs.getPropertyValue("--ember").trim();
   x.clearRect(0, 0, 680, 680);
-  const r = 305;
-  for (let s = 0; s < RSTEPS; s++) {
-    const a = -Math.PI / 2 + (s + 0.5) / RSTEPS * Math.PI * 2, px = 340 + Math.cos(a) * r, py = 340 + Math.sin(a) * r;
-    const big = s % 11 === 0, done = s < ros.step, here = s === ros.step;
-    x.fillStyle = here ? ember : done ? gold : line;
-    x.beginPath(); x.arc(px, py, big ? 8.5 : (here ? 6.5 : 4.6), 0, Math.PI * 2); x.fill();
+  const n = all.length, r = 305;
+  for (let i = 0; i < n; i++) {
+    const a = -Math.PI / 2 + (i + 0.5) / n * Math.PI * 2, px = 340 + Math.cos(a) * r, py = 340 + Math.sin(a) * r;
+    x.fillStyle = i === step ? ember : i < step ? gold : line;
+    const rad = all[i].big ? (n < 100 ? 11 : 8.5) : (i === step ? 7 : (n < 100 ? 6 : 4.6));
+    x.beginPath(); x.arc(px, py, rad, 0, Math.PI * 2); x.fill();
   }
 }
-function rSpeak(){
-  const i = rInfo(ros.step);
-  speakText(RTXT[i.kind][ros.lang], ros.lang === "it" ? "it" : "ru");
-}
 function rGo(d){
-  ros.step = Math.max(0, Math.min(RSTEPS, ros.step + d));
-  save("lp_rosary", ros); renderRosary();
-  if (ros.step === RSTEPS && d > 0) bell();
-  if (ros.auto && d > 0) rSpeak();
+  const all = steps(), st = rstate();
+  const before = st.step;
+  st.step = Math.max(0, Math.min(all.length - 1, st.step + d));
+  rsave(); renderRosary();
+  if (d > 0 && st.step === all.length - 1 && before !== st.step) bell();
+  if (ros.auto && d > 0 && !listening) rSpeak();
+}
+function rSpeak(){
+  const s = steps()[rstate().step], L = rlang();
+  speakText(s.t[L] || s.t.it, L === "it" ? "it" : "ru");
 }
 
-/* the device's own voices */
+/* ---------- voices ---------- */
 const HAS_TTS = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance === "function";
 if (!HAS_TTS) document.documentElement.classList.add("no-tts");
-function speakText(text, l){
+const VKEY = "men:voice";
+function vprefs(){ try { return Object.assign({it: "", ru: "", rate: 0.9}, JSON.parse(localStorage.getItem(VKEY) || "{}")); } catch (e) { return {it: "", ru: "", rate: 0.9}; } }
+function vsave(p){ try { localStorage.setItem(VKEY, JSON.stringify(p)); } catch (e) {} }
+function voicesFor(pre){ try { return speechSynthesis.getVoices().filter(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith(pre)); } catch (e) { return []; } }
+const VGOOD = /natural|neural|enhanced|premium|avanzat|online|google|siri|wavenet|journey|studio/i;
+const VFEM = /alice|federica|elsa|isabella|paola|emma|chiara|bianca|carla|giorgia|serena|valentina|silvia|milena|katya|katerina|svetlana|dariya|daria|irina|alena|ekaterina|tatyana|yuliya|female|donna/i;
+function bestVoice(pre, localOnly){
+  const vs = voicesFor(pre), chosen = vs.find(v => v.name === vprefs()[pre]);
+  if (chosen && !(localOnly && !chosen.localService)) return chosen;
+  const pool = localOnly ? vs.filter(v => v.localService) : vs;
+  return pool.map(v => [(VGOOD.test(v.name) ? 4 : 0) + (VFEM.test(v.name) ? 2 : 0) + (v.localService ? 1 : 0), v]).sort((a, b) => b[0] - a[0]).map(x => x[1])[0] || null;
+}
+function speakText(text, pre, localOnly){
   if (!HAS_TTS) return;
   try {
-    speechSynthesis.cancel();
-    const pre = l === "it" ? "it" : "ru";
-    const v = speechSynthesis.getVoices().filter(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith(pre));
+    if (!localOnly) speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = l === "it" ? "it-IT" : "ru-RU";
-    if (v.length) u.voice = v.find(x => x.localService) || v[0];
-    u.rate = l === "it" ? 0.95 : 0.9;
+    u.lang = pre === "it" ? "it-IT" : "ru-RU";
+    const v = bestVoice(pre, localOnly || navigator.onLine === false); if (v) u.voice = v;
+    const rate = Number(vprefs().rate) || 0.9;
+    u.rate = pre === "it" ? rate : rate * 0.95;
+    u.onerror = e => { if (v && !v.localService && !localOnly && e.error !== "interrupted" && e.error !== "canceled") speakText(text, pre, true); };
     speechSynthesis.speak(u);
   } catch (e) {}
 }
-
-function setMode(m){
-  save("lp_mode", m);
-  $("mode-j").setAttribute("aria-pressed", String(m === "j"));
-  $("mode-r").setAttribute("aria-pressed", String(m === "r"));
-  $("jesus").hidden = m !== "j"; $("jesus").style.display = m === "j" ? "contents" : "none";
-  $("rosary").hidden = m !== "r"; $("rosary").style.display = m === "r" ? "contents" : "none";
-  $("today").textContent = m === "j" ? "Preghiera di Gesù" : "Rosario della Madre di Dio";
-  if (m === "r") renderRosary();
+function fillVoice(){
+  if (!HAS_TTS) return;
+  const pre = rlang() === "it" ? "it" : "ru", vs = voicesFor(pre), auto = bestVoice(pre, false), p = vprefs();
+  $("v-sel").innerHTML = `<option value="">Automatica${auto ? " · " + auto.name : ""}</option>` + vs.map(v => `<option>${v.name}</option>`).join("");
+  $("v-sel").value = vs.some(v => v.name === p[pre]) ? p[pre] : "";
+  $("v-rate").value = p.rate; $("v-rate-n").textContent = "×" + Number(p.rate).toFixed(2);
 }
+if (HAS_TTS) {
+  $("v-sel").onchange = () => { const p = vprefs(); p[rlang() === "it" ? "it" : "ru"] = $("v-sel").value; vsave(p); rSpeak(); };
+  $("v-rate").oninput = () => { const p = vprefs(); p.rate = Number($("v-rate").value); vsave(p); $("v-rate-n").textContent = "×" + p.rate.toFixed(2); };
+  try { speechSynthesis.addEventListener("voiceschanged", fillVoice); } catch (e) {}
+}
+
+/* ---------- praying aloud: speech recognition moves the beads ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null, listening = false, heardBuf = "";
+function norm(t){ return String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-zЀ-ӿ0-9\s]/g, " ").replace(/\s+/g, " ").trim(); }
+function wordsIn(t){ const n = norm(t); return n ? n.split(" ").length : 0; }
+function micMsg(t){ $("r-heard").textContent = t; }
+function setMic(on){
+  listening = on;
+  $("r-mic").setAttribute("aria-pressed", String(on));
+  $("r-mic-l").textContent = on ? "Ti ascolto · tocca per fermare" : "Prega a voce";
+}
+function consume(){
+  // advance once for every prayer whose closing words have been heard
+  for (let guard = 0; guard < 12; guard++) {
+    const all = steps(), s = all[rstate().step], L = rlang() === "it" ? "it" : "ru";
+    const keys = (s.keys[L] || s.keys.it || []).map(norm);
+    const buf = norm(heardBuf), need = Math.max(3, Math.round(wordsIn(s.t[rlang()] || s.t.it) * 0.35));
+    let cut = -1;
+    for (const k of keys) {
+      // a closing word counts at the start of a word ("лукав" matches "лукавого"), and only once enough of the prayer was heard
+      let from = 0, idx;
+      while ((idx = buf.indexOf(k, from)) !== -1) {
+        const atWord = idx === 0 || buf[idx - 1] === " ";
+        if (atWord && wordsIn(buf.slice(0, idx)) + 1 >= need) {
+          const sp = buf.indexOf(" ", idx + k.length);
+          cut = sp === -1 ? buf.length : sp;
+          break;
+        }
+        from = idx + 1;
+      }
+      if (cut !== -1) break;
+    }
+    if (cut === -1) return;
+    heardBuf = buf.slice(cut);
+    const last = rstate().step >= all.length - 1;
+    rGo(1);
+    if (last) { stopListening(); micMsg("Rosario compiuto."); return; }
+  }
+}
+function startListening(){
+  if (!SR) { micMsg("Questo browser non riconosce la voce. Funziona con Chrome su Android e sul computer, e con Safari su iPhone."); return; }
+  if (window.claude) { micMsg("Dentro Claude il microfono non è disponibile: usa l'app installata sul telefono."); return; }
+  try { speechSynthesis.cancel(); } catch (e) {}
+  rec = new SR();
+  rec.lang = rlang() === "it" ? "it-IT" : "ru-RU";
+  rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+  heardBuf = "";
+  rec.onresult = e => {
+    let fin = "", interim = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) fin += " " + e.results[i][0].transcript; else interim += " " + e.results[i][0].transcript;
+    }
+    if (fin) { heardBuf += " " + fin; consume(); }
+    const shown = (fin || interim).trim();
+    if (shown && listening) micMsg("«" + shown.slice(-90) + "»");
+  };
+  rec.onerror = e => {
+    if (e.error === "not-allowed" || e.error === "service-not-allowed") { setMic(false); micMsg("Il microfono non è consentito: abilitalo per questa app nelle impostazioni del browser."); }
+    else if (e.error === "network") { setMic(false); micMsg("Il riconoscimento vocale ha bisogno della connessione su questo dispositivo."); }
+    else if (e.error === "language-not-supported") { setMic(false); micMsg("Questa lingua non è riconosciuta dal dispositivo."); }
+  };
+  rec.onend = () => { if (listening) { try { rec.start(); } catch (e) {} } };
+  try { rec.start(); setMic(true); micMsg("Ti ascolto. Prega con calma: avanzo quando finisci ogni preghiera."); } catch (e) { micMsg("Non riesco ad avviare il microfono."); }
+}
+function stopListening(){ setMic(false); try { rec && rec.stop(); } catch (e) {} rec = null; }
+$("r-mic").onclick = () => listening ? stopListening() : startListening();
+if (!SR) micMsg("Il riconoscimento vocale non è disponibile in questo browser.");
+else if (window.claude) micMsg("Il riconoscimento vocale funziona nell'app installata sul telefono, non dentro Claude.");
+
+/* ---------- modes ---------- */
+function setMode(m){
+  if (listening) stopListening();
+  ros.mode = m; rsave();
+  $("mode-j").setAttribute("aria-pressed", String(m === "j"));
+  $("mode-o").setAttribute("aria-pressed", String(m === "o"));
+  $("mode-c").setAttribute("aria-pressed", String(m === "c"));
+  $("jesus").hidden = m !== "j"; $("jesus").style.display = m === "j" ? "contents" : "none";
+  $("rosary").hidden = m === "j"; $("rosary").style.display = m === "j" ? "none" : "contents";
+  $("today").textContent = m === "j" ? "Preghiera di Gesù" : m === "o" ? "Rosario della Madre di Dio" : "Santo Rosario";
+  if (m !== "j") renderRosary();
+}
+function unlockAudio(){ if (!audio) { try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } }
 $("mode-j").onclick = () => setMode("j");
-$("mode-r").onclick = () => { if (!audio) { try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } setMode("r"); };
+$("mode-o").onclick = () => { unlockAudio(); setMode("o"); };
+$("mode-c").onclick = () => { unlockAudio(); setMode("c"); };
 $("r-next").onclick = () => rGo(1);
 $("r-prev").onclick = () => rGo(-1);
 $("rlamp").onclick = () => rGo(1);
 $("rlamp").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); rGo(1); } };
 $("r-say").onclick = rSpeak;
-$("r-reset").onclick = () => { ros.step = 0; save("lp_rosary", ros); renderRosary(); };
-$("r-lang").onchange = () => { ros.lang = $("r-lang").value; save("lp_rosary", ros); renderRosary(); };
-$("r-auto").onchange = () => { ros.auto = $("r-auto").checked; save("lp_rosary", ros); };
-setMode(load("lp_mode", "j") === "r" ? "r" : "j");
+$("r-reset").onclick = () => { rstate().step = 0; rsave(); renderRosary(); };
+$("r-lang").onchange = () => { ros.o.lang = $("r-lang").value; rsave(); if (listening) { stopListening(); startListening(); } renderRosary(); };
+$("r-set").onchange = () => { ros.c.set = $("r-set").value; rsave(); renderRosary(); };
+$("r-auto").onchange = () => { ros.auto = $("r-auto").checked; rsave(); };
+setMode(["j", "o", "c"].includes(ros.mode) ? ros.mode : "j");
 </script>
 </body></html>
