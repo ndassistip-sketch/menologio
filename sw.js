@@ -1,4 +1,4 @@
-const VERSION = "menologio-e7327f2b18";
+const VERSION = "menologio-62121a4318";
 const FILES = [
  "./",
  "data/calendar.json",

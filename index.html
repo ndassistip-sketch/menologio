@@ -139,6 +139,7 @@ details.one .text{margin:8px 0 6px 1.4em}
 
 /* saints */
 .foryou{display:flex;flex-direction:column;gap:14px}
+.foryou:empty,#patron:empty{display:none}
 .pick{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;align-items:start}
 .pick .sign{width:22px;height:22px;margin-top:4px}
 .pick b{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);line-height:1.25}
@@ -199,6 +200,53 @@ details.begin>summary{cursor:pointer}
 details.begin[open]>summary{margin-bottom:16px}
 details.begin .prayers{margin-top:0}
 .amen{font-size:var(--s-xs);color:var(--muted)}
+
+/* tappable saints and the saint sheet */
+button.pick{border:0;background:none;padding:6px 0;text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit;border-radius:8px}
+button.pick:hover b{color:var(--rubric)}
+.pick .more{grid-column:2;color:var(--rubric);font-size:var(--s-xs);font-family:var(--f-sc);text-transform:lowercase;letter-spacing:.06em}
+button.saint{display:flex;flex-direction:column;width:100%;text-align:left;border:0;background:none;padding:4px 0;cursor:pointer;color:var(--ink);font:inherit;line-height:1.45}
+button.saint>span:first-child::after{content:"  ›";color:var(--rubric)}
+button.saint:hover>span:first-child{color:var(--rubric)}
+ul.saints li::before{top:.85em}
+dialog.sheet{position:fixed;inset:auto 0 0 0;margin:0 auto;width:100%;max-width:40rem;max-height:86vh;overflow-y:auto;border:0;border-radius:18px 18px 0 0;
+  padding:12px max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(20px,env(safe-area-inset-left,0px));background:var(--leaf);color:var(--ink);box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+dialog.sheet[open]{display:flex;flex-direction:column;gap:10px;animation:sheet-in .22s ease-out}
+dialog.sheet::backdrop{background:rgba(20,18,15,.45)}
+@keyframes sheet-in{from{transform:translateY(40%);opacity:.4}to{transform:none;opacity:1}}
+.sheet-bar{display:flex;justify-content:space-between;align-items:center}
+dialog.sheet h3{font-family:var(--f-display);font-weight:400;font-size:var(--s-xl);line-height:1.15;margin:0;text-wrap:balance}
+.why{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.why p{margin:0 0 8px;max-width:62ch}
+.links{display:flex;flex-direction:column;border-top:1px solid var(--rule);margin-top:6px}
+.links a{display:flex;flex-direction:column;padding:12px 2px;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--ink)}
+.links a b{font-weight:600;color:var(--rubric)}
+.links a small{color:var(--muted);font-size:var(--s-xs)}
+
+/* read aloud */
+.say{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--leaf);color:var(--ink);border-radius:999px;padding:4px 12px 4px 8px;min-height:34px;cursor:pointer;font-size:var(--s-sm)}
+.say:hover{border-color:var(--rubric)}
+.say .ic{width:20px;height:20px}
+.say.mini{padding:2px 8px 2px 6px;min-height:28px;font-size:var(--s-xs)}
+.say.mini .ic{width:16px;height:16px}
+html.no-tts .say{display:none}
+.rhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.player{position:fixed;left:0;right:0;bottom:0;z-index:7;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);
+  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.player .iconbtn{color:var(--paper)}
+.player .iconbtn:hover{background:transparent;opacity:.8}
+.player .ic .acc{stroke:var(--paper)}
+.pl-label{flex:1;min-width:0;font-size:var(--s-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.speaking .page{padding-bottom:110px}
+
+/* chant: the two channels */
+.yt{display:flex;flex-direction:column;gap:12px}
+.ytcard{display:grid;grid-template-columns:28px 1fr auto;gap:2px 14px;align-items:center;padding:16px;background:var(--leaf);border:1px solid var(--rule);border-radius:12px;text-decoration:none;color:var(--ink)}
+.ytcard:hover{border-color:var(--rubric)}
+.ytcard .house{font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-xs);display:block}
+.ytcard b{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);display:block;line-height:1.2}
+.ytcard small{color:var(--muted);font-size:var(--s-sm);display:block}
+.ytcard .ext{color:var(--rubric);font-size:1.2rem}
 @media (max-width:480px){
   .date{font-size:2.1rem}
   .feast{font-size:1.45rem}
@@ -213,6 +261,7 @@ details.begin .prayers{margin-top:0}
 #lamp-dlg::backdrop{background:rgba(0,0,0,.4)}
 #lamp-dlg .dlg-bar{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 8px) max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--rule)}
 #lamp-dlg iframe{flex:1;border:0;width:100%;background:var(--paper)}
+#lamp-dlg .dlg-bar .btn{white-space:nowrap;flex:none}
 </style></head><body>
 
 <header class="appbar" id="appbar">
@@ -242,6 +291,20 @@ details.begin .prayers{margin-top:0}
   <button class="btn solid" id="install-btn" hidden>Installa l'app</button>
 </dialog>
 
+<dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-bar"><span class="rlabel" id="sheet-kicker">santo del giorno</span><button class="iconbtn" id="sheet-close" aria-label="Chiudi" data-icon="close"></button></div>
+  <h3 id="sheet-title"></h3>
+  <p class="note" id="sheet-orig"></p>
+  <div id="sheet-body"></div>
+</dialog>
+
+<div class="player" id="player" role="region" aria-label="Lettura ad alta voce" hidden>
+  <span data-icon="speaker"></span>
+  <span class="pl-label" id="pl-label" aria-live="polite"></span>
+  <button class="iconbtn" id="pl-pause" aria-label="Pausa" data-icon="pause"></button>
+  <button class="iconbtn" id="pl-stop" aria-label="Ferma la lettura" data-icon="stop"></button>
+</div>
+
 <main class="page" id="main">
   <button class="dayline" id="dayline" data-view="oggi" hidden></button>
 
@@ -260,6 +323,7 @@ details.begin .prayers{margin-top:0}
   <section class="view" id="v-letture" data-view="letture" aria-labelledby="h-read" hidden>
     <div class="readhead">
       <h2 id="h-read" style="flex:1">letture</h2>
+      <button class="say" data-say="readings"><span data-icon="speaker"></span><span>Ascolta</span></button>
       <div class="lang" role="group" aria-label="Lingua del testo">
         <button data-lang="it" aria-pressed="true" title="Italiano, Riveduta 1927">IT</button>
         <button data-lang="ru" aria-pressed="false" title="Русский, Синодальный перевод">RU</button>
@@ -296,34 +360,18 @@ details.begin .prayers{margin-top:0}
         <button data-plang="both" aria-pressed="false" title="Italiano e slavonico affiancati">IT + ЦСЯ</button>
       </div>
     </div>
+    <div><button class="say" data-say="prayers"><span data-icon="speaker"></span><span>Ascolta tutte le preghiere</span></button></div>
     <p class="season rub" id="season" hidden></p>
     <div id="prayers" role="tabpanel"></div>
   </section>
 
   <section class="view" id="v-canto" data-view="canto" aria-labelledby="h-chant" hidden>
     <h2 id="h-chant">canto</h2>
-    <div class="tracks" id="tracks" style="margin-top:18px"></div>
-    <p class="note" style="margin-top:10px">Le registrazioni sono sui siti dei monasteri e si aprono in una nuova scheda.</p>
-    <div class="archives" style="margin-top:22px">
-      <div>
-        <h3>Visoki Dečani</h3>
-        <ul>
-          <li><a href="https://www.decani.org/en/library/audio-archive/chanting-of-brethren" target="_blank" rel="noopener">Canto dei fratelli, registrazioni in studio</a></li>
-          <li><a href="https://www.decani.org/en/library/audio-archive/recording-of-church-services" target="_blank" rel="noopener">Registrazioni delle funzioni</a></li>
-          <li><a href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener">Canale YouTube</a></li>
-          <li><a href="https://www.decani.org/en/" target="_blank" rel="noopener">Sito del monastero</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Monastero di Santa Elisabetta, Minsk</h3>
-        <ul>
-          <li><a href="https://obitel-minsk.org/choirs/the-monastic-choir/audio" target="_blank" rel="noopener">Coro monastico, audio</a></li>
-          <li><a href="https://obitel-minsk.org/the-festive-choir" target="_blank" rel="noopener">Coro festivo</a></li>
-          <li><a href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener">Canale YouTube</a></li>
-          <li><a href="https://obitel-minsk.org/video" target="_blank" rel="noopener">Video del monastero</a></li>
-        </ul>
-      </div>
+    <div class="yt">
+      <a class="ytcard" href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener"><span data-icon="canto"></span><span><span class="house">Visoki Dečani</span><b>Canale YouTube del monastero</b><small>I monaci serbi di Dečani, in Kosovo</small></span><span class="ext" aria-hidden="true">↗</span></a>
+      <a class="ytcard" href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener"><span data-icon="canto"></span><span><span class="house">Santa Elisabetta, Minsk</span><b>Canale YouTube del monastero</b><small>Il coro monastico e il coro festivo</small></span><span class="ext" aria-hidden="true">↗</span></a>
     </div>
+    <p class="note">Si aprono nell'app YouTube o nel browser e richiedono la connessione.</p>
   </section>
 
   <footer class="sources" id="fonti" aria-labelledby="h-fonti">
@@ -341,6 +389,8 @@ details.begin .prayers{margin-top:0}
       <li>Testi slavonici dal Molitvoslov, il libro di preghiere della tradizione russa; si possono confrontare sul <a href="https://azbyka.ru/molitvoslov/" target="_blank" rel="noopener">molitvoslov di Azbuka very</a>.</li>
       <li>Le versioni italiane sono tradotte dallo slavonico per questa app e non sono un testo liturgico ufficiale.</li>
       <li>La preghiera degli starcy di Optina è riportata nel russo moderno in cui circola.</li>
+      <li>Rosario della Madre di Dio, nella Lampada: la regola dei centocinquanta «Madre di Dio Vergine» raccomandata da san Serafino di Sarov, con i quindici misteri nello schema del vescovo Serafino Zvezdinskij.</li>
+      <li>La lettura ad alta voce usa le voci installate sul telefono o sul computer: senza una voce russa il testo slavonico non si sente.</li>
     </ul></div>
     <div class="src-group"><h3>Santi patroni</h3><ul>
       <li>Date giuliane dal calendario di orthocal; le note sui patroni sono scritte per questa app.</li>
@@ -348,8 +398,8 @@ details.begin .prayers{margin-top:0}
       <li>Santo Stefano di Dečani: festa del monastero l'11 novembre giuliano (24 novembre civile), dall'<a href="https://eparhija-prizren.com/en/news/solemn-celebration-patron-saints-day-monastery-visoki-decani/" target="_blank" rel="noopener">Eparchia di Raška e Prizren</a>.</li>
     </ul></div>
     <div class="src-group"><h3>Canto</h3><ul>
-      <li><a href="https://www.decani.org/en/library/audio-archive/chanting-of-brethren" target="_blank" rel="noopener">Archivio audio di Visoki Dečani</a>: canto dei fratelli e registrazioni delle funzioni.</li>
-      <li><a href="https://obitel-minsk.org/choirs" target="_blank" rel="noopener">Cori del Monastero di Santa Elisabetta</a>, Minsk.</li>
+      <li><a href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener">Canale YouTube di Visoki Dečani</a>, indicato sul sito del monastero, <a href="https://www.decani.org/en/" target="_blank" rel="noopener">decani.org</a>.</li>
+      <li><a href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener">Canale YouTube del Monastero di Santa Elisabetta</a>, indicato sul sito <a href="https://obitel-minsk.org/choirs" target="_blank" rel="noopener">obitel-minsk.org</a>.</li>
     </ul></div>
     <div class="src-group"><h3>Caratteri e icone</h3><ul>
       <li>Old Standard TT di Alexey Kryukov e Spectral di Production Type, licenza SIL Open Font License, tramite Google Fonts e Fontsource.</li>
@@ -358,7 +408,7 @@ details.begin .prayers{margin-top:0}
     <p id="range-note" class="note"></p>
     <p id="app-note" class="note"></p>
     <p id="ios-hint" class="note" hidden>Su iPhone e iPad: apri questa pagina in Safari, tocca Condividi e poi «Aggiungi alla schermata Home».</p>
-    <p class="note">Per pregare con il respiro: <a href="#lampada" target="_blank" rel="noopener">Lampada della Preghiera</a>.</p>
+    <p class="note">Per la preghiera di Gesù e il rosario: <a href="#lampada" target="_blank" rel="noopener">Lampada della Preghiera</a>.</p>
   </footer>
 </main>
 
@@ -410,28 +460,6 @@ const PATRONS = [
  {n:"San Giovanni Cassiano", d:["02-28","02-29"], w:"Portò in Occidente l'insegnamento dei padri del deserto sugli otto pensieri."}
 ];
 
-const DEC = {chant:"https://www.decani.org/en/library/audio-archive/chanting-of-brethren", svc:"https://www.decani.org/en/library/audio-archive/recording-of-church-services"};
-const ELI = {mon:"https://obitel-minsk.org/choirs/the-monastic-choir/audio", fest:"https://obitel-minsk.org/the-festive-choir"};
-const T = {
- dushe:{h:"Visoki Dečani",t:"Душе моја",d:"Benedici, anima mia, il Signore: il salmo dei vespri",u:DEC.chant},
- ispr:{h:"Visoki Dečani",t:"Да исправитсја молитва моја",d:"Salga la mia preghiera come incenso: il canto della Quaresima",u:DEC.chant},
- poly:{h:"Visoki Dečani",t:"Полијелејни псалми 134 и 135",d:"I salmi del polieleo, per la veglia del sabato sera",u:DEC.chant},
- stasis:{h:"Visoki Dečani",t:"Статије Велике Суботе",d:"Le tre stasi del mattutino del Sabato Santo",u:DEC.chant},
- xmas:{h:"Visoki Dečani",t:"Тропар и кондак Божића",d:"Tropario e kontakion di Natale",u:DEC.chant},
- pascha:{h:"Visoki Dečani",t:"Ангел вопијаше · Приђите узмите светлост",d:"Canti della notte di Pasqua, registrati nel 2013",u:DEC.svc},
- cherub:{h:"Visoki Dečani",t:"Херувимска песма",d:"L'inno cherubico della Liturgia",u:DEC.svc},
- sava:{h:"Visoki Dečani",t:"Бденије за Светог Саву",d:"La veglia di san Sava, 2020",u:DEC.svc},
- king:{h:"Visoki Dečani",t:"Све војске ангелске",d:"Dal canone al santo re Stefan, fondatore del monastero",u:DEC.svc},
- dox:{h:"Santa Elisabetta",t:"Great Doxology",d:"Grande dossologia in canto bizantino, coro monastico",u:ELI.mon},
- tris:{h:"Santa Elisabetta",t:"Trisagion",d:"Il Trisagio, coro monastico",u:ELI.mon},
- child:{h:"Santa Elisabetta",t:"When Jesus Christ Was Yet a Child",d:"Canto di Natale, coro monastico",u:ELI.mon},
- irmos6:{h:"Santa Elisabetta",t:"Irmoses of Tone 6",d:"Irmi del sesto tono, il tono di questa settimana",u:ELI.mon},
- nunc:{h:"Santa Elisabetta",t:"Lord, Now Lettest Thou…",d:"Il cantico di Simeone, coro monastico",u:ELI.mon},
- blessed:{h:"Santa Elisabetta",t:"The Blessed",d:"Le Beatitudini della Liturgia domenicale, coro monastico",u:ELI.mon},
- meet:{h:"Santa Elisabetta",t:"It Is Truly Meet",d:"«È veramente giusto» in canto macedone, coro monastico",u:ELI.mon},
- fest:{h:"Santa Elisabetta",t:"Il coro festivo",d:"Canto znamennyj e bizantino armonizzato da madre Iuliania",u:ELI.fest}
-};
-
 const DEFAULT_PROFILE = "";
 
 const store = {
@@ -473,27 +501,6 @@ function patronsOn(k, day){
   return PATRONS.filter(p => (p.d && p.d.includes(day.j)) || (p.pd && p.pd.includes(day.pd)) || (p.g && p.g.includes(g)));
 }
 
-function chantFor(day){
-  const j = day.j, pd = day.pd, out = [];
-  const xmas = (j >= "12-20" && j <= "12-31") || (j >= "01-01" && j <= "01-05");
-  if (j === "11-11") out.push(T.king);
-  else if (j === "01-14") out.push(T.sava);
-  else if (pd === -1) out.push(T.stasis);
-  else if (pd >= 0 && pd <= 39) out.push(T.pascha);
-  else if (pd >= -48 && pd <= -2) out.push(T.ispr);
-  else if (xmas) out.push(T.xmas);
-  else if (day.wd === 6) out.push(T.poly);
-  else if (day.wd === 0) out.push(T.cherub);
-  else out.push(T.dushe);
-  if (j === "07-05") out.push(T.fest);
-  else if (xmas) out.push(T.child);
-  else if (j === "02-02") out.push(T.nunc);
-  else if (pd >= -48 && pd <= -2) out.push(T.tris);
-  else if (day.wd === 0) out.push(T.blessed);
-  else if (day.tn === 6) out.push(T.irmos6);
-  else out.push((parseInt(j.slice(3),10) % 2) ? T.dox : T.meet);
-  return out;
-}
 
 /* ---------- prayers: Slavic prayer book, Church Slavonic in civil script, Italian rendered from the Slavonic ---------- */
 const PR = {
@@ -575,10 +582,9 @@ function beginItems(s){
 function slotItems(slot, s){
   const hymn = s.pascha ? PR.angeloPasqua : PR.degno;
   const opening = s.pascha ? PR.risorto : (s.ascension ? null : PR.reCeleste);
-  const paschalLink = s.pascha ? {link: DEC.svc, text: "Ascolta «Ангел вопијаше» cantato a Visoki Dečani"} : null;
   switch (slot) {
     case "mattino": return [{begin: true}, PR.trop1, PR.trop2, PR.trop3, PR.kyrie12, PR.macMattino, PR.venite, PR.credo,
-      PR.optina, PR.theotokos, hymn, paschalLink, s.lent ? PR.efrem : null, PR.gesu];
+      PR.optina, PR.theotokos, hymn, s.lent ? PR.efrem : null, PR.gesu];
     case "giorno": return [{h: "Prima del lavoro"}, opening, PR.primaLavoro,
       {h: "A mezzogiorno"}, PR.sestaOra, PR.gesu, {link: "#lampada", text: "Ripetila con il respiro nella Lampada della Preghiera"},
       {h: "Alla fine del lavoro"}, PR.dopoLavoro, hymn];
@@ -587,7 +593,7 @@ function slotItems(slot, s){
          {h: "Prima di mangiare"}, PR.risorto, PR.benedici, {h: "Dopo aver mangiato"}, PR.risorto]
       : [{h: "Prima di mangiare"}, PR.occhi, {rubric: "oppure, o in aggiunta:"}, PR.padreNostro, PR.benedici,
          {h: "Dopo aver mangiato"}, PR.grazie, PR.gloria, PR.kyrie3];
-    case "sera": return [PR.luce, PR.concedi, PR.nunc, {link: ELI.mon, text: "Ascolta il Cantico di Simeone dal coro di Santa Elisabetta"},
+    case "sera": return [PR.luce, PR.concedi, PR.nunc,
       {rubric: "Poi il Trisagio, «Santissima Trinità» e il Padre nostro, come nelle preghiere iniziali."}, PR.theotokos,
       s.lent ? PR.efrem : null];
     case "notte": return [{begin: true}, PR.tropNotte1, PR.tropNotte2, PR.tropNotte3, PR.kyrie12, PR.macSera, PR.angelo, hymn,
@@ -608,7 +614,9 @@ function prayerHTML(p){
     const t = p[l] || p.it;
     return `<p class="pt" lang="${p[l] ? l : "it"}">${esc(t)}</p>`;
   }).join("");
-  return `<div class="pr">${p.t ? `<div class="ptitle">${esc(p.t)}</div>` : ""}${p.r ? `<div class="rub">${esc(p.r)}</div>` : ""}<div class="pv${langs.length > 1 ? " two" : ""}">${cols}</div></div>`;
+  const n = SPOKEN_PRAYERS.push(p) - 1;
+  const head = p.t ? `<div class="rhead"><div class="ptitle">${esc(p.t)}</div><button class="say mini" data-say-pr="${n}" aria-label="Ascolta: ${esc(p.t)}">${icon("speaker")}<span>Ascolta</span></button></div>` : "";
+  return `<div class="pr">${head}${p.r ? `<div class="rub">${esc(p.r)}</div>` : ""}<div class="pv${langs.length > 1 ? " two" : ""}">${cols}</div></div>`;
 }
 
 function renderPrayers(day){
@@ -625,6 +633,7 @@ function renderPrayers(day){
   const season = $("season");
   season.textContent = notes.join(" ");
   season.hidden = !notes.length;
+  SPOKEN_PRAYERS = [];
   const html = slotItems(pslot, s).filter(Boolean).map(p => p.begin
     ? `<details class="begin"><summary><span class="ptitle" style="font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric)">preghiere iniziali</span> <span class="note">dal «Nel nome del Padre» al «Padre nostro»</span></summary><div class="prayers">${beginItems(s).map(prayerHTML).join("")}</div></details>`
     : prayerHTML(p)).join("");
@@ -638,6 +647,10 @@ const ICON = {
   left: '<path d="M14.5 6 8.5 12l6 6"/>',
   right: '<path d="M9.5 6l6 6-6 6"/>',
   go: '<path d="M9.5 6l6 6-6 6"/>',
+  speaker: '<path d="M4.5 9.5h3l4.5-3.8v12.6l-4.5-3.8h-3z"/><path class="acc" d="M15.5 9.3a3.8 3.8 0 0 1 0 5.4M17.9 6.9a7.2 7.2 0 0 1 0 10.2"/>',
+  pause: '<path d="M9 6.5v11M15 6.5v11"/>',
+  play: '<path d="M8 5.8v12.4l9.8-6.2z"/>',
+  stop: '<rect x="7" y="7" width="10" height="10" rx="1.6"/>',
   // the Typikon sign of a great feast: a cross in a circle
   oggi: '<circle cx="12" cy="12" r="9.2"/><path class="acc" d="M12 5.6v12.8M10.3 7.9h3.4M8.5 10.3h7M9.9 15.2l4.2 1.5"/>',
   // an open Gospel book
@@ -662,7 +675,7 @@ const VIEWS = [
   {id: "santi", label: "Santi", desc: "I santi del giorno e i tuoi patroni"},
   {id: "preghiere", label: "Preghiere", desc: "Mattino, lavoro, pasti, sera, prima di dormire"},
   {id: "canto", label: "Canto", desc: "Visoki Dečani e Santa Elisabetta"},
-  {id: "lampada", label: "Lampada", desc: "La preghiera di Gesù con il respiro", href: LAMP_URL}
+  {id: "lampada", label: "Lampada", desc: "Preghiera di Gesù e rosario della Madre di Dio", href: LAMP_URL}
 ];
 let view = "oggi";
 
@@ -714,14 +727,238 @@ function renderSummary(day){
   let saints = mine.length ? mine.map(p => p.n).join(", ") : names.slice(0, 2).join(", ");
   if (!mine.length && items.length > 2) saints += ` e altri ${items.length - 2}`;
   if (!saints) saints = "Nessuna commemorazione";
-  const slot = slotNow(), chant = chantFor(day)[0];
+  const slot = slotNow();
   const row = (v, k, val, attrs) => `<button data-view="${v}"${attrs || ""}>${icon(v)}<span><span class="k">${k}</span><span class="v">${esc(val)}</span></span><span class="go">${icon("go")}</span></button>`;
   $("summary").innerHTML =
     row("letture", "letture", refs) +
     row("santi", mine.length ? "i tuoi santi oggi" : "santi del giorno", saints) +
     row("preghiere", "preghiere", SLOT_LABEL[slot], ` data-slot="${slot}"`) +
-    row("canto", "canto", chant.t + " · " + chant.h) +
-    `<a href="${LAMP_URL}" target="_blank" rel="noopener">${icon("lampada")}<span><span class="k">lampada</span><span class="v">La preghiera di Gesù con il respiro</span></span><span class="go">${icon("go")}</span></a>`;
+    row("canto", "canto", "Canali YouTube di Visoki Dečani e Santa Elisabetta") +
+    `<a href="${LAMP_URL}" target="_blank" rel="noopener">${icon("lampada")}<span><span class="k">lampada</span><span class="v">Preghiera di Gesù e rosario della Madre di Dio</span></span><span class="go">${icon("go")}</span></a>`;
+}
+
+
+/* ---------- the saint sheet: who they were, and why they concern you ---------- */
+// English search keys for the patrons, to find their lives on orthocal
+const PATRON_EN = {
+ "San Nicola di Mira": "Nicholas the Wonderworker", "San Trifone di Pečenga": "Tryphon of Kola", "San Zosima delle Solovki": "Zosima of Solovetsk",
+ "San Savvatij delle Solovki": "Sabbatius of Solovetsk", "Santi Sergio e Germano di Valaam": "Sergius and Herman, Wonderworkers of Valaam",
+ "Santo Stefano di Perm": "Stephen, Bishop of Perm", "Santi Cirillo e Metodio": "Methodius and Cyril", "Sant'Innocenzo di Mosca": "Innocent, enlightener of Alaska",
+ "San Nicola del Giappone": "Nikolai, Archbishop and Enlightener of Japan", "San Germano dell'Alaska": "Herman of Alaska", "Sant'Innocenzo di Irkutsk": "Innocent, Bishop of Irkutsk",
+ "San Sergio di Radonež": "Sergius of Radonezh", "San Serafino di Sarov": "Seraphim of Sarov", "San Paisij Veličkovskij": "Paisius Velichkovsky",
+ "San Gregorio Palamas": "Gregory Palamas", "Santa Maria Egiziaca": "Mary of Egypt", "San Mosè l'Etiope": "Moses of Ethiopia", "Sant'Antonio il Grande": "Anthony the Great",
+ "San Giovanni Climaco": "John Climacus", "San Tichon di Zadonsk": "Tikhon of Zadonsk", "Gli starcy di Optina": "Startsi of Optina", "Beato Agostino di Ippona": "Augustine, bishop of Hippo",
+ "Sant'Ignazio Brjančaninov": "Ignatius Brianchaninov", "San Teofane il Recluso": "Theophan the Recluse", "San Nilo di Sora": "Nil Sorsky", "San Giovanni di Kronštadt": "John of Kronstadt",
+ "San Sava di Serbia": "Sava, Enlightener and first Archbishop of Serbia", "Santa Elisabetta, granduchessa e martire": "Elizabeth Romanov", "Sant'Aleksandr Nevskij": "Alexander Nevsky",
+ "Sant'Andrea apostolo": "Andrew the First-Called", "Santo profeta Elia": "Prophet Elias", "San Basilio di Ostrog": "Basil, bishop of Ostrog", "San Giovanni Cassiano": "John Cassian"
+};
+function cleanName(s){ return String(s).replace(/\([^)]*\)/g, " ").replace(/[.\s]+$/, "").replace(/\s+/g, " ").trim(); }
+function whenText(){
+  const day = CAL && CAL.d[cur];
+  if (!day) return "";
+  const [jm, jd] = day.j.split("-").map(Number);
+  return `il ${jd} ${MONTHS[jm-1]} secondo il calendario giuliano`;
+}
+function oneKey(o){ return "men:one:v1:" + cur + ":" + hash((o.orig || o.name) + "|" + profile()); }
+function whyHTML(d){
+  return `<div class="why"><div class="rlabel">chi era</div><p>${esc(d.chi || "")}</p>` +
+    (d.perche ? `<div class="rlabel">perché ti riguarda</div><p>${esc(d.perche)}</p>` : "") + `</div>`;
+}
+
+function openSheet(o){
+  $("sheet-kicker").textContent = o.kicker;
+  $("sheet-title").textContent = o.name;
+  const orig = o.orig && o.orig !== o.name ? o.orig : "";
+  $("sheet-orig").textContent = orig;
+  $("sheet-orig").hidden = !orig;
+  const when = whenText();
+  let html = "";
+  if (o.why) html += `<div class="why"><div class="rlabel">perché ti riguarda</div><p>${esc(o.why)}</p></div>`;
+  let cached = null;
+  try { cached = JSON.parse(store.get(oneKey(o)) || "null"); } catch (e) {}
+  if (cached) html += whyHTML(cached);
+  else if (!o.why && sample && sampleState !== "denied" && sampleState !== "unavailable") {
+    html += `<div id="sheet-ask" class="ask"><button class="btn solid" id="sheet-ask-btn">Chi era e perché mi riguarda?</button></div>`;
+  }
+  const links = [];
+  const en = o.en || (o.orig ? cleanName(o.orig) : "");
+  if (en) links.push([`https://orthocal.info/saints/?q=${encodeURIComponent(en)}`, "Leggi la vita", "orthocal, dalle vite dei santi della Chiesa in America, in inglese"]);
+  const wiki = o.en ? ["it", o.name] : (o.orig ? ["en", cleanName(o.orig)] : ["it", o.name]);
+  links.push([`https://${wiki[0]}.wikipedia.org/w/index.php?search=${encodeURIComponent(wiki[1])}`, "Cerca su Wikipedia", wiki[0] === "it" ? "in italiano" : "in inglese"]);
+  const q = `Chi era ${o.name}${orig ? " (" + orig + ")" : ""}, che la Chiesa ortodossa ricorda ${when}? Raccontami in breve la sua vita e dimmi che cosa può dire a me, in base a quello che sai di me.`;
+  links.push([`https://claude.ai/new?q=${encodeURIComponent(q)}`, "Chiedi a Claude", "chi era e che cosa può dire a te"]);
+  html += `<div class="links">${links.map(([u, t, d]) => `<a href="${u}" target="_blank" rel="noopener"><b>${t} ↗</b><small>${d}</small></a>`).join("")}</div>`;
+  if (navigator.onLine === false) html += `<p class="note">Sei offline: i collegamenti si apriranno quando torna la connessione.</p>`;
+  $("sheet-body").innerHTML = html;
+  if ($("sheet-ask-btn")) $("sheet-ask-btn").onclick = () => askOne(o, when);
+  const d = $("sheet");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+function closeSheet(){ const d = $("sheet"); if (!d.open) return; if (d.close) d.close(); else d.removeAttribute("open"); }
+
+async function askOne(o, when){
+  const box = $("sheet-ask");
+  if (!box || !sample) return;
+  box.innerHTML = `<p class="thinking">Cerco il legame con la tua vita</p>`;
+  const prompt = [
+    "Sei una guida spirituale ortodossa colta, sobria e precisa. Scrivi in italiano.",
+    `Commemorazione: ${o.orig || o.name}, ${when}.`,
+    "Profilo della persona:\n" + profile(),
+    "1) In due o tre frasi: chi era, usando solo fatti agiografici certi. Se se ne sa poco, dillo senza inventare.",
+    "2) In una o due frasi concrete: che cosa può dire oggi a questa persona, legato alla sua vita.",
+    'Rispondi solo con JSON: {"nome": "nome nella forma italiana tradizionale", "chi": "...", "perche": "..."}'
+  ].join("\n\n");
+  try {
+    const d = await sample.json(prompt, { cache: { gcTime: 86400000 } });
+    if (!d || !d.chi) throw { code: "invalid_json" };
+    store.set(oneKey(o), JSON.stringify(d));
+    sampleState = "granted";
+    const b = $("sheet-ask");
+    if (b) b.outerHTML = whyHTML(d);
+    if (d.nome && $("sheet-title").textContent === o.name && o.orig) $("sheet-title").textContent = d.nome;
+  } catch (e) {
+    const code = e && e.code, b = $("sheet-ask");
+    if (!b) return;
+    if (["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(code)) {
+      sampleState = "denied"; b.innerHTML = `<p class="note">La risposta di Claude è disattivata per questa pagina.</p>`;
+    } else {
+      b.innerHTML = `<span class="note">${code === "rate_limited" ? "Troppe richieste in questo momento." : "Non è riuscito."}</span><button class="btn" id="sheet-retry">Riprova</button>`;
+      $("sheet-retry").onclick = () => askOne(o, when);
+    }
+  }
+}
+
+function sheetFromTap(t){
+  const day = CAL && CAL.d[cur];
+  if (!day) return false;
+  const pi = t.closest("[data-patron]"), si = t.closest("[data-si]"), pk = t.closest("[data-pick]");
+  if (pi) {
+    const p = PATRONS[Number(pi.dataset.patron)];
+    openSheet({kicker: "un tuo santo", name: p.n, why: p.w, en: PATRON_EN[p.n] || ""});
+    return true;
+  }
+  const items = dayItems(day), cached = readPick();
+  if (si) {
+    const i = Number(si.dataset.si), orig = items[i];
+    const it = cached && cached.nomi && cached.nomi[i];
+    const chosen = cached && cached.scelti && cached.scelti.find(s => Number(s.i) - 1 === i);
+    const isFeast = i < day.f.length;
+    openSheet({kicker: isFeast ? "festa del giorno" : "santo del giorno", name: it || orig, orig: isFeast ? "" : orig, why: chosen ? chosen.perche : ""});
+    return true;
+  }
+  if (pk && cached && cached.scelti) {
+    const s = cached.scelti[Number(pk.dataset.pick)], i = Number(s.i) - 1;
+    const orig = items[i], isFeast = i < day.f.length;
+    openSheet({kicker: "scelto per te", name: (cached.nomi && cached.nomi[i]) || orig, orig: isFeast ? "" : orig, why: s.perche});
+    return true;
+  }
+  return false;
+}
+
+/* ---------- read aloud, with the device's own voices (works offline when the voice is installed) ---------- */
+const SPEECH = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance === "function";
+if (!SPEECH) document.documentElement.classList.add("no-tts");
+const TTS = {queue: [], playing: false, paused: false, token: 0, label: ""};
+function voiceFor(l){
+  try {
+    const p = l === "it" ? "it" : "ru";
+    const vs = speechSynthesis.getVoices().filter(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith(p));
+    return vs.find(v => v.localService) || vs[0] || null;
+  } catch (e) { return null; }
+}
+function chunks(text){
+  const parts = String(text).replace(/\s+/g, " ").match(/[^.!?;:]+[.!?;:»"]*\s*/g) || [text];
+  const out = []; let acc = "";
+  for (const part of parts) {
+    if ((acc + part).length > 200 && acc) { out.push(acc.trim()); acc = ""; }
+    acc += part;
+  }
+  if (acc.trim()) out.push(acc.trim());
+  return out;
+}
+function showPlayer(label){
+  $("pl-label").textContent = label;
+  $("pl-pause").innerHTML = icon("pause"); $("pl-pause").setAttribute("aria-label", "Pausa"); $("pl-pause").hidden = false;
+  $("player").hidden = false; document.body.classList.add("speaking");
+}
+function hidePlayer(){ $("player").hidden = true; document.body.classList.remove("speaking"); }
+function stopSpeech(){
+  TTS.token++; TTS.queue = []; TTS.playing = false; TTS.paused = false;
+  try { speechSynthesis.cancel(); } catch (e) {}
+  hidePlayer();
+}
+function speak(items, label){
+  if (!SPEECH || !items.length) return;
+  stopSpeech();
+  const tok = ++TTS.token;
+  items.forEach(it => chunks(it.text).forEach(c => TTS.queue.push({text: c, lang: it.lang})));
+  TTS.playing = true; TTS.label = label;
+  const langs = [...new Set(items.map(i => i.lang))];
+  const missing = speechSynthesis.getVoices().length && langs.filter(l => !voiceFor(l));
+  showPlayer(missing && missing.length ? label + (missing.includes("it") ? " · nessuna voce italiana sul dispositivo" : " · nessuna voce russa sul dispositivo") : label);
+  const next = () => {
+    if (tok !== TTS.token) return;
+    const it = TTS.queue.shift();
+    if (!it) { TTS.playing = false; hidePlayer(); return; }
+    const u = new SpeechSynthesisUtterance(it.text);
+    u.lang = it.lang === "it" ? "it-IT" : "ru-RU";
+    const v = voiceFor(it.lang); if (v) u.voice = v;
+    u.rate = it.lang === "it" ? 0.95 : 0.9;
+    u.onend = next;
+    u.onerror = e => {
+      if (tok !== TTS.token || e.error === "interrupted" || e.error === "canceled") return;
+      TTS.token++; TTS.queue = []; TTS.playing = false;
+      $("pl-label").textContent = "Lettura non riuscita: sul dispositivo non c'è una voce per questa lingua.";
+      $("pl-pause").hidden = true;
+      setTimeout(() => { if (!TTS.playing) hidePlayer(); }, 6000);
+    };
+    speechSynthesis.speak(u);
+  };
+  next();
+}
+function togglePause(){
+  if (!TTS.playing) return;
+  if (TTS.paused) { speechSynthesis.resume(); TTS.paused = false; $("pl-pause").innerHTML = icon("pause"); $("pl-pause").setAttribute("aria-label", "Pausa"); }
+  else { speechSynthesis.pause(); TTS.paused = true; $("pl-pause").innerHTML = icon("play"); $("pl-pause").setAttribute("aria-label", "Riprendi"); }
+}
+function voiceLang(l){ return l === "it" ? "it" : "ru"; }
+function readingSpeech(pid){
+  const rows = TEXTS[lang] && TEXTS[lang][pid];
+  if (!rows) return null;
+  const m = CAL.p[pid];
+  const body = rows.map(r => r[2]).join(" ");
+  return {text: (lang === "it" ? m.full + ". " : "") + body, lang: voiceLang(lang)};
+}
+async function sayReadings(only){
+  const day = CAL && CAL.d[cur];
+  if (!day) return;
+  await loadTexts(lang);
+  const main = day.r.filter(r => r[3]);
+  const list = only != null ? day.r.filter(r => String(r[2]) === String(only)) : (main.length ? main : day.r.slice(0, 2));
+  const items = list.map(r => readingSpeech(r[2])).filter(Boolean);
+  const label = only != null ? (CAL.p[only] ? CAL.p[only].ref : "Lettura") : "Letture del giorno · " + list.map(r => CAL.p[r[2]].ref).join(" · ");
+  speak(items, label);
+}
+function repeatsOf(p){
+  const r = p.r || "";
+  if (/dodici volte/.test(r)) return 12;
+  if (/tre volte/.test(r)) return 3;
+  return 1;
+}
+function prayerSpeech(p){
+  const useIt = plang !== "cu";
+  let text = useIt ? p.it : (p.cu || p.ru || p.it), l = useIt ? "it" : "ru";
+  if (!text) return null;
+  const n = repeatsOf(p);
+  if (n > 1) text = Array(n).fill(text).join(" ");
+  return {text, lang: l};
+}
+let SPOKEN_PRAYERS = [];
+function sayPrayers(index){
+  const list = index != null ? [SPOKEN_PRAYERS[index]] : SPOKEN_PRAYERS;
+  const items = list.map(prayerSpeech).filter(Boolean);
+  const label = index != null ? (list[0].t || "Preghiera") : SLOT_LABEL[pslot];
+  speak(items, label);
 }
 
 /* ---------- rendering ---------- */
@@ -734,7 +971,7 @@ function render(){
     $("wd").textContent = WD[dt.getUTCDay()];
     $("date").textContent = dt.getUTCDate()+" "+MONTHS[dt.getUTCMonth()]+" "+dt.getUTCFullYear();
     $("jul").textContent = "Questo giorno è fuori dal calendario caricato ("+fmtShort(CAL.from)+" – "+fmtShort(CAL.to)+").";
-    ["week","feasts","chips","readings","foryou","patron","saints","tracks"].forEach(id => $(id).innerHTML = "");
+    ["week","feasts","chips","readings","foryou","patron","saints"].forEach(id => $(id).innerHTML = "");
     renderPrayers(null);
     renderSummary(null);
     renderDayline(null);
@@ -759,9 +996,6 @@ function render(){
   renderReadings(day);
   renderSaints(day);
   renderUpcoming();
-  $("tracks").innerHTML = chantFor(day).map(t => `
-    <div class="track"><span class="house">${esc(t.h)}</span><span class="t">${esc(t.t)}</span><span class="d">${esc(t.d)}</span>
-    <a href="${t.u}" target="_blank" rel="noopener">Ascolta ↗</a></div>`).join("");
   renderSummary(day);
 }
 
@@ -799,14 +1033,15 @@ function renderReadings(day){
   const others = main.length ? rest : day.r.slice(2);
   let html = list.map(r => {
     const x = readingHTML(r);
-    return `<article class="reading"><div class="rlabel">${x.label}</div>
+    return `<article class="reading"><div class="rhead"><div class="rlabel">${x.label}</div>
+      <button class="say mini" data-say-pid="${x.pid}" aria-label="Ascolta questa lettura">${icon("speaker")}<span>Ascolta</span></button></div>
       <div class="rref">${x.ref}<small>${x.full}</small></div>${textHTML(x.pid)}</article>`;
   }).join("");
   if (!day.r.length) html = `<p class="note">Oggi non sono previste letture alla Liturgia.</p>`;
   if (others.length) {
     html += `<details class="more"><summary>Altre letture del giorno (${others.length})</summary>` +
       others.map(r => { const x = readingHTML(r);
-        return `<details class="one" data-pid="${x.pid}"><summary><span class="rlabel">${x.label}</span><span class="rref" style="font-size:var(--s-md)">${x.ref}</span></summary>${textHTML(x.pid)}</details>`; }).join("") +
+        return `<details class="one" data-pid="${x.pid}"><summary><span class="rlabel">${x.label}</span><span class="rref" style="font-size:var(--s-md)">${x.ref}</span></summary><div style="margin:6px 0 0 1.4em"><button class="say mini" data-say-pid="${x.pid}">${icon("speaker")}<span>Ascolta</span></button></div>${textHTML(x.pid)}</details>`; }).join("") +
       `</details>`;
   }
   $("readings").innerHTML = html;
@@ -815,13 +1050,13 @@ function renderReadings(day){
 function renderSaints(day){
   const mine = patronsOn(cur, day);
   $("patron").innerHTML = mine.map(p => `
-    <div class="pick">${CROSS}<b>${esc(p.n)}</b><p>${esc(p.w)}</p></div>`).join("");
+    <button class="pick" data-patron="${PATRONS.indexOf(p)}">${CROSS}<b>${esc(p.n)}</b><p>${esc(p.w)}</p><span class="more">chi era ›</span></button>`).join("");
   const cached = readPick(day);
   const names = cached && cached.nomi;
   const items = dayItems(day);
   $("saints").innerHTML = items.map((s, i) => {
     const it = names && names[i] && names[i] !== s ? names[i] : null;
-    return `<li>${esc(it || s)}${it ? `<span class="orig">${esc(s)}</span>` : ""}</li>`;
+    return `<li><button class="saint" data-si="${i}"><span>${esc(it || s)}</span>${it ? `<span class="orig">${esc(s)}</span>` : ""}</button></li>`;
   }).join("");
   renderForYou(day, cached);
 }
@@ -848,9 +1083,9 @@ function renderForYou(day, data){
   const box = $("foryou");
   if (data && data.scelti) {
     const items = dayItems(day);
-    box.innerHTML = `<div class="rlabel">scelti per te</div>` + data.scelti.map(s => {
+    box.innerHTML = `<div class="rlabel">scelti per te</div>` + data.scelti.map((s, n) => {
       const i = Number(s.i) - 1, name = (data.nomi && data.nomi[i]) || items[i] || "";
-      return `<div class="pick">${sign(4)}<b>${esc(name)}</b><p>${esc(s.perche || "")}</p></div>`;
+      return `<button class="pick" data-pick="${n}">${sign(4)}<b>${esc(name)}</b><p>${esc(s.perche || "")}</p><span class="more">chi era ›</span></button>`;
     }).join("") + (data.spunto ? `<p class="hint">${esc(data.spunto)}</p>` : "");
     return;
   }
@@ -966,8 +1201,25 @@ async function init(){
     const r = $("drawer").getBoundingClientRect();
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) closeDrawer();
   });
+  $("sheet-close").onclick = closeSheet;
+  $("sheet").addEventListener("click", e => {
+    const r = $("sheet").getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) closeSheet();
+  });
+  $("pl-pause").onclick = togglePause;
+  $("pl-stop").onclick = stopSpeech;
+  if (SPEECH) { try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; } catch (e) {} }
   document.addEventListener("click", e => {
     if (!e.target.closest) return;
+    if (sheetFromTap(e.target)) return;
+    const sp = e.target.closest("[data-say], [data-say-pid], [data-say-pr]");
+    if (sp) {
+      if (sp.dataset.sayPid) sayReadings(sp.dataset.sayPid);
+      else if (sp.dataset.sayPr) sayPrayers(Number(sp.dataset.sayPr));
+      else if (sp.dataset.say === "readings") sayReadings(null);
+      else if (sp.dataset.say === "prayers") sayPrayers(null);
+      return;
+    }
     const b = e.target.closest("button[data-view]");
     if (b) {
       if (b.dataset.slot) { pslot = b.dataset.slot; renderPrayers(CAL && CAL.d[cur]); }
