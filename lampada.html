@@ -1,0 +1,241 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Lampada della Preghiera</title><link rel="stylesheet" href="fonts.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><style>
+/* Layout: una colonna centrata come una cella monastica — lampada (respiro) in alto, strumenti sotto, registro in fondo */
+:root{
+  --bg:#ecebe6; --surface:#f7f6f2; --ink:#23211c; --muted:#6b665b; --line:#d6d3c9;
+  --gold:#9a6b12; --gold-soft:#e7d6ae; --ember:#a3361f; --glow:rgba(154,107,18,.18);
+  --f-display:"Old Standard TT", Georgia, "Times New Roman", serif;
+  --f-body:"Spectral", Georgia, "Times New Roman", serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1114; --surface:#171a1f; --ink:#ece6d6; --muted:#958d7a; --line:#2a2e35;
+  --gold:#d9a845; --gold-soft:#3a3020; --ember:#e0704f; --glow:rgba(217,168,69,.22); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1114; --surface:#171a1f; --ink:#ece6d6; --muted:#958d7a; --line:#2a2e35;
+  --gold:#d9a845; --gold-soft:#3a3020; --ember:#e0704f; --glow:rgba(217,168,69,.22); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--f-display);font-weight:500;font-size:1.6rem;margin:0;text-wrap:balance;letter-spacing:.01em}
+.label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:500}
+.tabular{font-variant-numeric:tabular-nums}
+
+/* Lampada / respiro */
+.lamp{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:340px;width:100%;margin:0 auto}
+.lamp canvas{position:absolute;inset:0;width:100%;height:100%}
+.flame{width:46%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--glow) 0%,transparent 70%);
+  transform:scale(.7);transition:transform 4s ease-in-out}
+.center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:22%}
+.phase{font-family:var(--f-display);font-size:1.25rem;line-height:1.3;text-wrap:balance}
+.phase small{display:block;font-family:var(--f-body);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stats b{display:block;font-family:var(--f-display);font-size:1.9rem;font-weight:500;line-height:1.1}
+
+.controls{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:12px 16px;min-height:48px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.primary{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:700;flex:1 1 140px}
+.return{flex:2 1 220px;border-color:var(--gold);color:var(--gold);font-weight:500}
+.return:active{background:var(--gold-soft)}
+.note{font-size:.9rem;color:var(--muted);min-height:1.4em;margin:0;text-align:center}
+
+section.panel{border-top:1px solid var(--line);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+h2{font-family:var(--f-display);font-weight:500;font-size:1.2rem;margin:0}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.field{display:flex;flex-direction:column;gap:4px;flex:1 1 120px}
+input,select{font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-height:44px}
+p{margin:0}
+.prose{color:var(--muted);max-width:65ch}
+
+/* Metanie */
+.met{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.met-btn{width:96px;height:96px;border-radius:50%;border-color:var(--ember);color:var(--ember);font-family:var(--f-display);font-size:2rem}
+.met-btn:active{background:var(--gold-soft)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;flex:1 1 160px}
+.bar i{display:block;height:100%;background:var(--ember);width:0;transition:width .3s}
+
+/* Registro */
+.log{display:flex;flex-direction:column;gap:6px}
+.log-row{display:grid;grid-template-columns:5.5em 1fr 4.5em;gap:10px;align-items:center;font-size:.9rem}
+.log-row .track{height:10px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
+.log-row .track i{position:absolute;inset:0 auto 0 0;background:var(--gold)}
+.log-row .r{color:var(--muted);text-align:right}
+.empty{color:var(--muted);font-style:italic;font-family:var(--f-display)}
+.toggle{display:flex;gap:8px;align-items:center;font-size:.95rem}
+@media (prefers-reduced-motion:reduce){.flame{transition:none}}
+</style></head><body>
+
+<div class="wrap">
+  <header>
+    <h1>Lampada della Preghiera</h1>
+    <span class="label tabular" id="today">Preghiera di Gesù</span>
+  </header>
+
+  <div class="lamp" aria-live="polite">
+    <canvas id="beads" width="680" height="680" aria-hidden="true"></canvas>
+    <div class="flame" id="flame"></div>
+    <div class="center"><div class="phase" id="phase"><small>pronto</small>Signore Gesù Cristo, Figlio di Dio, abbi pietà di me peccatore</div></div>
+  </div>
+
+  <div class="stats">
+    <div><span class="label">Tempo</span><b class="tabular" id="time">00:00</b></div>
+    <div><span class="label">Preghiere</span><b class="tabular" id="count">0</b></div>
+    <div><span class="label">Ritorni</span><b class="tabular" id="returns">0</b></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary" id="start">Inizia</button>
+    <button id="reset">Chiudi sessione</button>
+    <button class="return" id="ret">Mi sono distratto · torno</button>
+  </div>
+  <p class="note" id="note">Ogni ritorno è preghiera. Non discutere col pensiero: torna alle parole.</p>
+
+  <section class="panel">
+    <h2>Quando l'assalto è forte</h2>
+    <p class="prose">Alzati e fai metanie: segno della croce, inchino fino a terra, una preghiera per ognuna. Il corpo spezza il circuito meglio della volontà.</p>
+    <div class="met">
+      <button class="met-btn tabular" id="met" aria-label="Conta una metania">0</button>
+      <div style="flex:1 1 160px;display:flex;flex-direction:column;gap:8px">
+        <div class="row">
+          <div class="field"><label class="label" for="metGoal">Obiettivo</label>
+            <select id="metGoal"><option>10</option><option selected>30</option><option>50</option><option>100</option></select></div>
+          <button id="metReset">Azzera</button>
+        </div>
+        <div class="bar"><i id="metBar"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Impostazioni</h2>
+    <div class="row">
+      <div class="field"><label class="label" for="dur">Durata (min)</label><input id="dur" type="number" min="1" max="120" value="15"></div>
+      <div class="field"><label class="label" for="inh">Inspiro (s)</label><input id="inh" type="number" min="2" max="12" value="4"></div>
+      <div class="field"><label class="label" for="exh">Espiro (s)</label><input id="exh" type="number" min="2" max="14" value="6"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label class="label" for="form">Formula</label>
+        <select id="form">
+          <option value="it">Italiano</option>
+          <option value="ru">Русский</option>
+          <option value="short">Breve</option>
+        </select></div>
+      <label class="toggle"><input type="checkbox" id="bell" checked> Campanella alla fine</label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Ultimi 14 giorni</h2>
+    <div class="log" id="log"></div>
+  </section>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const FORMS={
+  it:["Signore Gesù Cristo, Figlio di Dio,","abbi pietà di me peccatore."],
+  ru:["Господи Иисусе Христе, Сыне Божий,","помилуй мя грешнаго."],
+  short:["Signore Gesù,","abbi pietà di me."]
+};
+const NOTES=["Ogni ritorno è preghiera.","Senza rimproverarti: torna alle parole.","Il pensiero è passato. La preghiera resta.","Umiltà, non irritazione.","Prendi il pensiero all'inizio, poi lascialo cadere."];
+let st={running:false,elapsed:0,count:0,returns:0,met:0,last:0,phaseT:0,inhale:true};
+let raf=null,wake=null,audio=null;
+
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const cfg=load("lp_cfg",{dur:15,inh:4,exh:6,form:"it",bell:true});
+["dur","inh","exh","form"].forEach(k=>{$(k).value=cfg[k];$(k).addEventListener("change",()=>{cfg[k]=k==="form"?$(k).value:Math.max(1,+$(k).value||1);save("lp_cfg",cfg);renderPhase()})});
+$("bell").checked=cfg.bell;$("bell").addEventListener("change",()=>{cfg.bell=$("bell").checked;save("lp_cfg",cfg)});
+
+function fmt(s){s=Math.floor(s);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function renderPhase(){
+  const f=FORMS[cfg.form]||FORMS.it;
+  if(!st.running&&st.elapsed===0){$("phase").innerHTML="<small>pronto</small>"+f.join(" ");return}
+  $("phase").innerHTML="<small>"+(st.inhale?"inspira":"espira")+"</small>"+(st.inhale?f[0]:f[1]);
+  $("flame").style.transitionDuration=(st.inhale?cfg.inh:cfg.exh)+"s";
+  $("flame").style.transform=st.inhale?"scale(1.25)":"scale(.7)";
+}
+function tick(t){
+  if(!st.running)return;
+  const dt=(t-st.last)/1000;st.last=t;st.elapsed+=dt;st.phaseT+=dt;
+  const len=st.inhale?cfg.inh:cfg.exh;
+  if(st.phaseT>=len){st.phaseT=0;if(!st.inhale){st.count++;$("count").textContent=st.count;drawBeads()}st.inhale=!st.inhale;renderPhase()}
+  $("time").textContent=fmt(st.elapsed);
+  if(st.elapsed>=cfg.dur*60){finish(true);return}
+  raf=requestAnimationFrame(tick);
+}
+async function start(){
+  if(st.running){st.running=false;cancelAnimationFrame(raf);$("start").textContent="Riprendi";releaseWake();return}
+  st.running=true;st.last=performance.now();$("start").textContent="Pausa";
+  if(!audio){try{audio=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+  try{wake=await navigator.wakeLock.request("screen")}catch(e){}
+  renderPhase();raf=requestAnimationFrame(tick);
+}
+function releaseWake(){try{wake&&wake.release()}catch(e){}wake=null}
+function bell(){
+  if(!cfg.bell||!audio)return;
+  try{[0,2.2].forEach(d=>{const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime+d;
+    o.type="sine";o.frequency.value=528;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+3.5);
+    o.connect(g).connect(audio.destination);o.start(t);o.stop(t+3.6)})}catch(e){}
+}
+function finish(done){
+  st.running=false;cancelAnimationFrame(raf);releaseWake();
+  if(st.elapsed>=30){
+    const log=load("lp_log",{});const d=new Date().toISOString().slice(0,10);
+    const e=log[d]||{min:0,ret:0,met:0,pr:0};
+    e.min+=st.elapsed/60;e.ret+=st.returns;e.pr+=st.count;e.met+=st.met;log[d]=e;save("lp_log",log);
+  }
+  if(done){bell();$("note").textContent="Sessione compiuta. "+st.count+" preghiere, "+st.returns+" ritorni."}
+  st={running:false,elapsed:0,count:0,returns:0,met:0,last:0,phaseT:0,inhale:true};
+  $("time").textContent="00:00";$("count").textContent="0";$("returns").textContent="0";
+  $("met").textContent="0";$("metBar").style.width="0";
+  $("start").textContent="Inizia";$("flame").style.transform="scale(.7)";renderPhase();drawBeads();renderLog();
+}
+$("start").onclick=start;
+$("reset").onclick=()=>finish(false);
+$("ret").onclick=()=>{
+  st.returns++;$("returns").textContent=st.returns;
+  $("note").textContent=NOTES[st.returns%NOTES.length];
+  if(!st.running&&st.elapsed===0)start();
+  st.inhale=true;st.phaseT=0;renderPhase();
+};
+$("met").onclick=()=>{st.met++;$("met").textContent=st.met;$("metBar").style.width=Math.min(100,st.met/+$("metGoal").value*100)+"%";
+  if(st.met===+$("metGoal").value){$("note").textContent="Metanie compiute. Torna alla preghiera seduto, lentamente.";bell()}};
+$("metReset").onclick=()=>{st.met=0;$("met").textContent="0";$("metBar").style.width="0"};
+
+/* Komboskini: 100 nodi, con croce ogni 25 */
+function drawBeads(){
+  const c=$("beads"),x=c.getContext("2d"),cs=getComputedStyle(document.documentElement);
+  const gold=cs.getPropertyValue("--gold").trim(),line=cs.getPropertyValue("--line").trim();
+  x.clearRect(0,0,680,680);const n=100,r=300,done=st.count%n;
+  for(let i=0;i<n;i++){
+    const a=-Math.PI/2+i/n*Math.PI*2,px=340+Math.cos(a)*r,py=340+Math.sin(a)*r;
+    x.fillStyle=i<done?gold:line;
+    if(i%25===0){x.fillRect(px-7,py-2,14,4);x.fillRect(px-2,py-7,4,14)}
+    else{x.beginPath();x.arc(px,py,i<done?6:5,0,Math.PI*2);x.fill()}
+  }
+  if(st.count>=n){x.fillStyle=gold;x.font="400 22px 'Old Standard TT', Georgia, serif";x.textAlign="center";x.fillText("× "+Math.floor(st.count/n),340,620)}
+}
+function renderLog(){
+  const log=load("lp_log",{}),el=$("log");el.innerHTML="";
+  const days=[];for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d.toISOString().slice(0,10))}
+  const has=days.some(d=>log[d]);
+  if(!has){el.innerHTML='<p class="empty">Nessuna sessione ancora. Le sessioni oltre 30 secondi compaiono qui, con minuti e ritorni.</p>';return}
+  const max=Math.max(cfg.dur,...days.map(d=>log[d]?log[d].min:0));
+  days.slice().reverse().forEach(d=>{
+    const e=log[d];const dt=new Date(d+"T12:00");
+    const row=document.createElement("div");row.className="log-row tabular";
+    row.innerHTML='<span>'+dt.toLocaleDateString("it-IT",{weekday:"short",day:"numeric"})+'</span><span class="track"><i style="width:'+(e?e.min/max*100:0)+'%"></i></span><span class="r">'+(e?Math.round(e.min)+"′ · "+e.ret+"↺":"—")+'</span>';
+    el.appendChild(row);
+  });
+}
+const mq=window.matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",drawBeads);
+new MutationObserver(drawBeads).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+document.addEventListener("visibilitychange",async()=>{if(document.visibilityState==="visible"&&st.running){try{wake=await navigator.wakeLock.request("screen")}catch(e){}}});
+renderPhase();drawBeads();renderLog();
+</script>
+</body></html>

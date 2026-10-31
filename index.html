@@ -1,0 +1,850 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Menologio</title><meta name="description" content="Calendario ortodosso giuliano: letture del giorno, santi, preghiere e canto."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#eeefea" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#131311" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" href="icons/favicon-64.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Menologio"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="stylesheet" href="fonts.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><style>
+/* Layout: one column like a page of the Menaion — date masthead, rubricated readings, the day's saints, chant; tools fold away at the foot */
+:root{
+  --paper:#eeefea; --leaf:#f7f7f3; --ink:#1a1916; --muted:#625e55; --rule:#d3d2c9;
+  --rubric:#b1241b; --rubric-wash:#f2dcd6;
+  --f-display:"Old Standard TT", "Times New Roman", Georgia, serif;
+  --f-body:"Spectral", Georgia, "Times New Roman", serif;
+  --f-sc:"Spectral SC", "Spectral", Georgia, serif;
+  --s-xs:.8125rem; --s-sm:.9375rem; --s-md:1.0625rem; --s-lg:1.3rem; --s-xl:1.75rem; --s-xxl:2.6rem;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#131311; --leaf:#1b1b18; --ink:#ebe7dc; --muted:#a29c8e; --rule:#302f2a;
+  --rubric:#e4644f; --rubric-wash:#3a1f1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#131311; --leaf:#1b1b18; --ink:#ebe7dc; --muted:#a29c8e; --rule:#302f2a;
+  --rubric:#e4644f; --rubric-wash:#3a1f1a; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--s-md);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 56px}
+.page{max-width:44rem;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+a{color:var(--rubric);text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+.sc{font-family:var(--f-sc);font-weight:500;letter-spacing:.06em;text-transform:lowercase}
+.rub{color:var(--rubric)}
+.muted{color:var(--muted)}
+h2{font-family:var(--f-sc);font-weight:500;font-size:var(--s-sm);letter-spacing:.12em;text-transform:lowercase;color:var(--rubric);margin:0;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-size:var(--s-lg);letter-spacing:.02em}
+.brand span{color:var(--rubric)}
+.nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nav button,.nav input{background:var(--leaf);border:1px solid var(--rule);border-radius:999px;min-height:40px;padding:6px 14px;cursor:pointer}
+.nav input{padding:6px 10px;cursor:text}
+.nav button:hover{border-color:var(--muted)}
+.nav .arrow{width:40px;padding:0;font-family:var(--f-body);font-size:1.25rem;line-height:1}
+
+/* masthead */
+.mast{display:flex;flex-direction:column;gap:6px}
+.wd{font-family:var(--f-sc);letter-spacing:.14em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-sm)}
+.date{font-family:var(--f-display);font-weight:400;font-size:var(--s-xxl);line-height:1.05;margin:0;text-wrap:balance}
+.jul{color:var(--muted);font-size:var(--s-sm)}
+.jul b{font-weight:600;color:var(--ink)}
+.week{font-style:italic;margin-top:6px}
+.feast{display:flex;gap:10px;align-items:flex-start;font-family:var(--f-display);font-size:var(--s-xl);line-height:1.2;color:var(--rubric);margin-top:4px;text-wrap:balance}
+.feast.plain{color:var(--ink);font-size:var(--s-lg)}
+.sign{flex:none;width:30px;height:30px;margin-top:2px}
+.rank{font-size:var(--s-xs);color:var(--muted);font-family:var(--f-body);display:block;margin-top:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:3px 12px;font-size:var(--s-xs);background:var(--leaf)}
+.chip.fast{border-color:var(--rubric);color:var(--rubric);background:var(--rubric-wash)}
+
+/* readings */
+.lang{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--leaf)}
+.lang button{border:0;background:transparent;padding:6px 14px;min-height:36px;cursor:pointer;font-size:var(--s-sm)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.readhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.reading{display:flex;flex-direction:column;gap:6px}
+.reading + .reading{margin-top:28px}
+.rlabel{font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-sm)}
+.rref{font-family:var(--f-display);font-size:var(--s-lg)}
+.rref small{font-family:var(--f-body);font-size:var(--s-xs);color:var(--muted);margin-left:8px}
+.text{max-width:65ch;margin:0;hyphens:auto}
+.text sup{font-family:var(--f-body);font-size:.62em;color:var(--rubric);margin:0 .2em 0 .1em;font-variant-numeric:tabular-nums}
+.text.first::first-letter{font-family:var(--f-display);color:var(--rubric);font-size:2.9em;float:left;line-height:.9;margin:.08em .08em 0 0}
+.text[lang="ru"],.text[lang="cu"]{font-family:var(--f-display);font-size:1.08em;line-height:1.55}
+.note{font-size:var(--s-xs);color:var(--muted);margin:0}
+details.more{border-top:1px solid var(--rule);padding-top:12px;margin-top:8px}
+details.more>summary{cursor:pointer;color:var(--muted);font-size:var(--s-sm)}
+details.more[open]>summary{margin-bottom:16px}
+details.one{padding:6px 0}
+details.one>summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+details.one>summary::-webkit-details-marker{display:none}
+details.one>summary::before{content:"+";color:var(--rubric);font-family:var(--f-display);width:.8em}
+details.one[open]>summary::before{content:"−"}
+details.one .text{margin:8px 0 6px 1.4em}
+
+/* saints */
+.foryou{display:flex;flex-direction:column;gap:14px}
+.pick{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;align-items:start}
+.pick .sign{width:22px;height:22px;margin-top:4px}
+.pick b{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);line-height:1.25}
+.pick p{grid-column:2;margin:0;max-width:62ch}
+.hint{border-left:2px solid var(--rubric);padding:2px 0 2px 14px;font-style:italic;max-width:62ch;margin:0}
+.ask{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--rubric);background:transparent;color:var(--rubric);border-radius:999px;padding:8px 18px;min-height:42px;cursor:pointer}
+.btn:hover{background:var(--rubric-wash)}
+.btn.solid{background:var(--rubric);color:var(--leaf)}
+.thinking{color:var(--muted);font-style:italic}
+.thinking::after{content:"";display:inline-block;width:1.2em;text-align:left;animation:dots 1.4s steps(4) infinite}
+@keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+ul.saints{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+ul.saints li{padding-left:1.4em;position:relative}
+ul.saints li::before{content:"";position:absolute;left:.35em;top:.72em;width:.36em;height:.36em;border-radius:50%;background:var(--muted)}
+ul.saints .orig{display:block;font-size:var(--s-xs);color:var(--muted)}
+.next{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:var(--s-sm);align-items:baseline}
+.next .when{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.next button{all:unset;cursor:pointer;color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+.next button:focus-visible{outline:2px solid var(--rubric)}
+
+/* chant */
+.tracks{display:flex;flex-direction:column;gap:12px}
+.track{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:center;padding:12px 16px;background:var(--leaf);border:1px solid var(--rule);border-radius:10px}
+.track .house{font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-xs);grid-column:1}
+.track .t{font-family:var(--f-display);font-size:var(--s-lg);line-height:1.2;grid-column:1;min-width:0}
+.track .d{font-size:var(--s-sm);color:var(--muted);grid-column:1;min-width:0}
+.track a{grid-column:2;grid-row:1 / span 3;white-space:nowrap}
+.archives{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:18px}
+.archives h3{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);margin:0 0 6px}
+.archives ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:var(--s-sm)}
+
+/* tools */
+textarea{width:100%;min-height:9rem;border:1px solid var(--rule);border-radius:10px;background:var(--leaf);padding:12px;line-height:1.5;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+footer{font-size:var(--s-xs);color:var(--muted);display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--rule);padding-top:16px}
+footer p{margin:0;max-width:70ch}
+.loading{color:var(--muted);font-style:italic}
+
+/* prayers */
+.chip.jump{cursor:pointer;color:var(--ink)}
+.chip.jump:hover{border-color:var(--muted)}
+.ptools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;padding:6px 10px;min-height:38px;cursor:pointer;font-family:var(--f-sc);letter-spacing:.06em;text-transform:lowercase;color:var(--muted);border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--rubric);border-bottom-color:var(--rubric)}
+.season{font-size:var(--s-sm);font-style:italic;margin:16px 0 0;max-width:65ch}
+.prayers{display:flex;flex-direction:column;gap:22px;margin-top:22px}
+.pr{display:flex;flex-direction:column;gap:4px}
+.pr .ptitle{font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-sm)}
+.pr .rub{font-style:italic;font-size:var(--s-sm)}
+.pr .pt{margin:0;max-width:65ch}
+.pr .pt[lang="cu"],.pr .pt[lang="ru"]{font-family:var(--f-display);font-size:1.08em;line-height:1.55}
+.pv{display:grid;grid-template-columns:1fr;gap:6px 28px}
+@media (min-width:720px){.pv.two{grid-template-columns:1fr 1fr}}
+.pgroup{font-family:var(--f-display);font-size:var(--s-lg);margin:10px 0 -8px}
+details.begin{border:1px solid var(--rule);border-radius:10px;padding:10px 16px;background:var(--leaf)}
+details.begin>summary{cursor:pointer}
+details.begin[open]>summary{margin-bottom:16px}
+details.begin .prayers{margin-top:0}
+.amen{font-size:var(--s-xs);color:var(--muted)}
+@media (max-width:480px){
+  .date{font-size:2.1rem}
+  .feast{font-size:1.45rem}
+  .track{grid-template-columns:1fr}
+  .track a{grid-column:1;grid-row:auto;margin-top:6px}
+}
+@media (prefers-reduced-motion:reduce){.thinking::after{animation:none;content:"…"}}
+</style><style>
+#lamp-dlg{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--paper);color:var(--ink)}
+#lamp-dlg[open]{display:flex;flex-direction:column}
+#lamp-dlg::backdrop{background:rgba(0,0,0,.4)}
+#lamp-dlg .dlg-bar{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 8px) max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--rule)}
+#lamp-dlg iframe{flex:1;border:0;width:100%;background:var(--paper)}
+</style></head><body>
+
+<div class="page">
+  <div class="bar">
+    <div class="brand">Menol<span>o</span>gio</div>
+    <div class="nav" role="group" aria-label="Scegli il giorno">
+      <button class="arrow" id="prev" aria-label="Giorno precedente">←</button>
+      <button id="today">Oggi</button>
+      <button class="arrow" id="next" aria-label="Giorno successivo">→</button>
+      <input type="date" id="pick" aria-label="Vai a una data">
+    </div>
+  </div>
+
+  <header class="mast" id="mast">
+    <div class="wd" id="wd">&nbsp;</div>
+    <h1 class="date" id="date">Calendario ortodosso</h1>
+    <div class="jul" id="jul"><span class="loading">Apro il calendario</span></div>
+    <div class="week" id="week"></div>
+    <div id="feasts"></div>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <section aria-labelledby="h-read">
+    <div class="readhead">
+      <h2 id="h-read" style="flex:1">letture</h2>
+      <div class="lang" role="group" aria-label="Lingua del testo">
+        <button data-lang="it" aria-pressed="true" title="Italiano, Riveduta 1927">IT</button>
+        <button data-lang="ru" aria-pressed="false" title="Русский, Синодальный перевод">RU</button>
+        <button data-lang="cu" aria-pressed="false" title="Церковнославянский, Елизаветинская Библия">ЦСЯ</button>
+      </div>
+    </div>
+    <div id="readings" style="margin-top:18px"><p class="loading">Carico le letture</p></div>
+  </section>
+
+  <section aria-labelledby="h-saints">
+    <h2 id="h-saints">santi del giorno</h2>
+    <div class="foryou" id="foryou" style="margin-top:18px"></div>
+    <div id="patron" style="margin-top:18px"></div>
+    <ul class="saints" id="saints" style="margin-top:18px"></ul>
+    <div style="margin-top:26px">
+      <div class="rlabel" style="margin-bottom:8px">prossime feste dei tuoi santi</div>
+      <div class="next" id="upcoming"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-prayers" id="prayers-sec">
+    <h2 id="h-prayers">preghiere</h2>
+    <div class="ptools">
+      <div class="tabs" role="tablist" aria-label="Momento del giorno">
+        <button role="tab" data-slot="mattino" aria-selected="false">mattino</button>
+        <button role="tab" data-slot="giorno" aria-selected="false">lavoro e mezzogiorno</button>
+        <button role="tab" data-slot="pasti" aria-selected="false">pasti</button>
+        <button role="tab" data-slot="sera" aria-selected="false">sera</button>
+        <button role="tab" data-slot="notte" aria-selected="false">prima di dormire</button>
+      </div>
+      <div class="lang" role="group" aria-label="Lingua delle preghiere">
+        <button data-plang="it" aria-pressed="true" title="Italiano">IT</button>
+        <button data-plang="cu" aria-pressed="false" title="Церковнославянский">ЦСЯ</button>
+        <button data-plang="both" aria-pressed="false" title="Italiano e slavonico affiancati">IT + ЦСЯ</button>
+      </div>
+    </div>
+    <p class="season rub" id="season" hidden></p>
+    <div id="prayers" role="tabpanel"></div>
+  </section>
+
+  <section aria-labelledby="h-chant">
+    <h2 id="h-chant">canto</h2>
+    <div class="tracks" id="tracks" style="margin-top:18px"></div>
+    <p class="note" style="margin-top:10px">Le registrazioni sono sui siti dei monasteri e si aprono in una nuova scheda.</p>
+    <div class="archives" style="margin-top:22px">
+      <div>
+        <h3>Visoki Dečani</h3>
+        <ul>
+          <li><a href="https://www.decani.org/en/library/audio-archive/chanting-of-brethren" target="_blank" rel="noopener">Canto dei fratelli, registrazioni in studio</a></li>
+          <li><a href="https://www.decani.org/en/library/audio-archive/recording-of-church-services" target="_blank" rel="noopener">Registrazioni delle funzioni</a></li>
+          <li><a href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener">Canale YouTube</a></li>
+          <li><a href="https://www.decani.org/en/" target="_blank" rel="noopener">Sito del monastero</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Monastero di Santa Elisabetta, Minsk</h3>
+        <ul>
+          <li><a href="https://obitel-minsk.org/choirs/the-monastic-choir/audio" target="_blank" rel="noopener">Coro monastico, audio</a></li>
+          <li><a href="https://obitel-minsk.org/the-festive-choir" target="_blank" rel="noopener">Coro festivo</a></li>
+          <li><a href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener">Canale YouTube</a></li>
+          <li><a href="https://obitel-minsk.org/video" target="_blank" rel="noopener">Video del monastero</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Calendario giuliano, uso slavo. Letture e commemorazioni da <a href="https://github.com/brianglass/orthocal-python" target="_blank" rel="noopener">orthocal</a>, che segue il lezionario della Chiesa ortodossa in America. Testi: Riveduta 1927 (G. Luzzi), traduzione sinodale russa, Bibbia elisabettiana in slavonico; tutti di pubblico dominio.</p>
+    <p id="range-note"></p>
+    <p id="app-note"></p>
+    <p id="ios-hint" hidden>Su iPhone e iPad: apri questa pagina in Safari, tocca Condividi e poi «Aggiungi alla schermata Home».</p>
+    <p><button class="btn" id="install-btn" hidden>Installa l'app</button></p>
+    <p>Per pregare: <a href="#lampada" target="_blank" rel="noopener">Lampada della Preghiera</a>.</p>
+  </footer>
+</div>
+
+<dialog id="lamp-dlg" aria-label="Lampada della Preghiera"><div class="dlg-bar"><button class="btn" id="lamp-close">‹ Menologio</button><span class="sc muted">lampada della preghiera</span></div><iframe id="lamp-frame" title="Lampada della Preghiera"></iframe></dialog>
+<script>
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const MONTHS = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const WD = ["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+const RANK = {1:"Liturgia dei Presantificati",2:"Servizio a sei stichiri",3:"Servizio con grande dossologia",4:"Polieleo",5:"Veglia",6:"Grande festa",7:"Grande festa della Madre di Dio",8:"Grande festa del Signore"};
+
+/* Patrons chosen for Sage: Julian dates (d), Paschal distance (pd) or civil date (g). */
+const PATRONS = [
+ {n:"San Nicola di Mira", d:["12-06","05-09"], w:"Le sue reliquie sono a Bari, a quaranta chilometri da Trani; il 9 maggio giuliano si ricorda la loro traslazione. Patrono dei viaggiatori."},
+ {n:"San Nicola il Pellegrino", g:["06-02"], w:"Patrono di Trani. Giovane greco di Steiri, ripeteva senza sosta «Kyrie eleison». Non è nel calendario ortodosso ufficiale, ma nel 2024 il metropolita ortodosso d'Italia ha celebrato la Liturgia sulle sue reliquie."},
+ {n:"San Trifone di Pečenga", d:["12-15"], w:"Apostolo dei Sami della penisola di Kola, dove comincia la tua spedizione; fondò il monastero di Pečenga."},
+ {n:"San Zosima delle Solovki", d:["04-17"], w:"Cofondatore del monastero delle isole Solovki, nel Mar Bianco: una tappa del tuo primo tratto."},
+ {n:"San Savvatij delle Solovki", d:["09-27"], w:"Il primo eremita a stabilirsi sulle Solovki, nel Mar Bianco."},
+ {n:"Santi Sergio e Germano di Valaam", d:["06-28"], w:"Fondatori di Valaam sul lago Ladoga. Il canto di Valaam è quello che il coro di Santa Elisabetta usa nei giorni feriali."},
+ {n:"Santo Stefano di Perm", d:["04-26"], w:"Missionario tra i Komi: imparò la loro lingua e creò per loro un alfabeto."},
+ {n:"Santi Cirillo e Metodio", d:["05-11"], w:"Hanno dato agli Slavi la scrittura; l'alfabeto con cui stai imparando il russo porta il nome di Cirillo."},
+ {n:"Sant'Innocenzo di Mosca", d:["03-31","10-06"], w:"Missionario e linguista: visse tra gli Aleuti, ne studiò lingua e costumi e attraversò la Siberia. Un etnografo santo."},
+ {n:"San Nicola del Giappone", d:["02-03"], w:"Attraversò la Siberia per arrivare in Giappone, dove tradusse la Scrittura e la liturgia."},
+ {n:"San Germano dell'Alaska", d:["12-13"], w:"Monaco di Valaam che visse da eremita su un'isola dell'Alaska."},
+ {n:"Sant'Innocenzo di Irkutsk", d:["11-26"], w:"Primo vescovo di Irkutsk, nella Siberia orientale che dovrai attraversare."},
+ {n:"San Sergio di Radonež", d:["09-25","07-05"], w:"Eremita nei boschi, divideva il pane con un orso. Il lavoro delle mani come preghiera."},
+ {n:"San Serafino di Sarov", d:["01-02","07-19"], w:"Visse anni da solo nella foresta. Insegnava: acquista lo spirito di pace."},
+ {n:"San Paisij Veličkovskij", d:["11-15"], w:"Tradusse in slavonico la Filocalia e diffuse la preghiera di Gesù."},
+ {n:"San Gregorio Palamas", d:["11-14"], pd:[-35], w:"Difese l'esicasmo, la via della preghiera di Gesù."},
+ {n:"Santa Maria Egiziaca", d:["04-01"], pd:[-14], w:"Da una vita dominata dalle passioni a quarantasette anni nel deserto: la purezza si conquista."},
+ {n:"San Mosè l'Etiope", d:["08-28"], w:"Brigante forte e violento divenuto monaco a Scete: sa che cosa significa combattere le passioni."},
+ {n:"Sant'Antonio il Grande", d:["01-17"], w:"Padre dei monaci: nel deserto imparò a riconoscere e respingere i pensieri."},
+ {n:"San Giovanni Climaco", d:["03-30"], pd:[-21], w:"Autore della Scala del Paradiso; il gradino sulla purezza è scritto per chi lotta."},
+ {n:"San Tichon di Zadonsk", d:["08-13"], w:"Dostoevskij si ispirò a lui per lo starec Zosima dei Karamazov."},
+ {n:"Gli starcy di Optina", d:["10-11"], w:"Dostoevskij visitò Optina nel 1878 e incontrò lo starec Ambrogio, uno dei modelli di Zosima."},
+ {n:"Beato Agostino di Ippona", d:["06-15"], w:"Stai leggendo le sue Confessioni; la Chiesa russa lo ricorda il 15 giugno giuliano."},
+ {n:"Sant'Ignazio Brjančaninov", d:["04-30"], w:"Ufficiale del genio diventato monaco; scrisse sulla preghiera di Gesù con la precisione di un ingegnere."},
+ {n:"San Teofane il Recluso", d:["01-10"], w:"Maestro della preghiera del cuore; tradusse la Filocalia in russo."},
+ {n:"San Nilo di Sora", d:["05-07"], w:"Esicasta delle foreste del Nord russo: silenzio, lavoro manuale, preghiera."},
+ {n:"San Giovanni di Kronštadt", d:["12-20","10-19"], w:"Prete dell'isola-fortezza nel Golfo di Finlandia, una vita data agli altri."},
+ {n:"San Sava di Serbia", d:["01-14"], w:"Padre della Chiesa serba; a Dečani il suo giorno si celebra con la veglia."},
+ {n:"Santo Stefano di Dečani", d:["11-11"], w:"Il re serbo che fondò il monastero di Visoki Dečani: oggi è la festa del monastero."},
+ {n:"Santa Elisabetta, granduchessa e martire", d:["07-05"], w:"A lei è dedicato il monastero di Minsk di cui ascolti il coro."},
+ {n:"Sant'Aleksandr Nevskij", d:["11-23","08-30"], w:"Principe guerriero del Nord: difese Novgorod e morì monaco."},
+ {n:"Sant'Andrea apostolo", d:["11-30"], w:"Il Primo Chiamato, patrono della Russia; secondo la tradizione predicò tra gli Sciti."},
+ {n:"Santo profeta Elia", d:["07-20"], w:"L'uomo del deserto e del fuoco, nutrito dai corvi; Dio gli parlò in una brezza leggera."},
+ {n:"San Basilio di Ostrog", d:["04-29"], w:"Taumaturgo del monastero di Ostrog, nel Montenegro, tra i santi più amati dai Serbi."},
+ {n:"San Giovanni Cassiano", d:["02-28","02-29"], w:"Portò in Occidente l'insegnamento dei padri del deserto sugli otto pensieri."}
+];
+
+const DEC = {chant:"https://www.decani.org/en/library/audio-archive/chanting-of-brethren", svc:"https://www.decani.org/en/library/audio-archive/recording-of-church-services"};
+const ELI = {mon:"https://obitel-minsk.org/choirs/the-monastic-choir/audio", fest:"https://obitel-minsk.org/the-festive-choir"};
+const T = {
+ dushe:{h:"Visoki Dečani",t:"Душе моја",d:"Benedici, anima mia, il Signore: il salmo dei vespri",u:DEC.chant},
+ ispr:{h:"Visoki Dečani",t:"Да исправитсја молитва моја",d:"Salga la mia preghiera come incenso: il canto della Quaresima",u:DEC.chant},
+ poly:{h:"Visoki Dečani",t:"Полијелејни псалми 134 и 135",d:"I salmi del polieleo, per la veglia del sabato sera",u:DEC.chant},
+ stasis:{h:"Visoki Dečani",t:"Статије Велике Суботе",d:"Le tre stasi del mattutino del Sabato Santo",u:DEC.chant},
+ xmas:{h:"Visoki Dečani",t:"Тропар и кондак Божића",d:"Tropario e kontakion di Natale",u:DEC.chant},
+ pascha:{h:"Visoki Dečani",t:"Ангел вопијаше · Приђите узмите светлост",d:"Canti della notte di Pasqua, registrati nel 2013",u:DEC.svc},
+ cherub:{h:"Visoki Dečani",t:"Херувимска песма",d:"L'inno cherubico della Liturgia",u:DEC.svc},
+ sava:{h:"Visoki Dečani",t:"Бденије за Светог Саву",d:"La veglia di san Sava, 2020",u:DEC.svc},
+ king:{h:"Visoki Dečani",t:"Све војске ангелске",d:"Dal canone al santo re Stefan, fondatore del monastero",u:DEC.svc},
+ dox:{h:"Santa Elisabetta",t:"Great Doxology",d:"Grande dossologia in canto bizantino, coro monastico",u:ELI.mon},
+ tris:{h:"Santa Elisabetta",t:"Trisagion",d:"Il Trisagio, coro monastico",u:ELI.mon},
+ child:{h:"Santa Elisabetta",t:"When Jesus Christ Was Yet a Child",d:"Canto di Natale, coro monastico",u:ELI.mon},
+ irmos6:{h:"Santa Elisabetta",t:"Irmoses of Tone 6",d:"Irmi del sesto tono, il tono di questa settimana",u:ELI.mon},
+ nunc:{h:"Santa Elisabetta",t:"Lord, Now Lettest Thou…",d:"Il cantico di Simeone, coro monastico",u:ELI.mon},
+ blessed:{h:"Santa Elisabetta",t:"The Blessed",d:"Le Beatitudini della Liturgia domenicale, coro monastico",u:ELI.mon},
+ meet:{h:"Santa Elisabetta",t:"It Is Truly Meet",d:"«È veramente giusto» in canto macedone, coro monastico",u:ELI.mon},
+ fest:{h:"Santa Elisabetta",t:"Il coro festivo",d:"Canto znamennyj e bizantino armonizzato da madre Iuliania",u:ELI.fest}
+};
+
+const DEFAULT_PROFILE = "";
+
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+
+let CAL = null, cur = null;
+const TEXTS = {}, LOADING = {};
+let lang = store.get("men:lang") || "it";
+let sample = null, sampleState = "unavailable";
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]); }
+function pad(n){ return String(n).padStart(2,"0"); }
+function keyOf(dt){ return dt.getUTCFullYear()+"-"+pad(dt.getUTCMonth()+1)+"-"+pad(dt.getUTCDate()); }
+function parseKey(k){ const [y,m,d] = k.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)); }
+function addDays(k,n){ const dt = parseKey(k); dt.setUTCDate(dt.getUTCDate()+n); return keyOf(dt); }
+function localToday(){ const n = new Date(); return n.getFullYear()+"-"+pad(n.getMonth()+1)+"-"+pad(n.getDate()); }
+function hash(s){ let h = 5381; for (let i=0;i<s.length;i++) h = ((h<<5)+h+s.charCodeAt(i))|0; return (h>>>0).toString(36); }
+
+function sign(fl){
+  if (fl < 2) return "";
+  const red = fl >= 3, c = red ? "var(--rubric)" : "currentColor";
+  let g = "";
+  if (fl <= 3) {
+    g = `<path d="M5 10a9 9 0 0 0 18 0" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"/>
+         <circle cx="9.6" cy="13.2" r="1.6" fill="${c}"/><circle cx="14" cy="16.6" r="1.6" fill="${c}"/><circle cx="18.4" cy="13.2" r="1.6" fill="${c}"/>`;
+  } else {
+    g = `<path d="M14 6.5v15M8.5 11.5h11" stroke="${c}" stroke-width="2.6" stroke-linecap="round"/>`;
+    if (fl === 5) g += `<path d="M3.5 14a10.5 10.5 0 0 0 21 0" fill="none" stroke="${c}" stroke-width="2"/>`;
+    if (fl >= 6) g += `<circle cx="14" cy="14" r="11" fill="none" stroke="${c}" stroke-width="2"/>`;
+  }
+  return `<svg class="sign" viewBox="0 0 28 28" aria-hidden="true">${g}</svg>`;
+}
+const CROSS = `<svg class="sign" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3.5v21M11 7.5h6M7.5 11.5h13M10 17l8 2.6" stroke="var(--rubric)" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>`;
+
+function patronsOn(k, day){
+  const g = k.slice(5);
+  return PATRONS.filter(p => (p.d && p.d.includes(day.j)) || (p.pd && p.pd.includes(day.pd)) || (p.g && p.g.includes(g)));
+}
+
+function chantFor(day){
+  const j = day.j, pd = day.pd, out = [];
+  const xmas = (j >= "12-20" && j <= "12-31") || (j >= "01-01" && j <= "01-05");
+  if (j === "11-11") out.push(T.king);
+  else if (j === "01-14") out.push(T.sava);
+  else if (pd === -1) out.push(T.stasis);
+  else if (pd >= 0 && pd <= 39) out.push(T.pascha);
+  else if (pd >= -48 && pd <= -2) out.push(T.ispr);
+  else if (xmas) out.push(T.xmas);
+  else if (day.wd === 6) out.push(T.poly);
+  else if (day.wd === 0) out.push(T.cherub);
+  else out.push(T.dushe);
+  if (j === "07-05") out.push(T.fest);
+  else if (xmas) out.push(T.child);
+  else if (j === "02-02") out.push(T.nunc);
+  else if (pd >= -48 && pd <= -2) out.push(T.tris);
+  else if (day.wd === 0) out.push(T.blessed);
+  else if (day.tn === 6) out.push(T.irmos6);
+  else out.push((parseInt(j.slice(3),10) % 2) ? T.dox : T.meet);
+  return out;
+}
+
+/* ---------- prayers: Slavic prayer book, Church Slavonic in civil script, Italian rendered from the Slavonic ---------- */
+const PR = {
+ nome:{it:"Nel nome del Padre e del Figlio e dello Spirito Santo. Amen.", cu:"Во имя Отца и Сына и Святаго Духа. Аминь."},
+ publicano:{r:"con un inchino", it:"O Dio, abbi pietà di me peccatore.", cu:"Боже, милостив буди мне грешному."},
+ padri:{it:"Per le preghiere dei nostri santi padri, Signore Gesù Cristo, Dio nostro, abbi pietà di noi. Amen.", cu:"Молитвами святых отец наших, Господи Иисусе Христе, Боже наш, помилуй нас. Аминь."},
+ gloriaTe:{it:"Gloria a te, nostro Dio, gloria a te.", cu:"Слава Тебе, Боже наш, слава Тебе."},
+ reCeleste:{t:"Re celeste", it:"Re celeste, Consolatore, Spirito di verità, che sei presente ovunque e tutto ricolmi, tesoro dei beni e datore di vita, vieni e dimora in noi, purificaci da ogni macchia e salva, o Buono, le anime nostre.", cu:"Царю Небесный, Утешителю, Душе истины, Иже везде сый и вся исполняяй, Сокровище благих и жизни Подателю, прииди и вселися в ны, и очисти ны от всякия скверны, и спаси, Блаже, души наша."},
+ risorto:{t:"Cristo è risorto", r:"tre volte", it:"Cristo è risorto dai morti, con la morte ha calpestato la morte e a quelli nei sepolcri ha donato la vita.", cu:"Христос воскресе из мертвых, смертию смерть поправ, и сущим во гробех живот даровав."},
+ trisagio:{t:"Trisagio", r:"tre volte, con il segno della croce e un inchino", it:"Santo Dio, Santo Forte, Santo Immortale, abbi pietà di noi.", cu:"Святый Боже, Святый Крепкий, Святый Безсмертный, помилуй нас."},
+ gloria:{it:"Gloria al Padre e al Figlio e allo Spirito Santo, ora e sempre e nei secoli dei secoli. Amen.", cu:"Слава Отцу и Сыну и Святому Духу, и ныне и присно и во веки веков. Аминь."},
+ trinita:{t:"Alla Santissima Trinità", it:"Santissima Trinità, abbi pietà di noi; Signore, purifica i nostri peccati; Sovrano, perdona le nostre iniquità; Santo, visita e guarisci le nostre infermità, per amore del tuo nome.", cu:"Пресвятая Троице, помилуй нас; Господи, очисти грехи наша; Владыко, прости беззакония наша; Святый, посети и исцели немощи наша, имене Твоего ради."},
+ kyrie3:{r:"tre volte", it:"Signore, pietà.", cu:"Господи, помилуй."},
+ kyrie12:{r:"dodici volte", it:"Signore, pietà.", cu:"Господи, помилуй."},
+ padreNostro:{t:"Padre nostro", it:"Padre nostro, che sei nei cieli, sia santificato il tuo nome, venga il tuo regno, sia fatta la tua volontà, come in cielo così in terra. Dacci oggi il nostro pane quotidiano, e rimetti a noi i nostri debiti come noi li rimettiamo ai nostri debitori, e non ci indurre in tentazione, ma liberaci dal maligno.", cu:"Отче наш, Иже еси на небесех! Да святится имя Твое, да приидет Царствие Твое, да будет воля Твоя, яко на небеси и на земли. Хлеб наш насущный даждь нам днесь; и остави нам долги наша, якоже и мы оставляем должником нашим; и не введи нас во искушение, но избави нас от лукаваго."},
+
+ trop1:{t:"Tropari della Trinità", it:"Alzàti dal sonno, ci prostriamo davanti a te, o Buono, e a te, o Potente, gridiamo il canto degli angeli: Santo, santo, santo sei tu, o Dio; per l'intercessione della Madre di Dio abbi pietà di noi.", cu:"Востав от сна, припадаем Ти, Блаже, и ангельскую песнь вопием Ти, Сильне: Свят, Свят, Свят еси, Боже, Богородицею помилуй нас."},
+ trop2:{r:"Gloria al Padre…", it:"Dal letto e dal sonno mi hai fatto alzare, Signore: illumina la mia mente e il mio cuore e apri le mie labbra perché io canti te, Santa Trinità: Santo, santo, santo sei tu, o Dio; per l'intercessione della Madre di Dio abbi pietà di noi.", cu:"От одра и сна воздвигл мя еси, Господи, ум мой просвети и сердце, и устне мои отверзи, во еже пети Тя, Святая Троице: Свят, Свят, Свят еси, Боже, Богородицею помилуй нас."},
+ trop3:{r:"Ora e sempre…", it:"All'improvviso verrà il Giudice e le azioni di ciascuno saranno messe a nudo; ma con timore gridiamo nel mezzo della notte: Santo, santo, santo sei tu, o Dio; per l'intercessione della Madre di Dio abbi pietà di noi.", cu:"Внезапно Судия приидет, и коегождо деяния обнажатся, но страхом зовем в полунощи: Свят, Свят, Свят еси, Боже, Богородицею помилуй нас."},
+ macMattino:{t:"Preghiera di san Macario il Grande", it:"Alzatomi dal sonno, ti ringrazio, Santa Trinità, perché per la tua grande bontà e pazienza non ti sei adirata con me, pigro e peccatore, e non mi hai fatto perire con le mie iniquità, ma con il tuo consueto amore per gli uomini mi hai rialzato mentre giacevo senza speranza, perché io vegli all'alba e glorifichi la tua potenza. Ora illumina gli occhi della mia mente, apri la mia bocca perché impari le tue parole, comprenda i tuoi comandamenti, compia la tua volontà, ti canti confessandoti con il cuore e lodi il tuo santissimo nome, del Padre e del Figlio e dello Spirito Santo, ora e sempre e nei secoli dei secoli. Amen.", cu:"От сна востав, благодарю Тя, Святая Троице, яко многия ради Твоея благости и долготерпения не прогневался еси на мя, лениваго и грешнаго, ниже погубил мя еси со беззаконьми моими; но человеколюбствовал еси обычно и в нечаянии лежащаго воздвигл мя еси, во еже утреневати и славословити державу Твою. И ныне просвети мои очи мысленныя, отверзи моя уста поучатися словесем Твоим, и разумети заповеди Твоя, и творити волю Твою, и пети Тя во исповедании сердечнем, и воспевати всесвятое имя Твое, Отца и Сына и Святаго Духа, ныне и присно и во веки веков. Аминь."},
+ venite:{r:"con tre inchini", it:"Venite, adoriamo il nostro Re e Dio. Venite, adoriamo e prostriamoci davanti a Cristo, nostro Re e Dio. Venite, adoriamo e prostriamoci davanti a Cristo stesso, Re e Dio nostro.", cu:"Приидите, поклонимся Цареви нашему Богу. Приидите, поклонимся и припадем Христу, Цареви нашему Богу. Приидите, поклонимся и припадем Самому Христу, Цареви и Богу нашему."},
+ credo:{t:"Simbolo della fede", it:"Credo in un solo Dio, Padre onnipotente, creatore del cielo e della terra, di tutte le cose visibili e invisibili. E in un solo Signore, Gesù Cristo, Figlio di Dio, unigenito, nato dal Padre prima di tutti i secoli: luce da luce, Dio vero da Dio vero, generato, non creato, consustanziale al Padre, per mezzo del quale tutte le cose sono state fatte. Per noi uomini e per la nostra salvezza discese dai cieli, si incarnò dallo Spirito Santo e da Maria Vergine e si fece uomo. Fu crocifisso per noi sotto Ponzio Pilato, patì e fu sepolto. Il terzo giorno risuscitò secondo le Scritture, salì ai cieli e siede alla destra del Padre. E di nuovo verrà nella gloria a giudicare i vivi e i morti, e il suo regno non avrà fine. E nello Spirito Santo, Signore che dà la vita, che procede dal Padre, che con il Padre e il Figlio è adorato e glorificato e ha parlato per mezzo dei profeti. In una sola Chiesa santa, cattolica e apostolica. Professo un solo battesimo per la remissione dei peccati. Aspetto la risurrezione dei morti e la vita del secolo che verrà. Amen.", cu:"Верую во единаго Бога Отца, Вседержителя, Творца небу и земли, видимым же всем и невидимым. И во единаго Господа Иисуса Христа, Сына Божия, Единороднаго, Иже от Отца рожденнаго прежде всех век; Света от Света, Бога истинна от Бога истинна, рожденна, несотворенна, единосущна Отцу, Имже вся быша. Нас ради человек и нашего ради спасения сшедшаго с небес и воплотившагося от Духа Свята и Марии Девы, и вочеловечшася. Распятаго же за ны при Понтийстем Пилате, и страдавша, и погребенна. И воскресшаго в третий день по Писанием. И возшедшаго на небеса, и седяща одесную Отца. И паки грядущаго со славою судити живым и мертвым, Егоже Царствию не будет конца. И в Духа Святаго, Господа, Животворящаго, Иже от Отца исходящаго, Иже со Отцем и Сыном спокланяема и сславима, глаголавшаго пророки. Во едину Святую, Соборную и Апостольскую Церковь. Исповедую едино крещение во оставление грехов. Чаю воскресения мертвых, и жизни будущаго века. Аминь."},
+ optina:{t:"Preghiera degli starcy di Optina", r:"per l'inizio della giornata", it:"Signore, dammi di accogliere con la pace dell'anima tutto ciò che mi porterà il giorno che comincia. Dammi di abbandonarmi interamente alla tua santa volontà. In ogni ora di questo giorno istruiscimi e sostienimi in tutto. Qualunque notizia io riceva durante il giorno, insegnami ad accoglierla con animo tranquillo e con la ferma convinzione che in tutto c'è la tua santa volontà. In tutte le mie parole e azioni guida i miei pensieri e i miei sentimenti. In ogni circostanza imprevista non lasciarmi dimenticare che tutto è mandato da te. Insegnami ad agire con rettitudine e saggezza con ognuno della mia famiglia, senza turbare e senza rattristare nessuno. Signore, dammi la forza di sopportare la fatica del giorno che viene e tutti gli avvenimenti che porterà. Guida la mia volontà e insegnami a pregare, a credere, a sperare, a sopportare, a perdonare e ad amare. Amen.", ru:"Господи, дай мне с душевным спокойствием встретить все, что принесет мне наступающий день. Дай мне всецело предаться воле Твоей святой. На всякий час сего дня во всем наставь и поддержи меня. Какие бы я ни получал известия в течение дня, научи меня принять их со спокойной душою и твердым убеждением, что на все святая воля Твоя. Во всех словах и делах моих руководи моими мыслями и чувствами. Во всех непредвиденных случаях не дай мне забыть, что все ниспослано Тобой. Научи меня прямо и разумно действовать с каждым членом семьи моей, никого не смущая и не огорчая. Господи, дай мне силу перенести утомление наступающего дня и все события в течение дня. Руководи моею волею и научи меня молиться, верить, надеяться, терпеть, прощать и любить. Аминь."},
+ theotokos:{t:"Alla Madre di Dio", it:"Madre di Dio Vergine, rallegrati, Maria piena di grazia, il Signore è con te. Benedetta tu fra le donne e benedetto il frutto del tuo grembo, perché hai partorito il Salvatore delle anime nostre.", cu:"Богородице Дево, радуйся, Благодатная Марие, Господь с Тобою; благословена Ты в женах, и благословен плод чрева Твоего, яко Спаса родила еси душ наших."},
+ degno:{t:"È veramente giusto", it:"È veramente giusto proclamare beata te, Madre di Dio, sempre beata e tutta immacolata e Madre del nostro Dio. Più venerabile dei cherubini e incomparabilmente più gloriosa dei serafini, tu che senza corruzione hai generato Dio Verbo, vera Madre di Dio, noi ti magnifichiamo.", cu:"Достойно есть яко воистину блажити Тя, Богородицу, Присноблаженную и Пренепорочную и Матерь Бога нашего. Честнейшую Херувим и славнейшую без сравнения Серафим, без истления Бога Слова рождшую, сущую Богородицу Тя величаем."},
+ angeloPasqua:{t:"L'angelo gridava", r:"da Pasqua all'Ascensione, al posto di «È veramente giusto»", it:"L'angelo gridava alla Piena di grazia: Vergine pura, rallegrati! E di nuovo ti dico: rallegrati! Il tuo Figlio è risorto dal sepolcro il terzo giorno e ha risuscitato i morti; popoli, esultate! Risplendi, risplendi, nuova Gerusalemme, perché la gloria del Signore si è levata su di te. Danza ora ed esulta, Sion, e tu, Pura, Madre di Dio, rallegrati della risurrezione del tuo Figlio.", cu:"Ангел вопияше Благодатней: Чистая Дево, радуйся! И паки реку: радуйся! Твой Сын воскресе тридневен от гроба, и мертвыя воздвигнувый; людие, веселитеся! Светися, светися, новый Иерусалиме, слава бо Господня на тебе возсия. Ликуй ныне и веселися, Сионе. Ты же, Чистая, красуйся, Богородице, о востании Рождества Твоего."},
+ efrem:{t:"Preghiera di sant'Efrem il Siro", r:"nei giorni feriali della Quaresima: una prostrazione dopo ciascuna delle tre parti, poi dodici inchini dicendo «O Dio, purificami peccatore», infine tutta la preghiera e una prostrazione", it:"Signore e Sovrano della mia vita, non darmi uno spirito di pigrizia, di scoraggiamento, di brama di potere e di vane parole. Concedi invece a me, tuo servo, uno spirito di castità, di umiltà, di pazienza e di amore. Sì, Signore e Re, concedimi di vedere i miei peccati e di non giudicare mio fratello, perché tu sei benedetto nei secoli dei secoli. Amen.", cu:"Господи и Владыко живота моего, дух праздности, уныния, любоначалия и празднословия не даждь ми. Дух же целомудрия, смиренномудрия, терпения и любве даруй ми, рабу Твоему. Ей, Господи Царю, даруй ми зрети моя прегрешения и не осуждати брата моего, яко благословен еси во веки веков. Аминь."},
+ gesu:{t:"Preghiera di Gesù", it:"Signore Gesù Cristo, Figlio di Dio, abbi pietà di me peccatore.", cu:"Господи Иисусе Христе, Сыне Божий, помилуй мя грешнаго."},
+
+ primaLavoro:{t:"Prima di ogni lavoro", it:"Signore Gesù Cristo, Figlio unigenito del Padre tuo senza principio, tu hai detto con la tua purissima bocca: «Senza di me non potete fare nulla». Signore mio, Signore, accolte con fede nell'anima e nel cuore le tue parole, mi prostro davanti alla tua bontà: aiuta me, peccatore, a portare a compimento in te quest'opera che comincio, nel nome del Padre e del Figlio e dello Spirito Santo, per le preghiere della Madre di Dio e di tutti i tuoi santi. Amen.", cu:"Господи Иисусе Христе, Сыне Единородный Безначальнаго Твоего Отца, Ты бо рекл еси пречистыми усты Твоими, яко без Мене не можете творити ничесоже. Господи мой, Господи, верою объем в души моей и сердце Тобою реченная, припадаю Твоей благости: помози ми, грешному, сие дело, мною начинаемое, о Тебе Самом совершити, во имя Отца и Сына и Святаго Духа, молитвами Богородицы и всех Твоих святых. Аминь."},
+ sestaOra:{t:"Tropario dell'ora sesta", r:"a mezzogiorno, l'ora della crocifissione", it:"Tu che nel sesto giorno e nella sesta ora hai inchiodato alla croce il peccato che Adamo osò nel paradiso, straccia anche il documento dei nostri peccati, Cristo Dio, e salvaci.", cu:"Иже в шестый день же и час на кресте пригвождей в раи дерзновенный Адамов грех, и грехов наших рукописание раздери, Христе Боже, и спаси нас."},
+ dopoLavoro:{t:"Alla fine del lavoro", it:"Tu sei il compimento di ogni bene, o mio Cristo: riempi di gioia e di letizia l'anima mia e salvami, tu che solo sei ricco di misericordia. Signore, gloria a te.", cu:"Исполнение всех благих Ты еси, Христе мой, исполни радости и веселия душу мою и спаси мя, яко един Многомилостив. Господи, слава Тебе."},
+
+ occhi:{t:"Salmo 144", it:"Gli occhi di tutti sperano in te, Signore, e tu dai loro il cibo a suo tempo; tu apri la tua mano generosa e sazi di benevolenza ogni vivente.", cu:"Очи всех на Тя, Господи, уповают, и Ты даеши им пищу во благовремении, отверзаеши Ты щедрую руку Твою и исполняеши всякое животно благоволения."},
+ benedici:{t:"Benedizione", r:"segnando il cibo con la croce", it:"Cristo Dio, benedici il cibo e la bevanda dei tuoi servi, perché tu sei santo, sempre, ora e sempre e nei secoli dei secoli. Amen.", cu:"Христе Боже, благослови ястие и питие рабом Твоим, яко свят еси, всегда, ныне и присно и во веки веков. Аминь."},
+ grazie:{t:"Ringraziamento", it:"Ti ringraziamo, Cristo Dio nostro, perché ci hai saziati dei tuoi beni terreni; non privarci anche del tuo Regno celeste, ma come venisti in mezzo ai tuoi discepoli, Salvatore, donando loro la pace, vieni a noi e salvaci. Amen.", cu:"Благодарим Тя, Христе Боже наш, яко насытил еси нас земных Твоих благ; не лиши нас и Небеснаго Твоего Царствия, но яко посреде учеников Твоих пришел еси, Спасе, мир даяй им, прииди к нам и спаси нас. Аминь."},
+
+ luce:{t:"Luce serena", r:"l'inno dei vespri, al tramonto", it:"Luce serena della santa gloria del Padre immortale, celeste, santo e beato, Gesù Cristo! Giunti al tramonto del sole, vedendo la luce della sera, cantiamo il Padre, il Figlio e lo Spirito Santo, Dio. Tu sei degno di essere cantato in ogni tempo da voci sante, Figlio di Dio che dai la vita: per questo il mondo ti glorifica.", cu:"Свете тихий святыя славы Безсмертнаго Отца Небеснаго, Святаго Блаженнаго, Иисусе Христе! Пришедше на запад солнца, видевше свет вечерний, поем Отца, Сына и Святаго Духа, Бога. Достоин еси во вся времена пет быти гласы преподобными, Сыне Божий, живот даяй, темже мир Тя славит."},
+ concedi:{t:"Concedi, Signore", it:"Concedi, Signore, che in questa sera siamo custoditi senza peccato. Benedetto sei tu, Signore, Dio dei nostri padri, e lodato e glorificato è il tuo nome nei secoli. Amen. Sia su di noi, Signore, la tua misericordia, come abbiamo sperato in te. Benedetto sei tu, Signore: insegnami i tuoi decreti. Benedetto sei tu, Sovrano: fammi comprendere i tuoi decreti. Benedetto sei tu, Santo: illuminami con i tuoi decreti. Signore, la tua misericordia è per sempre: non disprezzare l'opera delle tue mani. A te si addice la lode, a te si addice il canto, a te si addice la gloria, Padre e Figlio e Spirito Santo, ora e sempre e nei secoli dei secoli. Amen.", cu:"Сподоби, Господи, в вечер сей без греха сохранитися нам. Благословен еси, Господи Боже отец наших, и хвально и прославлено имя Твое во веки. Аминь. Буди, Господи, милость Твоя на нас, якоже уповахом на Тя. Благословен еси, Господи, научи мя оправданием Твоим. Благословен еси, Владыко, вразуми мя оправданием Твоим. Благословен еси, Святый, просвети мя оправданьми Твоими. Господи, милость Твоя во век, дел руку Твоею не презри. Тебе подобает хвала, Тебе подобает пение, Тебе слава подобает, Отцу и Сыну и Святому Духу, ныне и присно и во веки веков. Аминь."},
+ nunc:{t:"Cantico di Simeone", it:"Ora lascia, Sovrano, che il tuo servo vada in pace secondo la tua parola, perché i miei occhi hanno visto la tua salvezza, preparata da te davanti a tutti i popoli: luce per illuminare le genti e gloria del tuo popolo Israele.", cu:"Ныне отпущаеши раба Твоего, Владыко, по глаголу Твоему, с миром; яко видеста очи мои спасение Твое, еже еси уготовал пред лицем всех людей, свет во откровение языков, и славу людей Твоих Израиля."},
+
+ tropNotte1:{t:"Tropari", it:"Abbi pietà di noi, Signore, abbi pietà di noi: privi di ogni difesa, noi peccatori ti offriamo questa preghiera come al nostro Sovrano: abbi pietà di noi.", cu:"Помилуй нас, Господи, помилуй нас; всякаго бо ответа недоумеюще, сию Ти молитву яко Владыце грешнии приносим: помилуй нас."},
+ tropNotte2:{r:"Gloria al Padre…", it:"Signore, abbi pietà di noi, perché in te abbiamo sperato; non adirarti molto con noi e non ricordare le nostre iniquità, ma guarda anche ora a noi nella tua compassione e liberaci dai nostri nemici: tu sei il nostro Dio e noi il tuo popolo, tutti opera delle tue mani, e invochiamo il tuo nome.", cu:"Господи, помилуй нас, на Тя бо уповахом; не прогневайся на ны зело, ниже помяни беззаконий наших, но призри и ныне яко благоутробен, и избави ны от враг наших; Ты бо еси Бог наш, и мы людие Твои, вси дела руку Твоею, и имя Твое призываем."},
+ tropNotte3:{r:"Ora e sempre…", it:"Aprici le porte della misericordia, benedetta Madre di Dio: noi che speriamo in te non andiamo perduti, ma per mezzo tuo siamo liberati dalle sventure, perché tu sei la salvezza della stirpe cristiana.", cu:"Милосердия двери отверзи нам, благословенная Богородице, надеющиися на Тя да не погибнем, но да избавимся Тобою от бед: Ты бо еси спасение рода христианскаго."},
+ macSera:{t:"Preghiera di san Macario il Grande", it:"Dio eterno e Re di ogni creatura, che mi hai concesso di giungere fino a quest'ora, perdonami i peccati che ho commesso oggi con le opere, con le parole e con i pensieri, e purifica, Signore, la mia umile anima da ogni macchia della carne e dello spirito. E concedimi, Signore, di passare questa notte in un sonno di pace, perché, alzandomi dal mio umile letto, io piaccia al tuo santissimo nome per tutti i giorni della mia vita e calpesti i nemici che mi combattono, nella carne e senza carne. Liberami, Signore, dai pensieri vani che mi contaminano e dai desideri malvagi. Poiché tuo è il regno, la potenza e la gloria, del Padre e del Figlio e dello Spirito Santo, ora e sempre e nei secoli dei secoli. Amen.", cu:"Боже вечный и Царю всякаго создания, сподобивый мя даже в час сей доспети, прости ми грехи, яже сотворих в сей день делом, словом и помышлением, и очисти, Господи, смиренную мою душу от всякия скверны плоти и духа. И даждь ми, Господи, в нощи сей сон прейти в мире, да востав от смиреннаго ми ложа, благоугожду пресвятому имени Твоему во вся дни живота моего, и поперу борющия мя враги плотския и безплотныя. И избави мя, Господи, от помышлений суетных, оскверняющих мя, и похотей лукавых. Яко Твое есть Царство, и сила, и слава, Отца и Сына и Святаго Духа, ныне и присно и во веки веков. Аминь."},
+ angelo:{t:"All'angelo custode", it:"Angelo di Cristo, mio santo custode e protettore dell'anima e del corpo, perdonami tutto ciò in cui ho peccato oggi, e liberami da ogni astuzia del nemico che mi combatte, perché con nessun peccato io irriti il mio Dio; ma prega per me, servo peccatore e indegno, perché tu mi renda degno della bontà e della misericordia della Santissima Trinità, della Madre del mio Signore Gesù Cristo e di tutti i santi. Amen.", cu:"Ангеле Христов, хранителю мой святый и покровителю души и тела моего, вся ми прости, елика согреших во днешний день, и от всякаго лукавствия противнаго ми врага избави мя, да ни в коемже гресе прогневаю Бога моего; но моли за мя грешнаго и недостойнаго раба, яко да достойна мя покажеши благости и милости Всесвятыя Троицы и Матере Господа моего Иисуса Христа и всех святых. Аминь."},
+ croce:{t:"Alla Croce", r:"segnandoti con la croce", it:"Risorga Dio e siano dispersi i suoi nemici, e fuggano dal suo volto quelli che lo odiano. Come svanisce il fumo, svaniscano; come si scioglie la cera davanti al fuoco, così periscano i demòni davanti a quelli che amano Dio e si segnano con il segno della croce, e dicono con gioia: Rallegrati, preziosissima e vivificante Croce del Signore, che scacci i demòni con la potenza del Signore nostro Gesù Cristo crocifisso su di te, che discese agli inferi, calpestò la potenza del diavolo e ci donò te, la sua Croce preziosa, per scacciare ogni avversario. O preziosissima e vivificante Croce del Signore, aiutami con la santa Signora, la Vergine Madre di Dio, e con tutti i santi, nei secoli. Amen.", cu:"Да воскреснет Бог, и расточатся врази Его, и да бежат от лица Его ненавидящии Его. Яко исчезает дым, да исчезнут; яко тает воск от лица огня, тако да погибнут беси от лица любящих Бога и знаменующихся крестным знамением, и в веселии глаголющих: радуйся, Пречестный и Животворящий Кресте Господень, прогоняяй бесы силою на тебе пропятаго Господа нашего Иисуса Христа, во ад сшедшаго и поправшаго силу диаволю, и даровавшаго нам тебе Крест Свой Честный на прогнание всякаго супостата. О, Пречестный и Животворящий Кресте Господень! Помогай ми со Святою Госпожею Девою Богородицею и со всеми святыми во веки. Аминь."},
+ mani:{t:"Nelle tue mani", r:"ultime parole prima del sonno", it:"Nelle tue mani, Signore Gesù Cristo, mio Dio, affido il mio spirito: tu benedicimi, tu abbi pietà di me e donami la vita eterna. Amen.", cu:"В руце Твои, Господи Иисусе Христе, Боже мой, предаю дух мой: Ты же мя благослови, Ты мя помилуй и живот вечный даруй ми. Аминь."}
+};
+
+const SLOT_LABEL = {mattino:"Preghiere del mattino", giorno:"Preghiere del giorno", pasti:"Preghiere dei pasti", sera:"Preghiere della sera", notte:"Preghiere prima di dormire"};
+let pslot = null;
+let plang = store.get("men:plang") || "it";
+
+function slotNow(){
+  const h = new Date().getHours();
+  if (h >= 4 && h < 11) return "mattino";
+  if (h >= 11 && h < 17) return "giorno";
+  if (h >= 17 && h < 21) return "sera";
+  return "notte";
+}
+
+function seasonOf(day){
+  const pd = day ? day.pd : 999, wd = day ? day.wd : -1;
+  return {
+    pascha: pd >= 0 && pd <= 38,
+    bright: pd >= 0 && pd <= 6,
+    ascension: pd >= 39 && pd <= 48,
+    lent: pd >= -48 && pd <= -4 && wd >= 1 && wd <= 5,
+    lentWeekend: pd >= -48 && pd <= -4 && (wd === 0 || wd === 6)
+  };
+}
+
+function beginItems(s){
+  return [PR.nome, PR.publicano, PR.padri, PR.gloriaTe, s.pascha ? PR.risorto : (s.ascension ? null : PR.reCeleste),
+          PR.trisagio, PR.gloria, PR.trinita, PR.kyrie3, PR.gloria, PR.padreNostro].filter(Boolean);
+}
+
+function slotItems(slot, s){
+  const hymn = s.pascha ? PR.angeloPasqua : PR.degno;
+  const opening = s.pascha ? PR.risorto : (s.ascension ? null : PR.reCeleste);
+  const paschalLink = s.pascha ? {link: DEC.svc, text: "Ascolta «Ангел вопијаше» cantato a Visoki Dečani"} : null;
+  switch (slot) {
+    case "mattino": return [{begin: true}, PR.trop1, PR.trop2, PR.trop3, PR.kyrie12, PR.macMattino, PR.venite, PR.credo,
+      PR.optina, PR.theotokos, hymn, paschalLink, s.lent ? PR.efrem : null, PR.gesu];
+    case "giorno": return [{h: "Prima del lavoro"}, opening, PR.primaLavoro,
+      {h: "A mezzogiorno"}, PR.sestaOra, PR.gesu, {link: "#lampada", text: "Ripetila con il respiro nella Lampada della Preghiera"},
+      {h: "Alla fine del lavoro"}, PR.dopoLavoro, hymn];
+    case "pasti": return s.pascha
+      ? [{rubric: "Da Pasqua all'Ascensione, prima e dopo i pasti si canta «Cristo è risorto» tre volte."},
+         {h: "Prima di mangiare"}, PR.risorto, PR.benedici, {h: "Dopo aver mangiato"}, PR.risorto]
+      : [{h: "Prima di mangiare"}, PR.occhi, {rubric: "oppure, o in aggiunta:"}, PR.padreNostro, PR.benedici,
+         {h: "Dopo aver mangiato"}, PR.grazie, PR.gloria, PR.kyrie3];
+    case "sera": return [PR.luce, PR.concedi, PR.nunc, {link: ELI.mon, text: "Ascolta il Cantico di Simeone dal coro di Santa Elisabetta"},
+      {rubric: "Poi il Trisagio, «Santissima Trinità» e il Padre nostro, come nelle preghiere iniziali."}, PR.theotokos,
+      s.lent ? PR.efrem : null];
+    case "notte": return [{begin: true}, PR.tropNotte1, PR.tropNotte2, PR.tropNotte3, PR.kyrie12, PR.macSera, PR.angelo, hymn,
+      {h: "Esame della giornata"}, {rubric: "In silenzio, ripercorri la giornata: ringrazia per il bene ricevuto e chiedi perdono di ciò che hai sbagliato con le opere, le parole e i pensieri."},
+      PR.croce, PR.mani];
+  }
+  return [];
+}
+
+function prayerHTML(p){
+  if (!p) return "";
+  if (p.h) return `<div class="pgroup">${esc(p.h)}</div>`;
+  if (p.rubric) return `<p class="rub" style="margin:0;font-size:var(--s-sm);font-style:italic">${esc(p.rubric)}</p>`;
+  if (p.link) return `<p class="note" style="margin:-8px 0 0"><a href="${p.link}" target="_blank" rel="noopener">${esc(p.text)} ↗</a></p>`;
+  const langs = plang === "both" ? ["it", "cu"] : [plang];
+  const cols = langs.map(l => {
+    if (l === "cu" && !p.cu && p.ru) return `<p class="pt" lang="ru">${esc(p.ru)} <span class="amen">(originale russo)</span></p>`;
+    const t = p[l] || p.it;
+    return `<p class="pt" lang="${p[l] ? l : "it"}">${esc(t)}</p>`;
+  }).join("");
+  return `<div class="pr">${p.t ? `<div class="ptitle">${esc(p.t)}</div>` : ""}${p.r ? `<div class="rub">${esc(p.r)}</div>` : ""}<div class="pv${langs.length > 1 ? " two" : ""}">${cols}</div></div>`;
+}
+
+function renderPrayers(day){
+  if (!pslot) pslot = slotNow();
+  const s = seasonOf(day);
+  document.querySelectorAll(".tabs [data-slot]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.slot === pslot)));
+  document.querySelectorAll("[data-plang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.plang === plang)));
+  const notes = [];
+  if (s.bright) notes.push("Settimana Luminosa: al posto delle preghiere del mattino e della sera si recitano le Ore di Pasqua.");
+  if (s.pascha) notes.push("Tempo pasquale: «Cristo è risorto» sostituisce «Re celeste» e «L'angelo gridava» sostituisce «È veramente giusto».");
+  if (s.ascension) notes.push("Dall'Ascensione a Pentecoste si omette «Re celeste»: si comincia dal Trisagio.");
+  if (s.lent) notes.push("Grande Quaresima: al mattino e alla sera si aggiunge la preghiera di sant'Efrem il Siro.");
+  if (s.lentWeekend) notes.push("Grande Quaresima: di sabato e di domenica la preghiera di sant'Efrem non si dice.");
+  const season = $("season");
+  season.textContent = notes.join(" ");
+  season.hidden = !notes.length;
+  const html = slotItems(pslot, s).filter(Boolean).map(p => p.begin
+    ? `<details class="begin"><summary><span class="ptitle" style="font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric)">preghiere iniziali</span> <span class="note">dal «Nel nome del Padre» al «Padre nostro»</span></summary><div class="prayers">${beginItems(s).map(prayerHTML).join("")}</div></details>`
+    : prayerHTML(p)).join("");
+  $("prayers").innerHTML = `<div class="prayers">${html}</div>`;
+}
+
+/* ---------- rendering ---------- */
+function render(){
+  const day = CAL.d[cur];
+  try { history.replaceState(null, "", "#" + cur); } catch (e) {}
+  $("pick").value = cur;
+  const dt = parseKey(cur);
+  if (!day) {
+    $("wd").textContent = WD[dt.getUTCDay()];
+    $("date").textContent = dt.getUTCDate()+" "+MONTHS[dt.getUTCMonth()]+" "+dt.getUTCFullYear();
+    $("jul").textContent = "Questo giorno è fuori dal calendario caricato ("+fmtShort(CAL.from)+" – "+fmtShort(CAL.to)+").";
+    ["week","feasts","chips","readings","foryou","patron","saints","tracks"].forEach(id => $(id).innerHTML = "");
+    renderPrayers(null);
+    return;
+  }
+  $("wd").textContent = WD[day.wd];
+  $("date").textContent = dt.getUTCDate()+" "+MONTHS[dt.getUTCMonth()]+" "+dt.getUTCFullYear();
+  const [jm, jd] = day.j.split("-").map(Number);
+  $("jul").innerHTML = `Calendario giuliano: <b>${jd} ${MONTHS[jm-1]}</b>` + (day.tn ? ` · tono ${day.tn}` : "");
+  $("week").textContent = day.t.join(" · ");
+  const isFeast = day.f.length > 0;
+  $("feasts").innerHTML = day.f.map((f,i) =>
+    `<div class="feast">${i===0 ? sign(day.fl) : ""}<div>${esc(f)}${i===0 && RANK[day.fl] ? `<span class="rank">${RANK[day.fl]}</span>` : ""}</div></div>`).join("");
+  const holyWeek = day.pd >= -7 && day.pd <= -1;
+  if (!isFeast && day.fl >= 2 && !holyWeek) {
+    $("feasts").innerHTML = `<div class="feast plain">${sign(day.fl)}<div><span class="rank" style="margin-top:6px">${RANK[day.fl]}</span></div></div>`;
+  }
+  const [fl, fd] = day.fs;
+  const slot = slotNow();
+  $("chips").innerHTML = `<span class="chip ${fd && fl !== "Senza digiuno" ? "fast" : ""}">${esc(fl)}${fd ? " · " + esc(fd) : ""}</span>` +
+    `<button class="chip jump" data-jump="${slot}">${SLOT_LABEL[slot]} ↓</button>`;
+  renderPrayers(day);
+  renderReadings(day);
+  renderSaints(day);
+  renderUpcoming();
+  $("tracks").innerHTML = chantFor(day).map(t => `
+    <div class="track"><span class="house">${esc(t.h)}</span><span class="t">${esc(t.t)}</span><span class="d">${esc(t.d)}</span>
+    <a href="${t.u}" target="_blank" rel="noopener">Ascolta ↗</a></div>`).join("");
+}
+
+function fmtShort(k){ const d = parseKey(k); return d.getUTCDate()+" "+MONTHS[d.getUTCMonth()]+" "+d.getUTCFullYear(); }
+
+function readingHTML(r, open){
+  const [src, desc, pid] = r, m = CAL.p[pid];
+  const label = esc(src) + (desc ? " · " + esc(desc) : "");
+  return { label, ref: esc(m.ref), full: esc(m.full), pid, open };
+}
+
+function textHTML(pid){
+  const m = CAL.p[pid];
+  if (!m.has.length) return `<p class="note">Lettura composta da una selezione di brani: il testo non è disponibile.</p>`;
+  if (!TEXTS[lang]) return `<p class="loading">Carico il testo</p>`;
+  const rows = TEXTS[lang][pid];
+  if (!rows) {
+    return `<p class="note">${lang === "it" ? "Questo libro non è nella Riveduta: prova RU o ЦСЯ." : "Testo non disponibile in questa lingua."}</p>`;
+  }
+  let html = "", prevCh = rows[0][0];
+  rows.forEach(([ch, v, t], i) => {
+    // the first verse opens with a rubricated initial, so its number is left to the reference above
+    if (i > 0) html += `<sup>${ch !== prevCh ? ch + "," + v : v}</sup>`;
+    html += esc(t) + " ";
+    prevCh = ch;
+  });
+  const part = m.part.includes(lang) ? `<p class="note">Il testo in questa traduzione è incompleto.</p>` : "";
+  return `<p class="text first" lang="${lang}">${html.trim()}</p>${part}`;
+}
+
+function renderReadings(day){
+  const main = day.r.filter(r => r[3]);
+  const rest = day.r.filter(r => !r[3]);
+  const list = main.length ? main : day.r.slice(0, 2);
+  const others = main.length ? rest : day.r.slice(2);
+  let html = list.map(r => {
+    const x = readingHTML(r);
+    return `<article class="reading"><div class="rlabel">${x.label}</div>
+      <div class="rref">${x.ref}<small>${x.full}</small></div>${textHTML(x.pid)}</article>`;
+  }).join("");
+  if (!day.r.length) html = `<p class="note">Oggi non sono previste letture alla Liturgia.</p>`;
+  if (others.length) {
+    html += `<details class="more"><summary>Altre letture del giorno (${others.length})</summary>` +
+      others.map(r => { const x = readingHTML(r);
+        return `<details class="one" data-pid="${x.pid}"><summary><span class="rlabel">${x.label}</span><span class="rref" style="font-size:var(--s-md)">${x.ref}</span></summary>${textHTML(x.pid)}</details>`; }).join("") +
+      `</details>`;
+  }
+  $("readings").innerHTML = html;
+}
+
+function renderSaints(day){
+  const mine = patronsOn(cur, day);
+  $("patron").innerHTML = mine.map(p => `
+    <div class="pick">${CROSS}<b>${esc(p.n)}</b><p>${esc(p.w)}</p></div>`).join("");
+  const cached = readPick(day);
+  const names = cached && cached.nomi;
+  const items = dayItems(day);
+  $("saints").innerHTML = items.map((s, i) => {
+    const it = names && names[i] && names[i] !== s ? names[i] : null;
+    return `<li>${esc(it || s)}${it ? `<span class="orig">${esc(s)}</span>` : ""}</li>`;
+  }).join("");
+  renderForYou(day, cached);
+}
+
+function dayItems(day){ return day.f.concat(day.s); }
+
+function renderUpcoming(){
+  const out = [];
+  let k = addDays(cur, 1);
+  for (let i = 0; i < 400 && out.length < 5 && CAL.d[k]; i++, k = addDays(k, 1)) {
+    for (const p of patronsOn(k, CAL.d[k])) out.push([k, p, i + 1]);
+  }
+  $("upcoming").innerHTML = out.slice(0, 5).map(([k, p, n]) =>
+    `<span class="when">${n === 1 ? "domani" : "tra " + n + " giorni"}</span><span><button data-go="${k}">${esc(p.n)}</button> <span class="muted">· ${fmtShort(k)}</span></span>`).join("")
+    || `<span class="muted">Nessuna nei prossimi mesi.</span>`;
+}
+
+/* ---------- personal selection (Claude) ---------- */
+function profile(){ return store.get("men:profile") || DEFAULT_PROFILE; }
+function pickKey(){ return "men:pick:v1:" + cur + ":" + hash(profile()); }
+function readPick(){ try{ const s = store.get(pickKey()); return s ? JSON.parse(s) : null; }catch(e){ return null; } }
+
+function renderForYou(day, data){
+  const box = $("foryou");
+  if (data && data.scelti) {
+    const items = dayItems(day);
+    box.innerHTML = `<div class="rlabel">scelti per te</div>` + data.scelti.map(s => {
+      const i = Number(s.i) - 1, name = (data.nomi && data.nomi[i]) || items[i] || "";
+      return `<div class="pick">${sign(4)}<b>${esc(name)}</b><p>${esc(s.perche || "")}</p></div>`;
+    }).join("") + (data.spunto ? `<p class="hint">${esc(data.spunto)}</p>` : "");
+    return;
+  }
+  if (!sample || sampleState === "denied" || sampleState === "unavailable") {
+    box.innerHTML = sample === null ? "" : `<p class="note">La scelta personale dei santi è disattivata per questa pagina.</p>`;
+    return;
+  }
+  if (!dayItems(day).length) { box.innerHTML = ""; return; }
+  box.innerHTML = `<div class="ask"><button class="btn solid" id="ask">Scegli i santi per me</button>
+    <span class="note">Claude legge i santi di oggi e il tuo profilo.</span></div>`;
+  $("ask").onclick = () => runPick(day, cur);
+}
+
+let pickBusy = false;
+async function runPick(day, k){
+  if (pickBusy || !sample) return;
+  pickBusy = true;
+  const box = $("foryou");
+  box.innerHTML = `<p class="thinking">Sfoglio il menologio di oggi</p>`;
+  const items = dayItems(day);
+  const mine = patronsOn(k, day);
+  const dt = parseKey(k);
+  const [jm, jd] = day.j.split("-").map(Number);
+  const prompt = [
+    "Sei una guida spirituale ortodossa colta, sobria e precisa. Scrivi in italiano.",
+    `Giorno: ${WD[day.wd]} ${dt.getUTCDate()} ${MONTHS[dt.getUTCMonth()]} ${dt.getUTCFullYear()} (calendario civile), ${jd} ${MONTHS[jm-1]} secondo il calendario giuliano.`,
+    "Settimana: " + day.t.join("; "),
+    "Commemorazioni del giorno, numerate (le feste sono già in italiano, i santi sono in inglese come nel calendario della Chiesa ortodossa in America):",
+    items.map((s, i) => `${i+1}. ${s}`).join("\n"),
+    mine.length ? "Tra i santi che questa persona sente vicini oggi c'è anche: " + mine.map(p => p.n).join(", ") + "." : "",
+    "Profilo della persona:\n" + profile(),
+    "Compito:",
+    "1) Traduci in italiano ogni voce della lista, nella forma tradizionale italiana (Ven. → San/Santa, Hieromartyr → Ieromartire, Greatmartyr → Grande martire, Righteous → Giusto, Blessed → Beato, Holy Martyr → Santo martire). Le voci già in italiano restano uguali. Togli date tra parentesi solo se rendono il nome confuso.",
+    "2) Scegli una o due voci della lista più vicine a questa persona oggi e spiega perché in una o due frasi concrete, legate alla sua vita. Usa solo fatti agiografici certi e noti; se di un santo si sa poco, non inventare dettagli e scegli un altro.",
+    "3) Scrivi uno spunto pratico per la giornata, una sola frase, senza retorica.",
+    'Rispondi solo con JSON: {"nomi": ["..."], "scelti": [{"i": 1, "perche": "..."}], "spunto": "..."}. "nomi" ha lo stesso numero e ordine della lista; "i" è il numero della voce.'
+  ].filter(Boolean).join("\n\n");
+  try {
+    const data = await sample.json(prompt, { cache: { gcTime: 86400000 } });
+    if (!data || !Array.isArray(data.scelti)) throw { code: "invalid_json" };
+    data.scelti = data.scelti.filter(s => Number(s.i) >= 1 && Number(s.i) <= items.length).slice(0, 2);
+    if (!Array.isArray(data.nomi) || data.nomi.length !== items.length) data.nomi = null;
+    store.set("men:pick:v1:" + k + ":" + hash(profile()), JSON.stringify(data));
+    sampleState = "granted";
+    if (k === cur) renderSaints(day);
+  } catch (e) {
+    const code = e && e.code;
+    if (["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(code)) {
+      sampleState = "denied";
+      box.innerHTML = `<p class="note">La scelta personale dei santi è disattivata per questa pagina.</p>`;
+    } else {
+      const msg = code === "rate_limited" ? "Troppe richieste in questo momento. Riprova più tardi."
+               : code === "session_expired" ? "La sessione è scaduta: accedi di nuovo a Claude e riprova."
+               : "La scelta non è riuscita.";
+      box.innerHTML = `<div class="ask"><span class="note">${msg}</span><button class="btn" id="retry">Riprova</button></div>`;
+      $("retry").onclick = () => runPick(day, k);
+    }
+  } finally {
+    pickBusy = false;
+  }
+}
+
+/* ---------- data loading ---------- */
+// data ships as files next to the page, or embedded as <script type="application/json" id="data-…"> in the one-file edition
+async function getJSON(name){
+  const el = document.getElementById("data-" + name);
+  if (el) return JSON.parse(el.textContent);
+  const r = await fetch("data/" + name + ".json");
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function loadTexts(l){
+  if (TEXTS[l] || LOADING[l]) return LOADING[l];
+  LOADING[l] = getJSON("texts-" + l)
+    .then(j => { TEXTS[l] = j; if (CAL && CAL.d[cur] && lang === l) renderReadings(CAL.d[cur]); })
+    .catch(() => { LOADING[l] = null; $("readings").insertAdjacentHTML("afterbegin", `<p class="note">Non riesco a caricare il testo. Ricarica la pagina.</p>`); });
+  return LOADING[l];
+}
+
+function setLang(l){
+  lang = l; store.set("men:lang", l);
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  if (CAL && CAL.d[cur]) renderReadings(CAL.d[cur]);
+  loadTexts(l);
+}
+
+function go(k){
+  if (!k) return;
+  cur = k;
+  render();
+  maybeAutoPick();
+}
+
+function maybeAutoPick(){
+  const day = CAL && CAL.d[cur];
+  if (!day || !sample || sampleState !== "granted") return;
+  if (cur !== localToday() || readPick()) return;
+  if (!dayItems(day).length) return;
+  runPick(day, cur);
+}
+
+function startFromHash(){
+  const h = decodeURIComponent((location.hash || "").slice(1));
+  return /^\d{4}-\d{2}-\d{2}$/.test(h) ? h : localToday();
+}
+
+async function init(){
+  document.querySelectorAll(".lang button").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  $("prev").onclick = () => go(addDays(cur, -1));
+  $("next").onclick = () => go(addDays(cur, 1));
+  $("today").onclick = () => go(localToday());
+  $("pick").onchange = e => go(e.target.value);
+  document.querySelectorAll(".tabs [data-slot]").forEach(b => b.onclick = () => { pslot = b.dataset.slot; renderPrayers(CAL && CAL.d[cur]); });
+  document.querySelectorAll("[data-plang]").forEach(b => b.onclick = () => { plang = b.dataset.plang; store.set("men:plang", plang); renderPrayers(CAL && CAL.d[cur]); });
+  $("chips").addEventListener("click", e => {
+    const b = e.target.closest("[data-jump]");
+    if (!b) return;
+    pslot = b.dataset.jump;
+    renderPrayers(CAL && CAL.d[cur]);
+    $("prayers-sec").scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  renderPrayers(null);
+  $("upcoming").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) { go(b.dataset.go); window.scrollTo({top:0, behavior:"smooth"}); } });
+  document.addEventListener("keydown", e => {
+    if (e.target.closest("input,textarea,select") || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === "ArrowLeft") go(addDays(cur, -1));
+    if (e.key === "ArrowRight") go(addDays(cur, 1));
+  });
+  window.addEventListener("hashchange", () => { const k = startFromHash(); if (k !== cur) go(k); });
+
+  if ($("profile")) {
+  $("profile").value = profile();
+  $("save-profile").onclick = () => { store.set("men:profile", $("profile").value.trim() || DEFAULT_PROFILE); $("profile-msg").textContent = "Salvato. Le prossime scelte useranno questo profilo."; if (CAL && CAL.d[cur]) renderSaints(CAL.d[cur]); };
+  $("reset-profile").onclick = () => { store.set("men:profile", DEFAULT_PROFILE); $("profile").value = DEFAULT_PROFILE; $("profile-msg").textContent = "Profilo ripristinato."; if (CAL && CAL.d[cur]) renderSaints(CAL.d[cur]); };
+  }
+
+  cur = startFromHash();
+  try {
+    CAL = await getJSON("calendar");
+  } catch (e) {
+    $("jul").textContent = "Non riesco a caricare il calendario. Ricarica la pagina.";
+    return;
+  }
+  $("pick").min = CAL.from; $("pick").max = CAL.to;
+  $("range-note").textContent = "Il calendario copre dal " + fmtShort(CAL.from) + " al " + fmtShort(CAL.to) + ".";
+  render();
+  loadTexts(lang);
+
+  if (window.claude && typeof window.claude.use === "function") {
+    try {
+      const [s, perms] = await Promise.all([claude.use("sample"), claude.use("permissions")]);
+      sample = s;
+      if (sample) {
+        sampleState = perms ? await perms.state("sample") : "prompt";
+        if (CAL.d[cur]) renderSaints(CAL.d[cur]);
+        maybeAutoPick();
+      }
+    } catch (e) { sample = null; }
+  }
+}
+init();
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var note = document.getElementById("app-note"), btn = document.getElementById("install-btn"), hint = document.getElementById("ios-hint");
+  if (window.ONE_FILE) { note.textContent = "Edizione in un solo file: funziona senza connessione. Solo i link al canto richiedono internet."; }
+  else if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+    navigator.serviceWorker.register("sw.js").then(function(){ return navigator.serviceWorker.ready; }).then(function(){
+      note.textContent = "Salvata su questo dispositivo: funziona anche senza connessione. Solo i link al canto richiedono internet.";
+    }).catch(function(){});
+  }
+  var deferred = null;
+  window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); deferred = e; btn.hidden = false; });
+  btn.onclick = function(){ if (!deferred) return; deferred.prompt(); deferred.userChoice.finally(function(){ deferred = null; btn.hidden = true; }); };
+  window.addEventListener("appinstalled", function(){ btn.hidden = true; });
+  var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+  if (!window.ONE_FILE && !standalone && /iphone|ipad|ipod/i.test(navigator.userAgent)) hint.hidden = false;
+
+  var dlg = document.getElementById("lamp-dlg"), frame = document.getElementById("lamp-frame");
+  function openLamp(){
+    if (!frame.getAttribute("data-loaded")) {
+      if (window.LAMP_SRCDOC) frame.srcdoc = window.LAMP_SRCDOC; else frame.src = "lampada.html";
+      frame.setAttribute("data-loaded", "1");
+    }
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[href="#lampada"]');
+    if (a) { e.preventDefault(); openLamp(); }
+  }, true);
+  document.getElementById("lamp-close").onclick = function(){ if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); };
+})();
+</script></body></html>
