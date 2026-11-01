@@ -251,6 +251,127 @@ body.speaking .page{padding-bottom:110px}
 .ytcard b{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);display:block;line-height:1.2}
 .ytcard small{color:var(--muted);font-size:var(--s-sm);display:block}
 .ytcard .ext{color:var(--rubric);font-size:1.2rem}
+
+/* drawer groups */
+.drawer-nav>.grp{display:block;width:auto;cursor:default;font-family:var(--f-sc);font-weight:500;text-transform:lowercase;letter-spacing:.1em;color:var(--muted);font-size:var(--s-xs);padding:14px 10px 2px}
+.drawer-nav>.grp:hover{background:none}
+.drawer-nav>.grp:first-child{padding-top:0}
+
+/* shared pieces of the new sections */
+.linkbtn{all:unset;cursor:pointer;color:var(--rubric);font-size:var(--s-sm);text-decoration:underline;text-decoration-color:var(--rubric-wash);text-underline-offset:3px}
+.linkbtn:focus-visible{outline:2px solid var(--rubric)}
+.btn.quiet{border-color:var(--rule);color:var(--ink)}
+.btn.quiet:hover{border-color:var(--muted);background:var(--leaf)}
+.btn:disabled{opacity:.5;cursor:default}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card{background:var(--leaf);border:1px solid var(--rule);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card p{margin:0;max-width:62ch}
+.big{font-family:var(--f-display);font-size:var(--s-xl);line-height:1.15;margin:0;text-wrap:balance}
+.lead{margin:0;max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:18px}
+input[type=search],input[type=text],input[type=time],input[type=url],.field select{border:1px solid var(--rule);border-radius:10px;background:var(--leaf);padding:8px 12px;min-height:44px;max-width:100%}
+
+/* bible */
+.goto{display:flex;gap:8px}
+.goto input{flex:1;min-width:0}
+.bookgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:6px;margin-top:10px}
+.bookgrid button{border:1px solid var(--rule);background:var(--leaf);border-radius:10px;padding:8px 10px;text-align:left;cursor:pointer;line-height:1.25;min-height:46px}
+.bookgrid button:hover{border-color:var(--rubric)}
+.bookgrid button small{display:block;color:var(--muted);font-size:var(--s-xs)}
+.chgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(3rem,1fr));gap:6px}
+.chgrid button{border:1px solid var(--rule);background:var(--leaf);border-radius:10px;min-height:44px;cursor:pointer;font-variant-numeric:tabular-nums}
+.chgrid button:hover,.chgrid button[aria-current]{border-color:var(--rubric);color:var(--rubric)}
+.chgrid button.done{background:var(--rubric-wash);border-color:var(--rubric-wash)}
+.vhi{background:var(--rubric-wash);border-radius:4px;box-shadow:0 0 0 3px var(--rubric-wash)}
+.pager{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--rule);padding-top:14px}
+.psalm + .psalm{margin-top:26px}
+.psalm h3{font-family:var(--f-display);font-weight:400;font-size:var(--s-lg);margin:0 0 6px}
+.psalm h3 small{font-family:var(--f-body);font-size:var(--s-xs);color:var(--muted);margin-left:8px}
+
+/* month */
+.mhead{display:flex;align-items:center;gap:4px}
+.mhead .big{flex:1;text-align:center}
+.mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.mgrid .wdh{font-family:var(--f-sc);font-size:var(--s-xs);color:var(--muted);text-align:center;text-transform:lowercase;padding-bottom:2px}
+.mgrid button{position:relative;min-height:54px;border:1px solid transparent;border-radius:8px;background:var(--leaf);cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;padding:4px 5px;color:var(--ink);text-align:left;overflow:hidden}
+.mgrid button b{font-weight:600;font-size:var(--s-md);line-height:1.1;font-variant-numeric:tabular-nums}
+.mgrid button small{font-size:.68rem;color:var(--muted);line-height:1.1}
+.mgrid button.fast{background:var(--rubric-wash)}
+.mgrid button.strict{box-shadow:inset 0 -3px 0 var(--rubric)}
+.mgrid button.sun b,.mgrid button.gf b{color:var(--rubric)}
+.mgrid .mk{position:absolute;right:3px;top:3px;display:flex;gap:2px;align-items:center}
+.mgrid .mk .sign{width:15px;height:15px;margin:0}
+.mgrid .pt{width:7px;height:7px;border-radius:50%;background:var(--rubric);position:absolute;right:5px;bottom:7px}
+.mgrid button.today{border-color:var(--muted)}
+.mgrid button[aria-current]{border:2px solid var(--ink)}
+.mgrid button:disabled{opacity:.35;cursor:default}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:var(--s-xs);color:var(--muted);align-items:center}
+.legend>span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:14px;height:14px;border-radius:4px;background:var(--leaf);border:1px solid var(--rule);display:inline-block;flex:none}
+.sw.fast{background:var(--rubric-wash);border-color:var(--rubric-wash)}
+.sw.strict{background:var(--rubric-wash);border-color:var(--rubric-wash);box-shadow:inset 0 -3px 0 var(--rubric)}
+.sw.pt{width:8px;height:8px;border-radius:50%;background:var(--rubric);border:0}
+.legend .sign{width:16px;height:16px;margin:0}
+
+/* rule and confession: rows that tick */
+.checks{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.check{display:grid;grid-template-columns:28px 1fr;gap:2px 12px;align-items:center;padding:12px 2px;border:0;border-bottom:1px solid var(--rule);background:none;text-align:left;cursor:pointer;width:100%;color:var(--ink);line-height:1.45}
+.check.q{align-items:start}
+.check.q .box{margin-top:2px}
+.box{width:24px;height:24px;border:1.6px solid var(--muted);border-radius:7px;display:grid;place-items:center;flex:none}
+[aria-pressed="true"] > .box{background:var(--rubric);border-color:var(--rubric)}
+[aria-pressed="true"] > .box::after{content:"";width:11px;height:6px;border-left:2px solid var(--leaf);border-bottom:2px solid var(--leaf);transform:translateY(-1px) rotate(-45deg)}
+.check b{font-weight:400;font-family:var(--f-display);font-size:var(--s-lg);line-height:1.25}
+.check small{grid-column:2;color:var(--muted);font-size:var(--s-xs)}
+.check .p{font-family:var(--f-sc);font-weight:500;letter-spacing:.06em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-xs);display:block}
+.counter{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.counter button{min-width:44px;height:44px;border-radius:999px;border:1px solid var(--rule);background:var(--leaf);cursor:pointer;padding:0 12px}
+.counter output{min-width:3ch;text-align:center;font-variant-numeric:tabular-nums;font-family:var(--f-display);font-size:var(--s-xl)}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);grid-auto-columns:14px;gap:3px}
+.heat i{border-radius:3px;background:var(--rule);display:block}
+.heat i.l1,.heat i.l2,.heat i.l3,.heat i.l4{background:var(--rubric)}
+.heat i.l1{opacity:.3}.heat i.l2{opacity:.5}.heat i.l3{opacity:.75}
+.heat i.fut{background:transparent}
+.heat i.cur{outline:1.5px solid var(--ink);outline-offset:1px}
+.heatwrap{display:flex;gap:8px;align-items:flex-start;overflow-x:auto}
+.heatdays{display:grid;grid-template-rows:repeat(7,14px);gap:3px;font-size:.62rem;color:var(--muted);line-height:14px}
+.stats{display:flex;flex-wrap:wrap;gap:10px 26px}
+.stat b{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--s-xl);line-height:1.1}
+.stat span{font-size:var(--s-xs);color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;line-height:1.4}
+.opt input[type=checkbox]{width:20px;height:20px;accent-color:var(--rubric);margin:2px 0 0;flex:none}
+.danger{border-color:var(--muted);color:var(--muted)}
+.csec{display:flex;flex-direction:column;gap:10px}
+.csec h3{font-family:var(--f-display);font-weight:400;font-size:var(--s-xl);margin:0;line-height:1.2}
+
+/* akathistos */
+.akb{display:flex;flex-direction:column;gap:4px}
+.akb .kick{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.akb .ptitle{font-family:var(--f-sc);letter-spacing:.08em;text-transform:lowercase;color:var(--rubric);font-size:var(--s-sm)}
+.akb.akpr{border-top:1px solid var(--rule);padding-top:18px}
+.akb .pt{margin:0;max-width:65ch}
+.akb .pt[lang="cu"]{font-family:var(--f-display);font-size:1.08em;line-height:1.55}
+.big small{font-family:var(--f-body);font-size:var(--s-xs);color:var(--muted);margin-left:8px;white-space:nowrap}
+.ak{display:flex;flex-direction:column;gap:24px;margin-top:6px}
+
+/* chant player */
+.playcard{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center}
+.playbtn{width:64px;height:64px;border-radius:50%;border:0;background:var(--rubric);color:var(--leaf);display:grid;place-items:center;cursor:pointer;text-decoration:none;flex:none}
+.playbtn .ic{width:30px;height:30px;stroke:var(--leaf)}
+.playbtn .ic path{fill:var(--leaf)}
+.playbox{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+.playbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.houses{display:flex;gap:6px;flex-wrap:wrap}
+.houses .btn[aria-pressed="true"],.houses .btn[aria-pressed="true"]:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn.sm{padding:6px 14px;min-height:40px;font-size:var(--s-sm)}
+
+/* phone calendar */
+.field{display:flex;flex-direction:column;gap:4px;font-size:var(--s-sm)}
+.inline{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-left:30px;font-size:var(--s-sm)}
+.copyrow{display:flex;gap:8px;align-items:center}
+.copyrow input{flex:1;min-width:0;font-size:var(--s-xs);color:var(--muted)}
 @media (max-width:480px){
   .date{font-size:2.1rem}
   .feast{font-size:1.45rem}
@@ -377,13 +498,77 @@ body.speaking .page{padding-bottom:110px}
     <div id="prayers" role="tabpanel"></div>
   </section>
 
+  <section class="view" id="v-salterio" data-view="salterio" aria-labelledby="h-psalter" hidden>
+    <div class="readhead">
+      <h2 id="h-psalter" style="flex:1">salterio</h2>
+      <div class="lang" role="group" aria-label="Lingua del testo">
+        <button data-lang="it" aria-pressed="true" title="Italiano, Riveduta 1927">IT</button>
+        <button data-lang="ru" aria-pressed="false" title="Русский, Синодальный перевод">RU</button>
+        <button data-lang="cu" aria-pressed="false" title="Церковнославянский, Елизаветинская Библия">ЦСЯ</button>
+      </div>
+    </div>
+    <div id="psalter" class="stack"></div>
+  </section>
+
+  <section class="view" id="v-akathistos" data-view="akathistos" aria-labelledby="h-ak" hidden>
+    <h2 id="h-ak">akathistos</h2>
+    <div class="ptools" style="margin-top:0">
+      <div class="tabs" role="tablist" aria-label="Quale akathistos">
+        <button role="tab" data-ak="gesu" aria-selected="false">a gesù dolcissimo</button>
+        <button role="tab" data-ak="madre" aria-selected="false">alla madre di dio</button>
+      </div>
+      <div class="lang" role="group" aria-label="Lingua dell'akathistos">
+        <button data-alang="it" aria-pressed="true" title="Italiano">IT</button>
+        <button data-alang="cu" aria-pressed="false" title="Церковнославянский">ЦСЯ</button>
+        <button data-alang="both" aria-pressed="false" title="Italiano e slavonico affiancati">IT + ЦСЯ</button>
+      </div>
+    </div>
+    <div class="toolbar"><button class="say" data-say="akathist"><span data-icon="speaker"></span><span>Ascolta</span></button>
+      <button class="linkbtn" data-view="preghiere">Prima si dicono le preghiere iniziali ›</button></div>
+    <div id="akathist"></div>
+  </section>
+
+  <section class="view" id="v-bibbia" data-view="bibbia" aria-labelledby="h-bible" hidden>
+    <div class="readhead">
+      <h2 id="h-bible" style="flex:1">bibbia</h2>
+      <div class="lang" role="group" aria-label="Lingua del testo">
+        <button data-lang="it" aria-pressed="true" title="Italiano, Riveduta 1927">IT</button>
+        <button data-lang="ru" aria-pressed="false" title="Русский, Синодальный перевод">RU</button>
+        <button data-lang="cu" aria-pressed="false" title="Церковнославянский, Елизаветинская Библия">ЦСЯ</button>
+      </div>
+    </div>
+    <div id="bible" class="stack"><p class="loading">Apro la Bibbia</p></div>
+  </section>
+
+  <section class="view" id="v-mese" data-view="mese" aria-labelledby="h-month" hidden>
+    <h2 id="h-month">mese</h2>
+    <div id="month" class="stack"></div>
+  </section>
+
+  <section class="view" id="v-regola" data-view="regola" aria-labelledby="h-rule" hidden>
+    <h2 id="h-rule">regola e diario</h2>
+    <div id="regola" class="stack"></div>
+  </section>
+
+  <section class="view" id="v-confessione" data-view="confessione" aria-labelledby="h-conf" hidden>
+    <h2 id="h-conf">preparazione alla confessione</h2>
+    <div id="conf" class="stack"></div>
+  </section>
+
+  <section class="view" id="v-calendario" data-view="calendario" aria-labelledby="h-ical" hidden>
+    <h2 id="h-ical">calendario del telefono</h2>
+    <div id="ical" class="stack"></div>
+  </section>
+
   <section class="view" id="v-canto" data-view="canto" aria-labelledby="h-chant" hidden>
     <h2 id="h-chant">canto</h2>
+    <div id="canto" class="stack"></div>
+    <div class="rlabel" style="margin-top:8px">i canali dei monasteri</div>
     <div class="yt">
       <a class="ytcard" href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener"><span data-icon="canto"></span><span><span class="house">Visoki Dečani</span><b>Canale YouTube del monastero</b><small>I monaci serbi di Dečani, in Kosovo</small></span><span class="ext" aria-hidden="true">↗</span></a>
       <a class="ytcard" href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener"><span data-icon="canto"></span><span><span class="house">Santa Elisabetta, Minsk</span><b>Canale YouTube del monastero</b><small>Il coro monastico e il coro festivo</small></span><span class="ext" aria-hidden="true">↗</span></a>
     </div>
-    <p class="note">Si aprono nell'app YouTube o nel browser e richiedono la connessione.</p>
+    <p class="note">Si aprono nell'app YouTube o nel browser.</p>
   </section>
 
   <footer class="sources" id="fonti" aria-labelledby="h-fonti">
@@ -396,6 +581,16 @@ body.speaking .page{padding-bottom:110px}
       <li>Italiano: Bibbia Riveduta di Giovanni Luzzi (1924–1927), testo digitale di <a href="https://github.com/Beblia/Holy-Bible-XML-Format" target="_blank" rel="noopener">Beblia</a>. Circa 380 parole a cui la trascrizione aveva tolto la prima lettera sono state corrette in automatico.</li>
       <li>Russo: traduzione sinodale (1876), da <a href="https://github.com/scrollmapper/bible_databases" target="_blank" rel="noopener">scrollmapper/bible_databases</a>.</li>
       <li>Slavonico: Bibbia elisabettiana, edizione del 1757, in caratteri civili, dalla stessa raccolta.</li>
+      <li>Nella sezione Bibbia i libri seguono l'ordine della Bibbia slava, con i libri deuterocanonici presenti solo in russo e in slavonico. I salmi della Riveduta hanno la numerazione ebraica, quelli russi e slavonici la greca dei Settanta.</li>
+      <li>Salterio: la divisione in venti catismi è quella del Salterio liturgico slavo.</li>
+    </ul></div>
+    <div class="src-group"><h3>Akathistos</h3><ul>
+      <li>Testo slavonico, in caratteri civili, dell'Akathistos a Gesù dolcissimo e dell'Akathistos alla Madre di Dio dal <a href="https://www.molitvoslov.org/" target="_blank" rel="noopener">Molitvoslov di molitvoslov.org</a>, come raccolto nel progetto <a href="https://github.com/m4j/molitvoslov-ebooks" target="_blank" rel="noopener">molitvoslov-ebooks</a>.</li>
+      <li>Le traduzioni italiane sono fatte dallo slavonico per questa app e non sono un testo liturgico ufficiale.</li>
+    </ul></div>
+    <div class="src-group"><h3>Confessione e regola</h3><ul>
+      <li>L'esame di coscienza segue lo schema dei libri di preparazione ortodossi: doveri verso Dio, verso il prossimo e le otto passioni descritte da Evagrio e da Giovanni Cassiano e riprese dalla Filocalia. Le domande sono scritte per questa app.</li>
+      <li>Le note della confessione, la regola e il diario restano solo nel browser di questo dispositivo.</li>
     </ul></div>
     <div class="src-group"><h3>Preghiere</h3><ul>
       <li>Testi slavonici dal Molitvoslov, il libro di preghiere della tradizione russa; si possono confrontare sul <a href="https://azbyka.ru/molitvoslov/" target="_blank" rel="noopener">molitvoslov di Azbuka very</a>.</li>
@@ -413,6 +608,10 @@ body.speaking .page{padding-bottom:110px}
     <div class="src-group"><h3>Canto</h3><ul>
       <li><a href="https://www.youtube.com/channel/UCihifZr5enkEMgQPVGhILvw" target="_blank" rel="noopener">Canale YouTube di Visoki Dečani</a>, indicato sul sito del monastero, <a href="https://www.decani.org/en/" target="_blank" rel="noopener">decani.org</a>.</li>
       <li><a href="https://www.youtube.com/channel/UC5PuZogASDicF0C0cmavfpw" target="_blank" rel="noopener">Canale YouTube del Monastero di Santa Elisabetta</a>, indicato sul sito <a href="https://obitel-minsk.org/choirs" target="_blank" rel="noopener">obitel-minsk.org</a>.</li>
+      <li>La musica del giorno è la playlist dei video caricati sul canale del monastero, suonata con il lettore di YouTube in modalità senza cookie (youtube-nocookie.com). Non è scelta in base alla festa.</li>
+    </ul></div>
+    <div class="src-group"><h3>Calendario del telefono</h3><ul>
+      <li>I calendari a cui iscriversi sono file .ics pubblicati insieme all'app su GitHub Pages e creati dagli stessi dati del Menologio.</li>
     </ul></div>
     <div class="src-group"><h3>Caratteri e icone</h3><ul>
       <li>Old Standard TT di Alexey Kryukov e Spectral di Production Type, licenza SIL Open Font License, tramite Google Fonts e Fontsource.</li>
@@ -677,19 +876,44 @@ const ICON = {
   // a hanging icon lamp with its flame
   lampada: '<path d="M12 2.8v2.4M12 5.2 6.4 11.4M12 5.2l5.6 6.2M5.6 11.4h12.8c-.5 3.7-3 6-6.4 6s-5.9-2.3-6.4-6zM12 17.4v3.2"/><path class="fill" d="M12 7.4c1.5 1.5 1.7 2.8 0 4-1.7-1.2-1.5-2.5 0-4z"/>',
   // a leaf with lines, for the sources
-  fonti: '<path d="M6.5 3.8h9.2l3 3v13.4H6.5zM15.7 3.8v3h3"/><path class="acc" d="M9.2 11h6.6M9.2 14h6.6M9.2 17h4"/>'
+  fonti: '<path d="M6.5 3.8h9.2l3 3v13.4H6.5zM15.7 3.8v3h3"/><path class="acc" d="M9.2 11h6.6M9.2 14h6.6M9.2 17h4"/>',
+  // a closed Bible with the cross on the cover
+  bibbia: '<path d="M6.8 3.8h11.4v16.4H6.8A1.8 1.8 0 0 1 5 18.4V5.6a1.8 1.8 0 0 1 1.8-1.8z"/><path d="M5 18.4a1.8 1.8 0 0 1 1.8-1.8h11.4"/><path class="acc" d="M11.6 6.6v6.8M9.4 8.8h4.4"/>',
+  // David's harp, for the Psalter
+  salterio: '<path d="M6.5 20.2V4.6c3.8.2 6.3 2.2 7.6 5 1.2 2.6 2.8 4 4.9 4.4v6.2z"/><path class="acc" d="M9.5 7.2v13M12.5 9.6v10.6M15.6 13.6v6.6"/>',
+  // the star on the Mother of God's veil
+  akathistos: '<circle cx="12" cy="12" r="2.6"/><path class="acc" d="M12 3.2v4.4M12 16.4v4.4M3.2 12h4.4M16.4 12h4.4M5.8 5.8l3 3M15.2 15.2l3 3M18.2 5.8l-3 3M8.8 15.2l-3 3"/>',
+  // a month on a wall calendar
+  mese: '<rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 9.8h16M8.5 3.5v4M15.5 3.5v4"/><path class="acc" d="M7.6 13.4h1.2M11.4 13.4h1.2M15.2 13.4h1.2M7.6 16.8h1.2M11.4 16.8h1.2"/>',
+  // a rule ticked off line by line
+  regola: '<path d="M10.5 7h9M10.5 12h9M10.5 17h9"/><path class="acc" d="M4.4 7l1.4 1.4L8.4 5.8M4.4 12l1.4 1.4 2.6-2.6M4.4 17l1.4 1.4 2.6-2.6"/>',
+  // the lectern with Gospel and cross, before which one confesses
+  confessione: '<path d="M7.2 20.4 9 12.6M16.8 20.4 15 12.6M5 12.6h14M8.4 12.6l.6-2.8h6l.6 2.8"/><path class="acc" d="M12 3.4v4.8M10.2 5.2h3.6"/>',
+  // a phone with a bell
+  calendario: '<rect x="7" y="2.8" width="10" height="18.4" rx="2.2"/><path d="M10.6 18.2h2.8"/><path class="acc" d="M12 7.2a2.4 2.4 0 0 1 2.4 2.4v2l1 1.4H8.6l1-1.4v-2A2.4 2.4 0 0 1 12 7.2zM11 14.6a1 1 0 0 0 2 0"/>',
+  download: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/>',
+  copy: '<rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6.3a1.8 1.8 0 0 0-1.8-1.8H6.3a1.8 1.8 0 0 0-1.8 1.8v7.4a1.8 1.8 0 0 0 1.8 1.8h2.2"/>'
 };
 function icon(name){ return `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[name]}</svg>`; }
 
 const LAMP_URL = "#lampada";
+// tab: shown as an icon in the app bar; day: the view depends on the chosen day, so the day line stays on top
 const VIEWS = [
-  {id: "oggi", label: "Oggi", desc: "Data, festa, digiuno e il giorno in breve"},
-  {id: "letture", label: "Letture", desc: "Apostolo e Vangelo in italiano, russo e slavonico"},
-  {id: "santi", label: "Santi", desc: "I santi del giorno e i tuoi patroni"},
-  {id: "preghiere", label: "Preghiere", desc: "Mattino, lavoro, pasti, sera, prima di dormire"},
-  {id: "canto", label: "Canto", desc: "Visoki Dečani e Santa Elisabetta"},
-  {id: "lampada", label: "Lampada", desc: "Preghiera di Gesù e rosario della Madre di Dio", href: LAMP_URL}
+  {id: "oggi", label: "Oggi", desc: "Data, festa, digiuno e il giorno in breve", tab: 1, grp: "il giorno"},
+  {id: "letture", label: "Letture", desc: "Apostolo e Vangelo in italiano, russo e slavonico", tab: 1, day: 1},
+  {id: "santi", label: "Santi", desc: "I santi del giorno e i tuoi patroni", tab: 1, day: 1},
+  {id: "mese", label: "Mese", desc: "Digiuni, grandi feste e patroni del mese"},
+  {id: "preghiere", label: "Preghiere", desc: "Mattino, lavoro, pasti, sera, prima di dormire", tab: 1, day: 1, grp: "pregare"},
+  {id: "salterio", label: "Salterio", desc: "Il catisma del giorno, in italiano e in slavonico", day: 1},
+  {id: "akathistos", label: "Akathistos", desc: "A Gesù dolcissimo e alla Madre di Dio, da leggere o ascoltare"},
+  {id: "lampada", label: "Lampada", desc: "Preghiera di Gesù e rosario della Madre di Dio", href: LAMP_URL, tab: 1},
+  {id: "canto", label: "Canto", desc: "La musica dei monasteri, qui nell'app"},
+  {id: "bibbia", label: "Bibbia", desc: "Tutta la Scrittura, con i libri della Bibbia slava", tab: 1, grp: "scrittura"},
+  {id: "regola", label: "Regola e diario", desc: "La tua regola di ogni giorno e la costanza nel tempo", day: 1, grp: "il tuo cammino"},
+  {id: "confessione", label: "Confessione", desc: "Esame di coscienza ortodosso, note private"},
+  {id: "calendario", label: "Calendario del telefono", desc: "Avvisi dei giorni di digiuno, feste e preghiere"}
 ];
+const TABS = ["oggi", "letture", "santi", "preghiere", "bibbia", "lampada"];
 let view = "oggi";
 
 function navItem(v, long){
@@ -698,20 +922,36 @@ function navItem(v, long){
 }
 
 function buildNav(){
-  $("viewtabs").innerHTML = VIEWS.map(v => navItem(v, false)).join("");
-  $("drawer-nav").innerHTML = VIEWS.map(v => navItem(v, true)).join("") +
-    `<button data-sources>${icon("fonti")}<span><b>Fonti</b><small>Da dove arriva ogni contenuto</small></span></button>`;
+  $("viewtabs").innerHTML = TABS.map(id => navItem(VIEWS.find(v => v.id === id), false)).join("");
+  $("drawer-nav").innerHTML = VIEWS.map(v => (v.grp ? `<div class="grp" aria-hidden="true">${v.grp}</div>` : "") + navItem(v, true)).join("") +
+    `<div class="grp" aria-hidden="true">altro</div><button data-sources>${icon("fonti")}<span><b>Fonti</b><small>Da dove arriva ogni contenuto</small></span></button>`;
   document.querySelectorAll("[data-icon]").forEach(el => { el.innerHTML = icon(el.dataset.icon); });
 }
 
 function showView(v){
+  if (v !== view) stopEmbeds();
   view = v;
+  const meta = VIEWS.find(x => x.id === v) || {};
   document.querySelectorAll("section.view").forEach(s => { s.hidden = s.dataset.view !== v; });
   document.querySelectorAll("#viewtabs [data-view], #drawer-nav [data-view]").forEach(b => {
     if (b.dataset.view === v) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
-  $("dayline").hidden = v === "oggi";
+  $("dayline").hidden = !meta.day;
+  renderView(v);
   window.scrollTo(0, 0);
+}
+// the sections that are drawn only when they are opened
+function renderView(v){
+  try {
+    if (v === "bibbia") renderBible();
+    else if (v === "salterio") renderPsalter();
+    else if (v === "akathistos") renderAkathist();
+    else if (v === "mese") renderMonth();
+    else if (v === "regola") renderRegola();
+    else if (v === "confessione") renderConf();
+    else if (v === "calendario") renderCalView();
+    else if (v === "canto") renderCanto();
+  } catch (e) { console.error(e); }
 }
 
 function openDrawer(){ const d = $("drawer"); if (d.showModal) d.showModal(); else d.setAttribute("open", ""); }
@@ -742,12 +982,16 @@ function renderSummary(day){
   if (!saints) saints = "Nessuna commemorazione";
   const slot = slotNow();
   const row = (v, k, val, attrs) => `<button data-view="${v}"${attrs || ""}>${icon(v)}<span><span class="k">${k}</span><span class="v">${esc(val)}</span></span><span class="go">${icon("go")}</span></button>`;
+  const ks = kstate(), kd = ks.log[cur];
+  const rg = regolaScore(cur);
   $("summary").innerHTML =
     row("letture", "letture", refs) +
     row("santi", mine.length ? "i tuoi santi oggi" : "santi del giorno", saints) +
     row("preghiere", "preghiere", SLOT_LABEL[slot], ` data-slot="${slot}"`) +
-    row("canto", "canto", "Canali YouTube di Visoki Dečani e Santa Elisabetta") +
-    `<a href="${LAMP_URL}" target="_blank" rel="noopener">${icon("lampada")}<span><span class="k">lampada</span><span class="v">Preghiera di Gesù e rosario della Madre di Dio</span></span><span class="go">${icon("go")}</span></a>`;
+    row("salterio", "salterio", kd ? `Catisma ${kd}, letto` : `Catisma ${ks.next}`) +
+    row("canto", "canto", "Suona il canto dei monasteri", ` data-play="1"`) +
+    `<a href="${LAMP_URL}" target="_blank" rel="noopener">${icon("lampada")}<span><span class="k">lampada</span><span class="v">Preghiera di Gesù e rosario della Madre di Dio</span></span><span class="go">${icon("go")}</span></a>` +
+    row("regola", "la tua regola", rg.total ? `${rg.done} di ${rg.total}` + (rg.done === rg.total ? ", compiuta" : "") : "Scegli le voci della tua regola");
 }
 
 
@@ -1047,12 +1291,17 @@ function render(){
   }
   const [fl, fd] = day.fs;
   $("chips").innerHTML = `<span class="chip ${fd && fl !== "Senza digiuno" ? "fast" : ""}">${esc(fl)}${fd ? " · " + esc(fd) : ""}</span>`;
+  // the evening before a fast day, a word of warning
+  const tom = CAL.d[addDays(cur, 1)];
+  if (tom && isFast(tom) && !(isFast(day) && day.fs[1] === tom.fs[1]))
+    $("chips").insertAdjacentHTML("beforeend", `<span class="chip fast">Domani: ${esc(tom.fs[0].toLowerCase())} · ${esc(fastShort(tom.fs[1]))}</span>`);
   renderDayline(day);
   renderPrayers(day);
   renderReadings(day);
   renderSaints(day);
   renderUpcoming();
   renderSummary(day);
+  if (["salterio", "mese", "regola"].includes(view)) renderView(view);
 }
 
 function fmtShort(k){ const d = parseKey(k); return d.getUTCDate()+" "+MONTHS[d.getUTCMonth()]+" "+d.getUTCFullYear(); }
@@ -1079,7 +1328,8 @@ function textHTML(pid){
     prevCh = ch;
   });
   const part = m.part.includes(lang) ? `<p class="note">Il testo in questa traduzione è incompleto.</p>` : "";
-  return `<p class="text first" lang="${lang}">${html.trim()}</p>${part}`;
+  const whole = m.book && m.book !== "OT" && m.book !== "S3Y" ? `<div><button class="linkbtn" data-bible="${m.book}.${rows[0][0]}">Leggi il capitolo intero nella Bibbia ›</button></div>` : "";
+  return `<p class="text first" lang="${lang}">${html.trim()}</p>${part}${whole}`;
 }
 
 function renderReadings(day){
@@ -1204,6 +1454,565 @@ async function runPick(day, k){
   }
 }
 
+/* ---------- fasting, for the month, the rule and the phone calendar ---------- */
+function isFast(day){ return !!day && !/^(Nessun|Senza) digiuno$/.test(day.fs[0]); }
+function noOil(r){ return /olio/.test(r) && !/olio permess/.test(r); }
+function fastShort(r){
+  if (/^digiuno stretto/.test(r)) return "digiuno stretto";
+  if (/pesce, vino e olio permessi/.test(r)) return "pesce permesso";
+  if (/vino e olio permessi/.test(r)) return "olio e vino permessi";
+  if (/vino permesso/.test(r)) return "senza olio, vino permesso";
+  if (noOil(r)) return "senza olio";
+  return r;
+}
+function fastName(s, prep){   // "il digiuno di Natale", "della Grande Quaresima"
+  const g = s.startsWith("Grande");
+  const t = g ? s : s[0].toLowerCase() + s.slice(1);
+  return (prep === "di" ? (g ? "della " : "del ") : (g ? "la " : "il ")) + t;
+}
+
+/* ---------- the Bible: 78 books in the order of the Slavonic Bible, IT / RU / ЦСЯ ---------- */
+const BIBLE_ONLINE = "https://ndassistip-sketch.github.io/menologio/bible/";
+let BIX = null, bpos = null, bTok = 0;          // bpos: {c, ch, v} open in the reader; null shows the list of books
+const BOOKS = {}, BLOAD = {};
+function bmeta(c){ return BIX && BIX.find(b => b.c === c); }
+async function bibleIndex(){
+  if (BIX) return BIX;
+  const el = document.getElementById("bible-index");
+  BIX = el ? JSON.parse(el.textContent) : await fetch("bible/index.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  return BIX;
+}
+// the one-file edition carries each book gzipped; the browser unpacks it when the book is opened
+async function gunzipJSON(b64){
+  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const stream = new Blob([bin]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return JSON.parse(await new Response(stream).text());
+}
+function getBook(code){
+  if (BOOKS[code]) return Promise.resolve(BOOKS[code]);
+  if (BLOAD[code]) return BLOAD[code];
+  const el = document.getElementById("bible-" + code);
+  const url = (el && typeof DecompressionStream === "undefined" ? BIBLE_ONLINE : "bible/") + code + ".json";
+  const p = el && typeof DecompressionStream !== "undefined" ? gunzipJSON(el.textContent.trim())
+          : fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  BLOAD[code] = p.then(j => (BOOKS[code] = j)).catch(e => { BLOAD[code] = null; throw e; });
+  return BLOAD[code];
+}
+// Psalms: the Riveduta numbers them as the Hebrew text, the Synodal and Slavonic Bibles as the Septuagint
+function lxxToHeb(n){
+  if (n <= 8) return [n];
+  if (n === 9) return [9, 10];
+  if (n <= 112) return [n + 1];
+  if (n === 113) return [114, 115];
+  if (n <= 115) return [116];
+  if (n <= 145) return [n + 1];
+  if (n <= 147) return [147];
+  if (n <= 150) return [n];
+  return [];
+}
+function hebToLxx(n){
+  if (n <= 8) return [n];
+  if (n <= 10) return [9];
+  if (n <= 113) return [n - 1];
+  if (n <= 115) return [113];
+  if (n === 116) return [114, 115];
+  if (n <= 146) return [n - 1];
+  if (n === 147) return [146, 147];
+  return [n];
+}
+function psLabel(l, n){
+  const o = l === "it" ? hebToLxx(n) : lxxToHeb(n);
+  const same = o.length === 1 && o[0] === n;
+  const note = !o.length ? "solo nei Settanta" : same ? "" : (l === "it" ? o.join("–") + " nei Settanta" : o.join("–") + " nella Riveduta");
+  return `Salmo ${n}` + (note ? ` <small>${note}</small>` : "");
+}
+function chapterHTML(rows, l, hiV){
+  return `<p class="text first" lang="${l}">` + rows.map((t, i) =>
+    (i ? `<sup>${i + 1}</sup>` : "") + `<span data-v="${i + 1}"${hiV === i + 1 ? ' class="vhi"' : ""}>${esc(t)}</span>`).join(" ") + `</p>`;
+}
+function chCount(b){ return b.ch[lang] || b.ch.ru || 0; }
+
+async function renderBible(){
+  const tok = ++bTok;
+  let ix;
+  try { ix = await bibleIndex(); }
+  catch (e) { $("bible").innerHTML = `<p class="note">Non riesco a caricare la Bibbia. ${navigator.onLine === false ? "Serve la connessione." : "Ricarica la pagina."}</p>`; return; }
+  if (tok !== bTok) return;
+  const m = bpos && bmeta(bpos.c);
+  if (!m) { bpos = null; return renderBooks(ix); }
+  if (!bpos.ch) return renderChapters(m);
+  return renderChapter(m, tok);
+}
+function renderBooks(ix){
+  let last = null; try { last = JSON.parse(store.get("men:bpos") || "null"); } catch (e) {}
+  const lm = last && bmeta(last.c);
+  const grp = (g, title, note) => `<div><div class="rlabel">${title}</div>${note ? `<p class="note">${note}</p>` : ""}<div class="bookgrid">` +
+    ix.filter(b => b.g === g).map(b => `<button data-book="${b.c}">${esc(b.n)}<small>${esc(b.a)} · ${chCount(b)} ${chCount(b) === 1 ? "capitolo" : "capitoli"}</small></button>`).join("") + `</div></div>`;
+  $("bible").innerHTML = `
+    <form class="goto" id="goto" role="search"><input id="goto-q" type="search" placeholder="Vai a… Gv 3,16 · Sal 50 · Rm 8" aria-label="Vai a un passo" autocomplete="off" enterkeyhint="go"><button class="btn">Vai</button></form>
+    <p class="note" id="goto-msg" aria-live="polite" hidden></p>
+    <div class="toolbar">${lm ? `<button class="btn quiet" data-bible="${lm.c}.${last.ch}">Continua: ${esc(lm.n)} ${last.ch}</button>` : ""}<button class="btn quiet" data-view="salterio">Salterio · catisma del giorno</button></div>
+    ${grp("at", "antico testamento")}
+    ${grp("dc", "libri deuterocanonici", "Nella Bibbia slava stanno tra i libri dell'Antico Testamento. La Riveduta non li contiene: si leggono in russo e in slavonico.")}
+    ${grp("nt", "nuovo testamento", "Nell'ordine della Bibbia slava: dopo gli Atti vengono le lettere di Giacomo, Pietro, Giovanni e Giuda, poi quelle di Paolo.")}
+    ${offlineBibleHTML()}`;
+}
+function renderChapters(m){
+  const n = chCount(m);
+  $("bible").innerHTML = `<div class="toolbar"><button class="linkbtn" data-books>‹ Tutti i libri</button></div>
+    <div><div class="rlabel">${m.g === "nt" ? "nuovo testamento" : m.g === "dc" ? "libro deuterocanonico" : "antico testamento"}</div><div class="big">${esc(m.n)}</div></div>
+    ${m.ch[lang] ? "" : `<p class="note">La Riveduta non contiene questo libro: si apre in ${lang === "it" ? "russo" : "questa lingua"}.</p>`}
+    <div class="chgrid">${Array.from({length: n}, (_, i) => `<button data-ch="${i + 1}">${i + 1}</button>`).join("")}</div>`;
+}
+async function renderChapter(m, tok){
+  const box = $("bible");
+  const head = `<div class="toolbar"><button class="linkbtn" data-books>‹ Tutti i libri</button><span class="muted" aria-hidden="true">·</span><button class="linkbtn" data-book="${m.c}">${esc(m.a)}: capitoli</button></div>`;
+  if (!BOOKS[m.c]) box.innerHTML = head + `<p class="loading">Apro ${esc(m.n)}</p>`;
+  let book;
+  try { book = await getBook(m.c); }
+  catch (e) {
+    box.innerHTML = head + `<p class="note">${navigator.onLine === false ? "Questo libro non è ancora salvato sul dispositivo: serve la connessione, oppure scarica tutta la Bibbia dall'elenco dei libri." : "Non riesco a caricare questo libro."}</p>`;
+    return;
+  }
+  if (tok !== bTok) return;
+  const l = book[lang] ? lang : null;
+  if (!l) {
+    box.innerHTML = head + `<div class="big">${esc(m.n)}</div><p class="note">La Riveduta non contiene questo libro.</p>
+      <div class="toolbar"><button class="btn quiet" data-setlang="ru">Leggi in russo</button><button class="btn quiet" data-setlang="cu">Leggi in slavonico</button></div>`;
+    return;
+  }
+  const total = Object.keys(book[l]).length;
+  const c = Math.min(Math.max(1, bpos.ch), total);
+  bpos.ch = c;
+  const rows = book[l][String(c)] || [];
+  const title = m.c === "PSA" ? psLabel(l, c) : `${esc(m.n)} ${c}`;
+  box.innerHTML = head + `
+    <div class="rhead"><div><div class="rlabel">${esc(m.n)}</div><div class="big">${title}</div></div>
+      <button class="say mini" data-say="chapter" aria-label="Ascolta il capitolo">${icon("speaker")}<span>Ascolta</span></button></div>
+    <article>${chapterHTML(rows, l, bpos.v)}</article>
+    ${m.c === "PSA" ? `<p class="note">${l === "it" ? "La Riveduta numera i salmi come il testo ebraico; la Chiesa ortodossa usa la numerazione greca dei Settanta, indicata accanto al titolo." : "Numerazione greca dei Settanta, come nella liturgia; accanto al titolo il numero della Riveduta."}</p>` : ""}
+    <nav class="pager" aria-label="Capitoli">${c > 1 ? `<button class="btn quiet" data-ch="${c - 1}">‹ ${c - 1}</button>` : "<span></span>"}${c < total ? `<button class="btn quiet" data-ch="${c + 1}">${c + 1} ›</button>` : "<span></span>"}</nav>`;
+  store.set("men:bpos", JSON.stringify({c: m.c, ch: c}));
+  const hv = bpos.v && box.querySelector(`[data-v="${bpos.v}"]`);
+  if (hv) hv.scrollIntoView({block: "center"}); else window.scrollTo(0, 0);
+}
+function normB(s){ return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9а-яё]/g, ""); }
+const BALIAS = {sal: "PSA", salmo: "PSA", salmi: "PSA", ps: "PSA", "псалом": "PSA", "пс": "PSA", gv: "JHN", giovanni: "JHN", mt: "MAT", matteo: "MAT", mc: "MRK", marco: "MRK", lc: "LUK", luca: "LUK",
+  at: "ACT", atti: "ACT", ap: "REV", apocalisse: "REV", qo: "ECC", qoelet: "ECC", sir: "SIR", ecclesiastico: "SIR", "3re": "1KI", "4re": "2KI", "1regni": "1SA", "2regni": "2SA", "3regni": "1KI", "4regni": "2KI"};
+function findRef(q){
+  const m = String(q).trim().match(/^([1-4]?\s*[^\d\s,.:;]+(?:\s+[^\d\s,.:;]+)*)\.?\s*(\d+)?(?:\s*[,.:]\s*(\d+))?/);
+  if (!m) return null;
+  const key = normB(m[1]);
+  if (!key) return null;
+  let b = BALIAS[key] ? bmeta(BALIAS[key]) : null;
+  if (!b) b = BIX.find(x => normB(x.a) === key || normB(x.c) === key || normB(x.n) === key);
+  if (!b && key.length >= 3) b = BIX.find(x => normB(x.n).startsWith(key));
+  if (!b && key.length >= 4) b = BIX.find(x => normB(x.n).includes(key));
+  if (!b) return null;
+  return {c: b.c, ch: m[2] ? Number(m[2]) : null, v: m[3] ? Number(m[3]) : null};
+}
+function openBible(c, ch, v){ bpos = {c, ch: ch || null, v: v || null}; if (view === "bibbia") renderBible(); else showView("bibbia"); }
+function offlineBibleHTML(){
+  if (window.ONE_FILE || !("caches" in window) || !navigator.serviceWorker || !navigator.serviceWorker.controller) return "";
+  const done = store.get("men:bible-offline") === "1";
+  return `<div class="card"><div class="rlabel">senza connessione</div>
+    <p>${done ? "Tutta la Bibbia è salvata su questo dispositivo." : "Il Salterio è già sul dispositivo; gli altri libri si salvano quando li apri. Puoi anche scaricare tutta la Bibbia adesso, circa 18 MB."}</p>
+    ${done ? "" : `<div class="toolbar"><button class="btn" id="bible-dl">Scarica tutta la Bibbia</button><span class="note" id="bible-dl-msg" aria-live="polite"></span></div>`}</div>`;
+}
+async function downloadBible(){
+  const btn = $("bible-dl"), msg = $("bible-dl-msg");
+  if (!btn || !BIX) return;
+  btn.disabled = true;
+  try {
+    let n = 0;
+    for (const b of BIX) {
+      const url = "bible/" + b.c + ".json";
+      // the service worker keeps every book it serves in its "bibbia" cache
+      if (!(await caches.match(url))) { const r = await fetch(url); if (!r.ok) throw new Error(r.status); await r.arrayBuffer(); }
+      msg.textContent = `${++n} libri su ${BIX.length}`;
+    }
+    store.set("men:bible-offline", "1");
+    msg.textContent = "Fatto: tutta la Bibbia è sul dispositivo.";
+  } catch (e) { msg.textContent = "Download interrotto: riprova con la connessione."; btn.disabled = false; }
+}
+async function sayChapter(){
+  if (!bpos || !bpos.ch) return;
+  const m = bmeta(bpos.c), book = await getBook(bpos.c), rows = book[lang] && book[lang][String(bpos.ch)];
+  if (!rows) return;
+  const title = lang === "it" ? (bpos.c === "PSA" ? "Salmo " + bpos.ch : m.n + ", capitolo " + bpos.ch) + ". " : "";
+  speak([{text: title + rows.join(" "), lang: voiceLang(lang)}], (bpos.c === "PSA" ? "Salmo " : m.n + " ") + bpos.ch);
+}
+
+/* ---------- the Psalter: one kathisma a day, the whole Psalter in twenty days ---------- */
+const KATH = [[1,8],[9,16],[17,23],[24,31],[32,36],[37,45],[46,54],[55,63],[64,69],[70,76],[77,84],[85,90],[91,100],[101,104],[105,108],[109,117],[118,118],[119,133],[134,142],[143,150]];
+let kview = null, psTok = 0;
+function kstate(){ try { return Object.assign({next: 1, log: {}, cycles: 0}, JSON.parse(store.get("men:kath") || "{}")); } catch (e) { return {next: 1, log: {}, cycles: 0}; } }
+function kput(s){ store.set("men:kath", JSON.stringify(s)); }
+// the psalms of a kathisma, numbered as the chosen Bible numbers them
+function kathPsalms(k, l){
+  const [a, b] = KATH[k - 1], lxx = [];
+  for (let n = a; n <= b; n++) lxx.push(n);
+  return l === "it" ? [...new Set(lxx.flatMap(lxxToHeb))] : lxx;
+}
+async function renderPsalter(){
+  const box = $("psalter");
+  const tok = ++psTok;
+  const s = kstate(), done = s.log[cur], k = kview || done || s.next;
+  const [a, b] = KATH[k - 1], ps = kathPsalms(k, lang);
+  const lxxR = a === b ? `salmo ${a}` : `salmi ${a}–${b}`;
+  const itR = ps.length > 1 ? `Salmi ${ps[0]}–${ps[ps.length - 1]}` : `Salmo ${ps[0]}`;
+  const range = lang !== "it" || (ps[0] === a && ps[ps.length - 1] === b) ? (a === b ? `Salmo ${a}` : `Salmi ${a}–${b}`) : `${itR} nella Riveduta · ${lxxR} secondo i Settanta`;
+  const today = done === k;
+  const kick = today ? "letto oggi" : kview && kview !== s.next ? "catisma scelto" : done ? `oggi hai già letto il catisma ${done}` : "catisma del giorno";
+  box.innerHTML = `<div class="card"><div class="rlabel">${kick}</div><div class="big">Catisma ${k}</div><p class="note">${range}</p>
+      <div class="toolbar"><button class="say" data-say="kathisma">${icon("speaker")}<span>Ascolta</span></button>
+      ${today ? `<button class="btn quiet" disabled>Letto ✓</button><button class="linkbtn" data-kundo="${k}">annulla</button>` : `<button class="btn solid" data-kdone="${k}">Segna come letto</button>`}</div></div>
+    <div><div class="rlabel" style="margin-bottom:8px">i venti catismi${s.cycles ? ` · salterio completato ${s.cycles} ${s.cycles === 1 ? "volta" : "volte"}` : ""}</div>
+      <div class="chgrid">${KATH.map((_, i) => `<button data-kath="${i + 1}" class="${i + 1 < s.next ? "done" : ""}"${i + 1 === k ? ' aria-current="true"' : ""} aria-label="Catisma ${i + 1}${i + 1 < s.next ? ", letto" : ""}">${i + 1}</button>`).join("")}</div>
+      <p class="note" style="margin-top:8px">Un catisma al giorno: in venti giorni si legge tutto il Salterio, come nella regola di molti fedeli. In chiesa il Salterio si legge ogni settimana, tra vespro e mattutino. Prima del catisma si dicono le preghiere iniziali.</p></div>
+    <div id="kath-text"><p class="loading">Apro i salmi</p></div>`;
+  let book;
+  try { book = await getBook("PSA"); } catch (e) { if (tok === psTok) $("kath-text").innerHTML = `<p class="note">Non riesco a caricare i salmi.</p>`; return; }
+  if (tok !== psTok) return;
+  $("kath-text").innerHTML = ps.map(n => `<article class="psalm"><h3>${psLabel(lang, n)}</h3>${chapterHTML(book[lang][String(n)] || [], lang)}</article>`).join("");
+}
+function markKathisma(k, undo){
+  const s = kstate();
+  if (undo) { delete s.log[cur]; s.next = k; if (k === 20 && s.cycles) s.cycles--; }
+  else { s.log[cur] = k; s.next = k % 20 + 1; if (k === 20) s.cycles = (s.cycles || 0) + 1; }
+  kput(s);
+  const r = rstate(); (r.d[cur] = r.d[cur] || {}).salterio = !undo; rput(r);
+  kview = null;
+  renderPsalter();
+  if (CAL && CAL.d[cur]) renderSummary(CAL.d[cur]);
+}
+async function sayKathisma(){
+  const s = kstate(), k = kview || s.log[cur] || s.next, book = await getBook("PSA");
+  const items = kathPsalms(k, lang).map(n => ({text: (lang === "it" ? `Salmo ${n}. ` : "") + (book[lang][String(n)] || []).join(" "), lang: voiceLang(lang)}));
+  speak(items, "Catisma " + k);
+}
+
+/* ---------- akathistos ---------- */
+let AK = null, akSel = store.get("men:ak") || (new Date().getDay() === 6 ? "madre" : "gesu"), alang = store.get("men:alang") || "it";
+async function renderAkathist(){
+  document.querySelectorAll("[data-ak]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.ak === akSel)));
+  document.querySelectorAll("[data-alang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.alang === alang)));
+  const box = $("akathist");
+  if (!AK) {
+    box.innerHTML = `<p class="loading">Apro l'akathistos</p>`;
+    try { AK = await getJSON("akathist"); } catch (e) { box.innerHTML = `<p class="note">Non riesco a caricare il testo. Ricarica la pagina.</p>`; return; }
+  }
+  const a = AK[akSel], both = alang === "both", l1 = alang === "cu" ? "cu" : "it";
+  const para = (b, l) => `<p class="pt" lang="${l}">${esc(b[l])}</p>`;
+  box.innerHTML = `<div class="big">${esc(alang === "cu" ? a.cu : a.it)}</div>${both ? `<p class="note" lang="cu">${esc(a.cu)}</p>` : ""}
+    <div class="ak">${a.b.map(b => {
+      const head = both ? `${b.h} · ${b.hc}` : alang === "cu" ? b.hc : b.h;
+      const rub = b.x3 ? `<span class="rub">si legge tre volte</span>` : b.rep ? `<span class="rub">si ripete</span>` : "";
+      return `<article class="akb${b.pr ? " akpr" : ""}"><div class="kick"><span class="ptitle">${esc(head)}</span>${rub}</div>${both ? `<div class="pv two">${para(b, "it")}${para(b, "cu")}</div>` : para(b, l1)}</article>`;
+    }).join("")}</div>`;
+}
+function sayAkathist(){
+  if (!AK) return;
+  const a = AK[akSel], l = alang === "cu" ? "cu" : "it", items = [];
+  a.b.forEach(b => { for (let i = 0; i < (b.x3 ? 3 : 1); i++) items.push({text: b[l], lang: voiceLang(l)}); });
+  speak(items, l === "cu" ? a.cu : a.it);
+}
+
+/* ---------- the month ---------- */
+let mview = null;
+function renderMonth(){
+  if (!CAL) return;
+  const ym = mview || cur.slice(0, 7);
+  mview = ym;
+  const [y, m] = ym.split("-").map(Number);
+  const nd = new Date(Date.UTC(y, m, 0)).getUTCDate(), lead = (new Date(Date.UTC(y, m - 1, 1)).getUTCDay() + 6) % 7;
+  const today = localToday(), notes = [];
+  let cells = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"].map(w => `<span class="wdh" aria-hidden="true">${w}</span>`).join("") + `<span aria-hidden="true"></span>`.repeat(lead);
+  for (let d = 1; d <= nd; d++) {
+    const k = `${y}-${pad(m)}-${pad(d)}`, day = CAL.d[k];
+    if (!day) { cells += `<button disabled aria-label="${d} ${MONTHS[m - 1]}, fuori dal calendario"><b>${d}</b></button>`; continue; }
+    const fast = isFast(day), pats = patronsOn(k, day), [jm, jd] = day.j.split("-").map(Number);
+    const cls = [fast ? "fast" : "", fast && noOil(day.fs[1]) ? "strict" : "", day.wd === 0 ? "sun" : "", day.fl >= 6 ? "gf" : "", k === today ? "today" : ""].filter(Boolean).join(" ");
+    const label = [`${WD[day.wd]} ${d} ${MONTHS[m - 1]}`, `${jd} ${MONTHS[jm - 1]} giuliano`, day.f[0] || "", fast ? `${day.fs[0]}: ${day.fs[1]}` : "", pats.map(p => p.n).join(", ")].filter(Boolean).join(". ");
+    cells += `<button class="${cls}" data-go="${k}"${k === cur ? ' aria-current="date"' : ""} aria-label="${esc(label)}"><b>${d}</b><small>${jd}</small>${day.fl >= 4 ? `<span class="mk">${sign(day.fl)}</span>` : ""}${pats.length ? '<span class="pt"></span>' : ""}</button>`;
+    const prev = CAL.d[addDays(k, -1)], nxt = CAL.d[addDays(k, 1)], named = fast && day.fs[0] !== "Digiuno";
+    if (named && (!prev || prev.fs[0] !== day.fs[0])) notes.push([k, "Comincia " + fastName(day.fs[0])]);
+    if (day.fl >= 6 && (day.f[0] || day.t[0])) notes.push([k, day.f[0] || day.t[0], 1]);
+    pats.forEach(p => notes.push([k, p.n, 2]));
+    if (named && nxt && nxt.fs[0] !== day.fs[0]) notes.push([k, "Ultimo giorno " + fastName(day.fs[0], "di")]);
+  }
+  const first = CAL.from.slice(0, 7), last = CAL.to.slice(0, 7);
+  $("month").innerHTML = `<div class="mhead"><button class="iconbtn" data-mon="-1" aria-label="Mese precedente"${ym <= first ? " disabled" : ""}>${icon("left")}</button>
+      <div class="big">${MONTHS[m - 1]} ${y}</div><button class="iconbtn" data-mon="1" aria-label="Mese successivo"${ym >= last ? " disabled" : ""}>${icon("right")}</button></div>
+    <div class="mgrid">${cells}</div>
+    <div class="legend"><span><i class="sw fast"></i>digiuno</span><span><i class="sw strict"></i>senza olio</span><span>${sign(6)}grande festa</span><span><i class="sw pt"></i>tuo patrono</span><span>sotto il giorno: la data giuliana</span></div>
+    <div><div class="rlabel" style="margin-bottom:8px">in questo mese</div><div class="next">${notes.map(([k, t, kind]) =>
+      `<span class="when">${Number(k.slice(8))} ${MONTHS[m - 1].slice(0, 3)}</span><span><button data-go="${k}">${esc(t)}</button>${kind === 2 ? ' <span class="muted">· tuo patrono</span>' : ""}</span>`).join("") || `<span class="muted">Nessuna grande festa.</span>`}</div></div>`;
+}
+
+/* ---------- the rule of prayer and the diary ---------- */
+const RITEMS = [
+  {k: "mattino", t: "Preghiere del mattino"},
+  {k: "letture", t: "Letture del giorno"},
+  {k: "gesu", t: "Preghiera di Gesù"},
+  {k: "rosario", t: "Rosario della Madre di Dio"},
+  {k: "salterio", t: "Salterio"},
+  {k: "akathistos", t: "Akathistos", off: true},
+  {k: "sera", t: "Preghiere della sera"},
+  {k: "digiuno", t: "Digiuno della Chiesa", fast: true}
+];
+function rstate(){ try { return Object.assign({on: {}, d: {}}, JSON.parse(store.get("men:regola") || "{}")); } catch (e) { return {on: {}, d: {}}; } }
+function rput(s){ store.set("men:regola", JSON.stringify(s)); }
+function itemOn(s, it){ return it.k in s.on ? !!s.on[it.k] : !it.off; }
+// what the Lampada recorded (it lives next to the Menologio in the installed app)
+function lampAll(){ try { return JSON.parse(localStorage.getItem("lp_log") || "{}"); } catch (e) { return {}; } }
+function rctx(){ return {ks: kstate(), lp: lampAll()}; }
+function itemsFor(s, k){ const day = CAL && CAL.d[k]; return RITEMS.filter(it => itemOn(s, it) && (!it.fast || isFast(day))); }
+function isDone(s, k, it, c){
+  const e = s.d[k] || {};
+  if (it.k in e) return !!e[it.k];
+  if (it.k === "gesu") { const lp = c.lp[k]; return !!(lp && lp.min >= 1); }
+  if (it.k === "salterio") return !!c.ks.log[k];
+  return false;
+}
+function scoreOf(s, k, c){ const its = itemsFor(s, k); return {done: its.filter(it => isDone(s, k, it, c)).length, total: its.length}; }
+function regolaScore(k){ return scoreOf(rstate(), k, rctx()); }
+function dayAny(s, k, c){ return scoreOf(s, k, c).done > 0 || ((s.d[k] || {}).met || 0) > 0; }
+function statsHTML(s, c){
+  const today = localToday();
+  let streak = 0, k = today;
+  if (!dayAny(s, k, c)) k = addDays(k, -1);           // today still counts until it is over
+  while (streak < 3650 && dayAny(s, k, c)) { streak++; k = addDays(k, -1); }
+  let days30 = 0, met30 = 0; const per = {};
+  for (let i = 0; i < 30; i++) {
+    const d = addDays(today, -i);
+    if (dayAny(s, d, c)) days30++;
+    met30 += ((s.d[d] || {}).met || 0) + ((c.lp[d] || {}).met || 0);
+    itemsFor(s, d).forEach(it => { if (isDone(s, d, it, c)) per[it.k] = (per[it.k] || 0) + 1; });
+  }
+  const wd = (parseKey(today).getUTCDay() + 6) % 7, start = addDays(today, -(77 + wd));
+  let cells = "";
+  for (let i = 0; i < 84; i++) {
+    const d = addDays(start, i);
+    if (d > today) { cells += `<i class="fut"></i>`; continue; }
+    const sc = scoreOf(s, d, c), f = sc.total ? sc.done / sc.total : 0;
+    const lv = !sc.done ? 0 : f <= .25 ? 1 : f <= .5 ? 2 : f < 1 ? 3 : 4;
+    cells += `<i class="l${lv}${d === cur ? " cur" : ""}" title="${fmtShort(d)}: ${sc.done} di ${sc.total}"></i>`;
+  }
+  return `<div class="stats"><div class="stat"><b>${streak}</b><span>${streak === 1 ? "giorno di fila" : "giorni di fila"}</span></div>
+      <div class="stat"><b>${days30}</b><span>giorni su 30</span></div><div class="stat"><b>${met30}</b><span>metanie in 30 giorni</span></div></div>
+    <div class="heatwrap" style="margin-top:14px" role="img" aria-label="Le ultime dodici settimane: più è pieno il quadrato, più voci della regola sono segnate quel giorno">
+      <div class="heatdays" aria-hidden="true"><span>lun</span><span></span><span>mer</span><span></span><span>ven</span><span></span><span>dom</span></div><div class="heat">${cells}</div></div>
+    <p class="note" style="margin-top:8px">${Object.keys(per).length ? "Negli ultimi 30 giorni: " + RITEMS.filter(it => per[it.k]).map(it => `${it.t.toLowerCase()} ${per[it.k]}`).join(" · ") : "Segna le voci di oggi: qui vedrai la tua costanza nel tempo."}</p>`;
+}
+function wipeHTML(kind, label){ return `<button class="btn danger" data-wipe="${kind}">${label}</button>`; }
+function renderRegola(){
+  if (!CAL) return;
+  const s = rstate(), c = rctx(), k = cur, e = s.d[k] || {}, day = CAL.d[k], lp = c.lp[k], kd = c.ks.log[k], dt = parseKey(k);
+  const rows = itemsFor(s, k).map(it => {
+    let sub = "";
+    if (it.k === "gesu" && lp && lp.min) sub = `dalla Lampada: ${Math.round(lp.min)} min` + (lp.pr ? ` · ${lp.pr} invocazioni` : "");
+    if (it.k === "salterio" && kd) sub = `catisma ${kd}`;
+    if (it.k === "digiuno" && day) sub = `${day.fs[0]}: ${day.fs[1]}`;
+    return `<button class="check" data-rk="${it.k}" aria-pressed="${isDone(s, k, it, c)}"><span class="box" aria-hidden="true"></span><b>${it.t}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</button>`;
+  }).join("");
+  $("regola").innerHTML = `<div><div class="rlabel">${k === localToday() ? "oggi" : "giorno scelto"}</div><div class="big">${WD[dt.getUTCDay()]} ${dt.getUTCDate()} ${MONTHS[dt.getUTCMonth()]}</div>
+      <p class="note">Con le frecce in alto segni anche i giorni passati. Tutto resta solo su questo dispositivo.</p></div>
+    <div class="checks">${rows || `<p class="note">Nessuna voce scelta: aprile qui sotto.</p>`}</div>
+    <div><div class="rlabel" style="margin-bottom:6px">metanie</div><div class="counter">
+      <button data-met="-10">−10</button><button data-met="-1" aria-label="Una in meno">−</button><output id="met-n" aria-live="polite">${e.met || 0}</output><button data-met="1" aria-label="Una in più">+</button><button data-met="10">+10</button></div>
+      ${lp && lp.met ? `<p class="note">e ${lp.met} con la Lampada</p>` : ""}</div>
+    <label class="field" for="r-note"><span class="rlabel">diario</span>
+      <textarea id="r-note" data-note="regola" placeholder="Come è andata la preghiera, i pensieri che sono tornati, una parola letta oggi…">${esc(e.note || "")}</textarea></label>
+    <div><div class="rlabel" style="margin-bottom:10px">costanza</div>${statsHTML(s, c)}</div>
+    <details class="more"><summary>Le voci della tua regola</summary><div class="opts">${RITEMS.map(it =>
+      `<label class="opt"><input type="checkbox" data-ron="${it.k}"${itemOn(s, it) ? " checked" : ""}><span>${it.t}${it.fast ? ' <span class="note">· solo nei giorni di digiuno</span>' : ""}</span></label>`).join("")}</div></details>
+    <div>${wipeHTML("regola", "Cancella regola e diario")}</div>`;
+}
+function toggleRule(key){
+  const s = rstate(), it = RITEMS.find(x => x.k === key), e = s.d[cur] = s.d[cur] || {};
+  e[key] = !isDone(s, cur, it, rctx());
+  rput(s);
+  renderRegola();
+  if (CAL.d[cur]) renderSummary(CAL.d[cur]);
+}
+function addMet(n){
+  const s = rstate(), e = s.d[cur] = s.d[cur] || {};
+  e.met = Math.max(0, (e.met || 0) + n);
+  rput(s);
+  renderRegola();
+}
+
+/* ---------- preparation for confession ---------- */
+const CONF = [
+  {id: "dio", t: "Verso Dio", q: [
+    {t: "Ho trascurato la preghiera del mattino e della sera, o l'ho detta in fretta e distratto?"},
+    {t: "Ho mancato la Divina Liturgia la domenica e nelle feste senza un motivo serio, o ci sono andato con il cuore altrove?"},
+    {t: "Mi sono accostato alla Comunione senza preparazione, senza digiuno o senza essere in pace con qualcuno?"},
+    {t: "Ho rotto i digiuni della Chiesa senza necessità, o me ne sono vantato davanti agli altri?"},
+    {t: "Ho dubitato della fede, o ho cercato oroscopi, divinazioni, superstizioni e pratiche estranee alla Chiesa?"},
+    {t: "Ho nominato Dio invano, ho giurato, ho scherzato sulle cose sante?"},
+    {t: "Mi sono vergognato della fede, o l'ho taciuta per paura del giudizio degli altri?"},
+    {t: "Ho mormorato contro Dio nelle prove, o ho disperato della sua misericordia?"},
+    {t: "Ho messo il lavoro, i progetti, il denaro o la fama prima di Dio?"},
+    {t: "Ho taciuto per vergogna un peccato in una confessione precedente?"}]},
+  {id: "prossimo", t: "Verso il prossimo", q: [
+    {t: "Ho onorato i miei genitori e ho pregato per loro, per i vivi e per i defunti?"},
+    {t: "Porto rancore verso qualcuno? Ho rifiutato di perdonare o di chiedere perdono?"},
+    {t: "Mi sono adirato, ho offeso o umiliato qualcuno, ho alzato la voce o le mani?"},
+    {t: "Ho giudicato, calunniato, parlato male di chi non era presente?"},
+    {t: "Ho mentito, ingannato, mancato alla parola data?"},
+    {t: "Ho invidiato qualcuno, o ho gioito del suo male?"},
+    {t: "Ho chiuso il cuore a chi era nel bisogno? Ho preso ciò che non era mio?"},
+    {t: "Ho fatto male il mio lavoro, o ho approfittato di chi lavorava con me?"},
+    {t: "Ho mancato di gratitudine verso chi mi ha ospitato, aiutato o insegnato?"},
+    {t: "Ho guardato o trattato le persone come oggetti, nei pensieri, negli sguardi o nelle parole?"},
+    {t: "Ho dato scandalo, o ho spinto altri al peccato con l'esempio o con le parole?"}]},
+  {id: "me", t: "Verso me stesso: le otto passioni", lead: "I Padri della Filocalia descrivono otto pensieri da cui nascono tutti gli altri. Guarda quale ha più presa su di te: è lì che si combatte.", q: [
+    {p: "golosità", t: "Ho mangiato o bevuto oltre misura, per piacere più che per bisogno? Mi sono ubriacato?"},
+    {p: "lussuria", t: "Ho accolto pensieri impuri e mi ci sono trattenuto? Ho cercato immagini impure? Ho commesso atti impuri, da solo o con altri?",
+     n: "Il pensiero che arriva non è ancora peccato. I Padri distinguono la suggestione, il dialogo con il pensiero, il consenso e la schiavitù: si confessa ciò che hai accolto e a cui hai acconsentito, non ciò che hai respinto."},
+    {p: "amore del denaro", t: "Sono attaccato al denaro e alle cose? Ho speso per vanità? Ho dato poco o niente ai poveri?"},
+    {p: "ira", t: "Ho covato collera, rimuginato le offese, cercato vendetta anche solo nei pensieri?"},
+    {p: "tristezza", t: "Mi sono lasciato andare all'abbattimento e all'autocommiserazione, invece di affidarmi a Dio?"},
+    {p: "accidia", t: "Sono stato pigro nella preghiera e nel lavoro, irrequieto, ho perso il tempo in distrazioni e schermi?"},
+    {p: "vanagloria", t: "Ho fatto il bene per essere visto? Ho cercato lodi, ho raccontato le mie imprese per farmi ammirare?"},
+    {p: "superbia", t: "Mi sono creduto migliore degli altri, ho disprezzato qualcuno, ho rifiutato una correzione, ho confidato solo nelle mie forze?"}]}
+];
+function cstate(){ try { return Object.assign({c: {}, n: {}}, JSON.parse(store.get("men:conf") || "{}")); } catch (e) { return {c: {}, n: {}}; } }
+function cput(s){ store.set("men:conf", JSON.stringify(s)); }
+function confCount(s){ return Object.values(s.c).filter(Boolean).length; }
+function confCountText(s){ const n = confCount(s); return n ? `Hai segnato ${n} ${n === 1 ? "voce" : "voci"}.` : ""; }
+function renderConf(){
+  const s = cstate();
+  $("conf").innerHTML = `<div class="card"><p>Leggi con calma, alla presenza di Dio. Segna solo ciò che riconosci e scrivi con parole tue: al sacerdote non serve un elenco ma un cuore che si pente. Quello che segni e scrivi resta solo su questo dispositivo, e lo cancelli quando vuoi.</p>
+      <p class="hint">Sì, Signore e Re, concedimi di vedere le mie colpe e di non giudicare il mio fratello.</p><p class="note">Dalla preghiera di sant'Efrem il Siro</p>
+      <div class="toolbar"><button class="btn quiet" data-psalm="50">Salmo 50, «Pietà di me, o Dio»</button></div></div>
+    ${CONF.map(sec => `<section class="csec"><h3>${sec.t}</h3>${sec.lead ? `<p class="lead">${sec.lead}</p>` : ""}
+      <div class="checks">${sec.q.map((q, i) => { const id = sec.id + "-" + i; return `<button class="check q" data-cq="${id}" aria-pressed="${!!s.c[id]}"><span class="box" aria-hidden="true"></span><span>${q.p ? `<span class="p">${q.p}</span>` : ""}${esc(q.t)}${q.n ? `<span class="note" style="display:block;margin-top:6px">${esc(q.n)}</span>` : ""}</span></button>`; }).join("")}</div>
+      <label class="field"><span class="note">Con parole tue</span><textarea data-note="conf-${sec.id}">${esc(s.n[sec.id] || "")}</textarea></label></section>`).join("")}
+    <section class="csec"><h3>Davanti al sacerdote</h3>
+      <p class="lead">Porta con te questi appunti, se ti aiutano. Di' le cose con semplicità, senza giustificarti e senza accusare altri, e ascolta il consiglio che ricevi. Dopo l'assoluzione cancella tutto: quei peccati sono perdonati, non serve conservarli.</p>
+      <p class="note" id="conf-count" aria-live="polite">${confCountText(s)}</p><div>${wipeHTML("conf", "Cancella tutto")}</div></section>`;
+}
+
+/* ---------- chant: the monasteries' own channels, played inside the app ---------- */
+const HOUSES = [
+  {id: "decani", n: "Visoki Dečani", d: "I monaci serbi di Dečani, in Kosovo", ch: "UCihifZr5enkEMgQPVGhILvw"},
+  {id: "elisabetta", n: "Santa Elisabetta", d: "Il coro del monastero di Minsk", ch: "UC5PuZogASDicF0C0cmavfpw"}
+];
+let house = null, playingHouse = null;
+function inClaude(){ return !!(window.claude && typeof window.claude.use === "function"); }
+function houseOfDay(){ return HOUSES[Math.floor(parseKey(cur || localToday()).getTime() / 864e5) % 2]; }
+function uploadsOf(h){ return "UU" + h.ch.slice(2); }     // a channel's uploads, as one playlist
+function renderCanto(){
+  const h = house || houseOfDay();
+  if (playingHouse && playingHouse === h.id && $("playbox") && $("playbox").firstChild) return;   // do not stop what is playing
+  const embed = !inClaude(), url = `https://www.youtube.com/playlist?list=${uploadsOf(h)}`;
+  const btn = embed ? `<button class="playbtn" data-play-now aria-label="Suona ${esc(h.n)}">${icon("play")}</button>`
+                    : `<a class="playbtn" href="${url}" target="_blank" rel="noopener" aria-label="Suona ${esc(h.n)} su YouTube">${icon("play")}</a>`;
+  $("canto").innerHTML = `<div class="card"><div class="playcard">${btn}<div><div class="rlabel">musica del giorno</div>
+      <div class="big" style="font-size:var(--s-lg)">${esc(h.n)}</div><p class="note">${esc(h.d)}</p></div></div>
+    <div class="houses" role="group" aria-label="Monastero">${HOUSES.map(x => `<button class="btn quiet sm" data-house="${x.id}" aria-pressed="${x.id === h.id}">${esc(x.n)}</button>`).join("")}</div>
+    <div id="playbox"></div>
+    <p class="note">${embed ? "Suona uno dopo l'altro i video più recenti del canale del monastero, qui nell'app; il monastero cambia ogni giorno. Serve la connessione." : "Qui dentro Claude il video non può suonare nella pagina: il tasto apre la playlist del monastero su YouTube. Nell'app installata suona direttamente."}</p></div>`;
+}
+function playNow(){
+  const h = house || houseOfDay();
+  if (inClaude()) { window.open(`https://www.youtube.com/playlist?list=${uploadsOf(h)}`, "_blank", "noopener"); return; }
+  if (navigator.onLine === false) { $("playbox").innerHTML = `<p class="note">Senza connessione la musica non può suonare.</p>`; return; }
+  $("playbox").innerHTML = `<div class="playbox"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${uploadsOf(h)}&autoplay=1&rel=0&playsinline=1" title="${esc(h.n)}"
+    allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    <div class="toolbar" style="margin-top:8px"><button class="btn quiet" data-stop-play>Ferma la musica</button></div>`;
+  playingHouse = h.id;
+}
+function stopPlay(){ playingHouse = null; if ($("playbox")) $("playbox").innerHTML = ""; }
+function stopEmbeds(){}
+
+/* ---------- the phone calendar: subscriptions and a file made to measure ---------- */
+const SITE = "https://ndassistip-sketch.github.io/menologio/";
+const FEEDS = [
+  {f: "digiuni.ics", t: "Giorni di digiuno", d: "Ogni giorno di digiuno con la regola del cibo, e un avviso alle 7 del mattino."},
+  {f: "feste.ics", t: "Grandi feste e santi patroni", d: "Pasqua, le grandi feste e le feste dei tuoi patroni, con un avviso alle 20 del giorno prima."}
+];
+const ALARMS = [["PT7H", "il giorno stesso alle 7"], ["-PT4H", "il giorno prima alle 20"], ["-PT3H", "il giorno prima alle 21"], ["", "nessun avviso"]];
+function alarmOptions(def){ return ALARMS.map(([v, t]) => `<option value="${v}"${v === def ? " selected" : ""}>${t}</option>`).join(""); }
+function renderCalView(){
+  const feeds = FEEDS.map(x => {
+    const https = SITE + "calendario/" + x.f, webcal = https.replace(/^https:/, "webcal:");
+    return `<div class="card"><div class="rlabel">iscriviti</div><div class="big" style="font-size:var(--s-lg)">${x.t}</div><p class="note">${x.d}</p>
+      <div class="toolbar"><a class="btn sm" href="${webcal}">iPhone e Mac</a><a class="btn sm" href="https://calendar.google.com/calendar/render?cid=${encodeURIComponent(webcal)}" target="_blank" rel="noopener">Google Calendar</a></div>
+      <div class="copyrow"><input type="text" readonly value="${https}" aria-label="Indirizzo del calendario ${x.t}"><button class="iconbtn" data-copy="${https}" aria-label="Copia l'indirizzo">${icon("copy")}</button></div></div>`;
+  }).join("");
+  const gen = inClaude()
+    ? `<div class="card"><div class="rlabel">file su misura</div><p>Qui dentro Claude il file del calendario non si può scaricare. Nell'app installata, in questa stessa sezione, scegli cosa mettere nel calendario (digiuni, feste, patroni, promemoria delle preghiere agli orari che vuoi) e scarichi il file.</p>
+        <div><a class="btn" href="${SITE}#calendario" target="_blank" rel="noopener">Apri l'app</a></div></div>`
+    : `<div class="card"><div class="rlabel">file su misura</div><p>Scegli tu cosa mettere nel calendario e gli orari degli avvisi. Il file non si aggiorna da solo: quando il calendario dell'app si allunga, scaricalo di nuovo.</p>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" id="g-fast" checked><span>Giorni di digiuno</span></label>
+        <div class="inline"><span>avviso</span><select id="g-fast-a">${alarmOptions("PT7H")}</select></div>
+        <label class="opt"><input type="checkbox" id="g-feast" checked><span>Pasqua e grandi feste</span></label>
+        <label class="opt"><input type="checkbox" id="g-pat" checked><span>Feste dei tuoi patroni</span></label>
+        <div class="inline"><span>avviso per feste e patroni</span><select id="g-feast-a">${alarmOptions("-PT4H")}</select></div>
+        <label class="opt"><input type="checkbox" id="g-pray"><span>Promemoria delle preghiere, ogni giorno</span></label>
+        <div class="inline"><label>mattino <input type="time" id="g-pm" value="07:00"></label><label>sera <input type="time" id="g-ps" value="21:30"></label></div>
+        <label class="field" style="margin-top:4px">periodo<select id="g-range"><option value="3">i prossimi 3 mesi</option><option value="6">i prossimi 6 mesi</option><option value="12" selected>un anno</option><option value="all">tutto il calendario, fino al ${fmtShort(CAL ? CAL.to : localToday())}</option></select></label>
+      </div>
+      <div class="toolbar"><button class="btn solid" id="g-dl">Scarica il file del calendario</button><span class="note" id="g-msg" aria-live="polite"></span></div>
+      <p class="note">iPhone: apri il file e tocca «Aggiungi tutti». Android: aprilo con il calendario del telefono; Google Calendar importa i file solo dal computer (calendar.google.com › Impostazioni › Importa).</p></div>`;
+  $("ical").innerHTML = `<p class="lead">Una pagina web non può mandare notifiche da sola, ma il calendario del telefono sì. Iscriviti a questi calendari: ti avvisano dei giorni di digiuno e delle feste, e si aggiornano da soli.</p>${feeds}
+    <div class="card"><div class="rlabel">come si fa</div>
+      <p><b>iPhone:</b> tocca «iPhone e Mac», poi «Iscriviti». Nella schermata che segue disattiva «Rimuovi avvisi», altrimenti il telefono non suona.</p>
+      <p><b>Android:</b> tocca «Google Calendar» e conferma con «Aggiungi»; se dal telefono non si apre, fallo dal computer e il calendario arriva anche sul telefono. Google ignora gli avvisi scritti nel calendario: in Google Calendar › Impostazioni › il calendario aggiunto, imposta le notifiche per gli eventi di tutto il giorno, per esempio il giorno stesso alle 7.</p>
+      <p class="note">I calendari si aggiornano da soli ogni qualche ora; Google anche solo una volta al giorno.</p></div>${gen}`;
+}
+function icsEsc(s){ return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+function icsFold(line){
+  const enc = new TextEncoder();
+  let out = "", n = 0;
+  for (const ch of line) { const b = enc.encode(ch).length; if (n + b > 74) { out += "\r\n "; n = 1; } out += ch; n += b; }
+  return out;
+}
+function monthsAhead(k, n){ const d = parseKey(k); d.setUTCMonth(d.getUTCMonth() + n); return keyOf(d); }
+function buildICS(o){
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Menologio//IT", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:Menologio"];
+  const alarm = (txt, trig) => trig ? ["BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc(txt), "TRIGGER:" + trig, "END:VALARM"] : [];
+  const ev = (uid, k, sum, desc, trig) => L.push("BEGIN:VEVENT", "UID:" + uid + "@menologio", "DTSTAMP:" + stamp, "DTSTART;VALUE=DATE:" + k.replace(/-/g, ""),
+    "DTEND;VALUE=DATE:" + addDays(k, 1).replace(/-/g, ""), "SUMMARY:" + icsEsc(sum), "TRANSP:TRANSPARENT", ...(desc ? ["DESCRIPTION:" + icsEsc(desc)] : []), ...alarm(sum, trig), "END:VEVENT");
+  for (let k = o.from; k <= o.to && CAL.d[k]; k = addDays(k, 1)) {
+    const day = CAL.d[k];
+    if (o.fast && isFast(day)) ev("digiuno-" + k, k, "Digiuno · " + fastShort(day.fs[1]), `${day.fs[0]}: ${day.fs[1]}.`, o.fastA);
+    if (o.feast && day.fl >= 6 && (day.f[0] || day.t[0])) ev("festa-" + k, k, "☦ " + (day.f[0] || day.t[0]), RANK[day.fl] || "", o.feastA);
+    if (o.pat) patronsOn(k, day).forEach((p, i) => ev(`patrono-${k}-${i}`, k, "☦ " + p.n, p.w, o.feastA));
+  }
+  (o.prayers || []).forEach(([t, name, id]) => {
+    const [h, mi] = t.split(":");
+    L.push("BEGIN:VEVENT", `UID:preghiera-${id}@menologio`, "DTSTAMP:" + stamp, `DTSTART:${o.from.replace(/-/g, "")}T${h}${mi}00`, "DURATION:PT15M",
+      `RRULE:FREQ=DAILY;UNTIL=${o.to.replace(/-/g, "")}T235959`, "SUMMARY:" + icsEsc(name), ...alarm(name, "PT0M"), "END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  return L.map(icsFold).join("\r\n") + "\r\n";
+}
+function saveFile(name, text, mime){
+  const url = URL.createObjectURL(new Blob([text], {type: mime}));
+  const a = document.createElement("a");
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+function makeICS(){
+  if (!CAL) return;
+  const v = id => $(id).value, on = id => $(id).checked;
+  const from = localToday() < CAL.from ? CAL.from : localToday();
+  const r = v("g-range"), to = r === "all" ? CAL.to : (monthsAhead(from, Number(r)) < CAL.to ? monthsAhead(from, Number(r)) : CAL.to);
+  const o = {from, to, fast: on("g-fast"), fastA: v("g-fast-a"), feast: on("g-feast"), pat: on("g-pat"), feastA: v("g-feast-a"),
+             prayers: on("g-pray") ? [[v("g-pm") || "07:00", "Preghiere del mattino", "mattino"], [v("g-ps") || "21:30", "Preghiere della sera", "sera"]] : []};
+  if (!o.fast && !o.feast && !o.pat && !o.prayers.length) { $("g-msg").textContent = "Scegli almeno una voce."; return; }
+  const text = buildICS(o), n = (text.match(/BEGIN:VEVENT/g) || []).length;
+  saveFile("menologio.ics", text, "text/calendar");
+  $("g-msg").textContent = `File pronto: ${n} eventi, dal ${fmtShort(from)} al ${fmtShort(to)}.`;
+}
+
 /* ---------- data loading ---------- */
 // data ships as files next to the page, or embedded as <script type="application/json" id="data-…"> in the one-file edition
 async function getJSON(name){
@@ -1222,10 +2031,17 @@ async function loadTexts(l){
 }
 
 function setLang(l){
+  const prev = lang;
   lang = l; store.set("men:lang", l);
-  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  document.querySelectorAll(".lang button[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
   if (CAL && CAL.d[cur]) renderReadings(CAL.d[cur]);
   loadTexts(l);
+  // a psalm keeps its place when the numbering changes between the Riveduta and the Septuagint
+  if (bpos && bpos.c === "PSA" && bpos.ch && (prev === "it") !== (l === "it")) {
+    bpos.ch = (prev === "it" ? hebToLxx(bpos.ch) : lxxToHeb(bpos.ch))[0] || Math.min(bpos.ch, 150);
+    bpos.v = null;
+  }
+  if (view === "bibbia" || view === "salterio") renderView(view);
 }
 
 function go(k){
@@ -1246,6 +2062,76 @@ function maybeAutoPick(){
 function startFromHash(){
   const h = decodeURIComponent((location.hash || "").slice(1));
   return /^\d{4}-\d{2}-\d{2}$/.test(h) ? h : localToday();
+}
+function viewFromHash(){
+  const h = decodeURIComponent((location.hash || "").slice(1));
+  return VIEWS.some(v => v.id === h && !v.href) ? h : null;
+}
+
+/* ---------- taps inside the new sections ---------- */
+const armed = {};
+function onSectionTap(e){
+  const t = e.target, q = sel => t.closest(sel);
+  let el;
+  if ((el = q("[data-bible]"))) { const [c, ch] = el.dataset.bible.split("."); openBible(c, Number(ch)); return true; }
+  if ((el = q("[data-psalm]"))) { const n = Number(el.dataset.psalm); openBible("PSA", lang === "it" ? lxxToHeb(n)[0] : n); return true; }
+  if ((el = q("[data-book]"))) { bpos = {c: el.dataset.book, ch: null}; renderBible(); window.scrollTo(0, 0); return true; }
+  if (q("[data-books]")) { bpos = null; renderBible(); window.scrollTo(0, 0); return true; }
+  if ((el = q("#bible [data-ch]"))) { bpos.ch = Number(el.dataset.ch); bpos.v = null; renderBible(); return true; }
+  if ((el = q("[data-setlang]"))) { setLang(el.dataset.setlang); return true; }
+  if (q("#bible-dl")) { downloadBible(); return true; }
+  if ((el = q("[data-kath]"))) { kview = Number(el.dataset.kath); renderPsalter(); return true; }
+  if ((el = q("[data-kdone]"))) { markKathisma(Number(el.dataset.kdone)); return true; }
+  if ((el = q("[data-kundo]"))) { markKathisma(Number(el.dataset.kundo), true); return true; }
+  if ((el = q("[data-ak]"))) { akSel = el.dataset.ak; store.set("men:ak", akSel); stopSpeech(); renderAkathist(); return true; }
+  if ((el = q("[data-alang]"))) { alang = el.dataset.alang; store.set("men:alang", alang); renderAkathist(); return true; }
+  if ((el = q("[data-mon]"))) { const [y, m] = mview.split("-").map(Number), d = new Date(Date.UTC(y, m - 1 + Number(el.dataset.mon), 1)); mview = keyOf(d).slice(0, 7); renderMonth(); return true; }
+  if ((el = q("#month [data-go]"))) { go(el.dataset.go); showView("oggi"); return true; }
+  if ((el = q("[data-rk]"))) { toggleRule(el.dataset.rk); return true; }
+  if ((el = q("[data-met]"))) { addMet(Number(el.dataset.met)); return true; }
+  if ((el = q("[data-cq]"))) {
+    const s = cstate(), id = el.dataset.cq;
+    s.c[id] = !s.c[id]; if (!s.c[id]) delete s.c[id]; cput(s);
+    el.setAttribute("aria-pressed", String(!!s.c[id]));
+    if ($("conf-count")) $("conf-count").textContent = confCountText(s);
+    return true;
+  }
+  if ((el = q("[data-house]"))) { house = HOUSES.find(h => h.id === el.dataset.house); const was = playingHouse; stopPlay(); renderCanto(); if (was) playNow(); return true; }
+  if (q("[data-play-now]")) { playNow(); return true; }
+  if (q("[data-stop-play]")) { stopPlay(); return true; }
+  if ((el = q("[data-copy]"))) {
+    const text = el.dataset.copy, input = el.parentNode.querySelector("input");
+    const ok = () => { el.setAttribute("aria-label", "Copiato"); el.style.color = "var(--rubric)"; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, () => { input.select(); });
+    else { input.select(); try { document.execCommand("copy"); ok(); } catch (err) {} }
+    return true;
+  }
+  if (q("#g-dl")) { makeICS(); return true; }
+  if ((el = q("[data-wipe]"))) {
+    const kind = el.dataset.wipe;
+    if (!armed[kind]) {
+      armed[kind] = setTimeout(() => { armed[kind] = null; if (el.isConnected) el.textContent = kind === "conf" ? "Cancella tutto" : "Cancella regola e diario"; }, 6000);
+      el.textContent = "Tocca di nuovo per cancellare davvero";
+      return true;
+    }
+    clearTimeout(armed[kind]); armed[kind] = null;
+    try { localStorage.removeItem(kind === "conf" ? "men:conf" : "men:regola"); } catch (err) {}
+    if (kind === "conf") renderConf(); else { renderRegola(); if (CAL && CAL.d[cur]) renderSummary(CAL.d[cur]); }
+    return true;
+  }
+  return false;
+}
+// notes are saved while you write
+let noteTimer = null;
+function onNoteInput(e){
+  const t = e.target, key = t.dataset && t.dataset.note;
+  if (!key) return;
+  clearTimeout(noteTimer);
+  const day = cur, val = t.value;
+  noteTimer = setTimeout(() => {
+    if (key === "regola") { const s = rstate(), d = s.d[day] = s.d[day] || {}; if (val.trim()) d.note = val; else delete d.note; rput(s); }
+    else { const s = cstate(), id = key.slice(5); if (val.trim()) s.n[id] = val; else delete s.n[id]; cput(s); }
+  }, 350);
 }
 
 async function init(){
@@ -1274,20 +2160,37 @@ async function init(){
       else if (sp.dataset.sayPr) sayPrayers(Number(sp.dataset.sayPr));
       else if (sp.dataset.say === "readings") sayReadings(null);
       else if (sp.dataset.say === "prayers") sayPrayers(null);
+      else if (sp.dataset.say === "chapter") sayChapter();
+      else if (sp.dataset.say === "kathisma") sayKathisma();
+      else if (sp.dataset.say === "akathist") sayAkathist();
       return;
     }
+    if (onSectionTap(e)) return;
     const b = e.target.closest("button[data-view]");
     if (b) {
       if (b.dataset.slot) { pslot = b.dataset.slot; renderPrayers(CAL && CAL.d[cur]); }
       closeDrawer();
       showView(b.dataset.view);
+      if (b.dataset.play) playNow();
       return;
     }
     if (e.target.closest("[data-sources]")) { closeDrawer(); $("fonti").scrollIntoView({behavior: "smooth", block: "start"}); return; }
     if (e.target.closest("#drawer-nav a")) closeDrawer();
   });
-  document.querySelectorAll(".lang button").forEach(b => b.onclick = () => setLang(b.dataset.lang));
-  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  document.querySelectorAll(".lang button[data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+  document.querySelectorAll(".lang button[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  document.addEventListener("input", onNoteInput);
+  document.addEventListener("change", e => {
+    const t = e.target;
+    if (t.dataset && t.dataset.ron) { const s = rstate(); s.on[t.dataset.ron] = t.checked; rput(s); renderRegola(); if (CAL && CAL.d[cur]) renderSummary(CAL.d[cur]); }
+  });
+  document.addEventListener("submit", e => {
+    if (e.target.id !== "goto") return;
+    e.preventDefault();
+    const q = $("goto-q").value, r = BIX && findRef(q), msg = $("goto-msg");
+    if (!r) { msg.hidden = false; msg.textContent = q.trim() ? "Non trovo questo libro. Prova con l'abbreviazione, per esempio Gv 3,16." : ""; return; }
+    openBible(r.c, r.ch, r.v);
+  });
   $("prev").onclick = () => go(addDays(cur, -1));
   $("next").onclick = () => go(addDays(cur, 1));
   $("today").onclick = () => go(localToday());
@@ -1310,6 +2213,7 @@ async function init(){
   }
 
   cur = startFromHash();
+  const startView = viewFromHash();
   try {
     CAL = await getJSON("calendar");
   } catch (e) {
@@ -1320,6 +2224,7 @@ async function init(){
   $("range-note").textContent = "Il calendario copre dal " + fmtShort(CAL.from) + " al " + fmtShort(CAL.to) + ".";
   render();
   loadTexts(lang);
+  if (startView) showView(startView);
 
   if (window.claude && typeof window.claude.use === "function") {
     try {
@@ -1333,6 +2238,8 @@ async function init(){
     } catch (e) { sample = null; }
   }
 }
+// a small handle for testing the page from outside
+window.__menologio = {showView, openBible, setLang, stopSpeech, go, state: () => ({view, bpos, queue: TTS.queue.length})};
 init();
 })();
 </script>
@@ -1341,10 +2248,10 @@ init();
 (function(){
   "use strict";
   var note = document.getElementById("app-note"), btn = document.getElementById("install-btn"), hint = document.getElementById("ios-hint");
-  if (window.ONE_FILE) { note.textContent = "Edizione in un solo file: funziona senza connessione. Solo i link al canto richiedono internet."; }
+  if (window.ONE_FILE) { note.textContent = "Edizione in un solo file: funziona senza connessione, Bibbia compresa. Solo il canto e i calendari da iscrivere richiedono internet."; }
   else if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
     navigator.serviceWorker.register("sw.js").then(function(){ return navigator.serviceWorker.ready; }).then(function(){
-      note.textContent = "Salvata su questo dispositivo: funziona anche senza connessione. Solo i link al canto richiedono internet.";
+      note.textContent = "Salvata su questo dispositivo: funziona anche senza connessione. Il canto richiede internet; la Bibbia intera si può salvare dalla sezione Bibbia.";
     }).catch(function(){});
   }
   var deferred = null;

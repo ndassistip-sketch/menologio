@@ -263,7 +263,7 @@ function bell(){
 function finish(done){
   st.running=false;cancelAnimationFrame(raf);releaseWake();
   if(st.elapsed>=30){
-    const log=load("lp_log",{});const d=new Date().toISOString().slice(0,10);
+    const log=load("lp_log",{});const n0=new Date(),d=n0.getFullYear()+"-"+String(n0.getMonth()+1).padStart(2,"0")+"-"+String(n0.getDate()).padStart(2,"0");
     const e=log[d]||{min:0,ret:0,met:0,pr:0};
     e.min+=st.elapsed/60;e.ret+=st.returns;e.pr+=st.count;e.met+=st.met;log[d]=e;save("lp_log",log);
   }
